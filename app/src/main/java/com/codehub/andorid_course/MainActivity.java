@@ -32,10 +32,10 @@ public class MainActivity extends AbstractActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
         List<PlayNowString> data = new ArrayList<PlayNowString>();
-        data.add(new PlayNowString("Vassilis", sdf.format(timestamp), "Vassilis", "Vassilis"));
-        data.add(new PlayNowString("Markos", sdf.format(timestamp), "Markos", "Markos"));
-        data.add(new PlayNowString("Kostas", sdf.format(timestamp), "Kostas", "Kostas"));
-        data.add(new PlayNowString("Maria", sdf.format(timestamp), "Maria", "Maria"));
+        data.add(new PlayNowString("Vassilis", sdf.format(timestamp),0,0));
+        data.add(new PlayNowString("Vassilis", sdf.format(timestamp),0,0 ));
+        data.add(new PlayNowString("Vassilis", sdf.format(timestamp),0,0 ));
+        data.add(new PlayNowString("Vassilis", sdf.format(timestamp),0,0 ));
 
         adapter.submitList(data);
 

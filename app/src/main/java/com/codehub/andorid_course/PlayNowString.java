@@ -10,11 +10,11 @@ public class PlayNowString {
     @Nullable
     private String var2;
     @Nullable
-    private String var3;
+    private Integer var3;
     @Nullable
-    private String var4;
+    private Integer var4;
 
-    public PlayNowString(@NonNull String var1, @Nullable String var2, @Nullable String var3, @Nullable String var4) {
+    public PlayNowString(@NonNull String var1, @Nullable String var2, @Nullable Integer var3, @Nullable Integer var4) {
         this.var1 = var1;
         this.var2 = var2;
         this.var3 = var3;
@@ -33,23 +33,25 @@ public class PlayNowString {
         return var2;
     }
 
-    public void setVar2(String var2) {
+    public void setVar2(@Nullable String var2) {
         this.var2 = var2;
     }
 
-    public String getVar3() {
+    @Nullable
+    public Integer getVar3() {
         return var3;
     }
 
-    public void setVar3(String var3) {
+    public void setVar3(@Nullable Integer var3) {
         this.var3 = var3;
     }
 
-    public String getVar4() {
+    @Nullable
+    public Integer getVar4() {
         return var4;
     }
 
-    public void setVar4(String var4) {
+    public void setVar4(@Nullable Integer var4) {
         this.var4 = var4;
     }
 
