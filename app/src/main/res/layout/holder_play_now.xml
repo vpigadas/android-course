@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        tools:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/holder_play_now_timestamp"
