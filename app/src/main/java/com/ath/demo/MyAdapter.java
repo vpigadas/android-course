@@ -1,6 +1,8 @@
 package com.ath.demo;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +17,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     Context context;
     int[] icons;
     String[] texts;
+    String[] links;
     int link_icon;
 
-    public MyAdapter(Context ct, int[] imgs, String[] names , int l_icon) {
+    public MyAdapter(Context ct, int[] imgs, String[] names , String[] links ,int l_icon) {
         context = ct;
         icons = imgs;
         texts = names;
+        links = links;
         link_icon = l_icon;
     }
 
@@ -35,10 +39,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         holder.iconStart.setImageResource(icons[position]);
         holder.text.setText(texts[position]);
         holder.link_icon.setImageResource(link_icon);
+        holder.link_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse(links[position]));
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
