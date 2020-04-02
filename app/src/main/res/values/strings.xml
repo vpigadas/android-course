@@ -1,4 +1,7 @@
 <resources>
+
+    <string name="appName">Greek Channels</string>
+
     <string-array name="channel_names">
         <item>ERT 1</item>
         <item>ERT 2</item>
@@ -9,4 +12,5 @@
         <item>OPEN</item>
         <item>ALPHA</item>
     </string-array>
+
 </resources>
