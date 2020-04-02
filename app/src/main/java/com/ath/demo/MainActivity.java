@@ -1,63 +1,35 @@
 package com.ath.demo;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class MainActivity extends AbstractActivity {
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class MainActivity extends AppCompatActivity {
+
+
+    RecyclerView recyclerView;
+    String channel_names[];
+    int link_icon = R.drawable.image_preview;
+    int channel_icons[] = {R.drawable.ic_channel_ert1, R.drawable.ic_channel_ert2, R.drawable.ic_channel_ert3, R.drawable.ic_channel_star,
+            R.drawable.ic_channel_ant1, R.drawable.ic_channel_skai, R.drawable.ic_channel_open, R.drawable.ic_channel_alpha};
 
     @Override
-    public int getLayout() {
-        return R.layout.activity_login;
-    }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-    @Override
-    public void initialiseLayout() {
-        Button btnLogin = findViewById(R.id.login_btn);
-        btnLogin.setText(R.string.brn_login);
+        channel_names = getResources().getStringArray(R.array.channel_names);
 
-        EditText editUserName = findViewById(R.id.login_username);
-        EditText editPassword = findViewById(R.id.login_password);
-
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ThirdActivity.class);
-                startActivity(intent);
-
-//                String message = "";
-//
-//                EditText editUserName = findViewById(R.id.login_username);
-//                EditText editPassword = findViewById(R.id.login_password);
-//
-//                message = editUserName.getText().toString();
-//
-//                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        btnLogin.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-//                Toast.makeText(MainActivity.this, "Hello Guys!!!!", Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });
-    }
-
-    @Override
-    public void runOperation() {
-
-    }
-
-    @Override
-    public void stopOperation() {
-
-    }
-
-    @Override
-    public void destroyLayout() {
+        recyclerView = findViewById(R.id.recyclerView);
+        MyAdapter myAdapter = new MyAdapter(this, channel_icons, channel_names, link_icon);
+        recyclerView.setAdapter(myAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
     }
 

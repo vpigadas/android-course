@@ -1,0 +1,61 @@
+package com.ath.demo;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+
+    Context context;
+    int[] icons;
+    String[] texts;
+    int link_icon;
+
+    public MyAdapter(Context ct, int[] imgs, String[] names , int l_icon) {
+        context = ct;
+        icons = imgs;
+        texts = names;
+        link_icon = l_icon;
+    }
+
+    @NonNull
+    @Override
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View view = inflater.inflate(R.layout.my_row, parent, false);
+
+        return new MyViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        holder.iconStart.setImageResource(icons[position]);
+        holder.text.setText(texts[position]);
+        holder.link_icon.setImageResource(link_icon);
+    }
+
+    @Override
+    public int getItemCount() {
+        return texts.length;
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+
+        ImageView iconStart,link_icon;
+        TextView text;
+
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            iconStart = itemView.findViewById(R.id.channel_icon);
+            text = itemView.findViewById(R.id.channel_name);
+            link_icon = itemView.findViewById(R.id.go_to_website_icon);
+        }
+    }
+}

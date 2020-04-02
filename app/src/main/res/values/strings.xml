@@ -1,6 +1,12 @@
 <resources>
-    <string name="app_name">DemoApp</string>
-    <string name="app_demo">DEMO!!!!</string>
-    <string name="vassilis_pigadas">Vassilis PIgadas</string>
-    <string name="brn_login">Login</string>
+    <string-array name="channel_names">
+        <item>ERT 1</item>
+        <item>ERT 2</item>
+        <item>ERT 3</item>
+        <item>STAR</item>
+        <item>ANT1</item>
+        <item>SKAI</item>
+        <item>OPEN</item>
+        <item>ALPHA</item>
+    </string-array>
 </resources>
