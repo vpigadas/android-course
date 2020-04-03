@@ -15,7 +15,8 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     String channel_names[];
-    String links[];
+    String links[] = {"https://webtv.ert.gr/ert1","https://webtv.ert.gr/ert2","https://webtv.ert.gr/ert3","https://www.star.gr/",
+            "https://www.antenna.gr/","https://www.skaitv.gr/","https://www.tvopen.gr/","https://www.alphatv.gr/"};
     int link_icon = R.drawable.image_preview;
     int channel_icons[] = {R.drawable.ic_channel_ert1, R.drawable.ic_channel_ert2, R.drawable.ic_channel_ert3, R.drawable.ic_channel_star,
             R.drawable.ic_channel_ant1, R.drawable.ic_channel_skai, R.drawable.ic_channel_open, R.drawable.ic_channel_alpha};
@@ -26,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         channel_names = getResources().getStringArray(R.array.channel_names);
-        links = getResources().getStringArray(R.array.links_to_channels);
 
         recyclerView = findViewById(R.id.recyclerView);
         MyAdapter myAdapter = new MyAdapter(this, channel_icons, channel_names, links ,link_icon);

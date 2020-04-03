@@ -13,15 +13,5 @@
         <item>ALPHA</item>
     </string-array>
 
-    <string-array name="links_to_channels">
-        <item>https://webtv.ert.gr/ert1/</item>
-        <item>https://webtv.ert.gr/ert2/</item>
-        <item>https://webtv.ert.gr/ert3/</item>
-        <item>https://www.star.gr/</item>
-        <item>https://www.antenna.gr/</item>
-        <item>https://www.skaitv.gr/</item>
-        <item>https://www.tvopen.gr/</item>
-        <item>https://www.alphatv.gr/</item>
-    </string-array>
 
 </resources>

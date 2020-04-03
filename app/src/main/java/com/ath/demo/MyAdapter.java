@@ -17,14 +17,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     Context context;
     int[] icons;
     String[] texts;
-    String[] links;
+    String[] linksOfAd;
     int link_icon;
 
     public MyAdapter(Context ct, int[] imgs, String[] names , String[] links ,int l_icon) {
         context = ct;
         icons = imgs;
         texts = names;
-        links = links;
+        linksOfAd = links;
         link_icon = l_icon;
     }
 
@@ -46,10 +46,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.link_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setData(Uri.parse(links[position]));
+                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(linksOfAd[position]));
                 context.startActivity(intent);
             }
         });
