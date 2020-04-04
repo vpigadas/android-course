@@ -1,9 +1,5 @@
 <resources>
-    <string name="app_name">DemoApp</string>
-    <string name="app_demo">DEMO!!!!</string>
-    <string name="vassilis_pigadas">Vassilis PIgadas</string>
-    <string name="brn_login">Login</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">Channels</string>
+    <string name="main_header_text">Greek channels</string>
+    <string name="url_icon_desc">Visit Website</string>
 </resources>

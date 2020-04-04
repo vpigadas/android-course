@@ -1,2 +1,2 @@
+rootProject.name='greekchannels'
 include ':app'
-rootProject.name='DemoApp'
