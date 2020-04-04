@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TV Guide</string>
+    <string name="channel_name">Τηλεοπτικό κανάλι</string>
+    <string name="land_vistweb">Επίσκεψη Ιστοσελίδας</string>
+    <string name="channelname_skai">ΣΚΑΪ</string>
+    <string name="channelname_makedonia">Μακεδονία TV</string>
+    <string name="channelname_ant1">ANT1</string>
+    <string name="channelname_mega">Mega</string>
+    <string name="channelname_alpha">Alpha</string>
+    <string name="channelname_star">Star</string>
+    <string name="channelname_open">Open</string>
+    <string name="channelname_ertsports">ΕΡΤ Sports</string>
+</resources>

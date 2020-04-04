@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">TV Guide</string>
+    <string name="channel_name">TV Channel</string>
+    <string name="land_vistweb">Visit Website</string>
+    <string name="channelname_ant1">ANT1</string>
+    <string name="channelname_mega">Mega</string>
+    <string name="channelname_alpha">Alpha</string>
+    <string name="channelname_star">Star</string>
+    <string name="channelname_open">Open</string>
+    <string name="channelname_makedonia">Makedonia TV</string>
+    <string name="channelname_skai">SKAI</string>
+    <string name="channelname_ertsports">ERT Sports</string>
+</resources>
