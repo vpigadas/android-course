@@ -6,393 +6,73 @@
     android:layout_height="match_parent"
     android:id="@+id/channels_scrollview">
 
-<androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
 
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/channel1"
+            layout="@layout/channel_layout_land"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include
+            android:id="@+id/channel2"
+            layout="@layout/channel_layout_land"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/channel1" />
+
+        <include
+            android:id="@+id/channel3"
+            layout="@layout/channel_layout_land"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/channel2"
+            />
+
+        <include
+            android:id="@+id/channel4"
+            layout="@layout/channel_layout_land"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/channel3"
+            />
+
+        <include
+            android:id="@+id/channel5"
+            layout="@layout/channel_layout_land"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/channel4"
+            />
+
+        <include
+            android:id="@+id/channel6"
+            layout="@layout/channel_layout_land"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/channel5"
+            />
+
+        <include
+            android:id="@+id/channel7"
+            layout="@layout/channel_layout_land"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/channel6"
+            />
+
+        <include
+            android:id="@+id/channel8"
+            layout="@layout/channel_layout_land"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/channel7"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
 
 
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/channel_logo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@mipmap/ic_launcher"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="10dp" />
-
-    <TextView
-        android:id="@+id/channel_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/channel_name"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/channel_logo"
-        app:layout_constraintLeft_toRightOf="@id/channel_logo"
-        app:layout_constraintTop_toTopOf="@id/channel_logo" />
-
-    <TextView
-        android:id="@+id/land_vistweb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/land_vistweb"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintRight_toLeftOf="@id/channel_web"
-        app:layout_constraintBottom_toBottomOf="@id/channel_web"
-        app:layout_constraintTop_toTopOf="@id/channel_web" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/channel_web"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/arrow"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!--    Channel 2-->
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/channel2_logo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@mipmap/ic_launcher"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/channel_logo"
-        android:layout_marginStart="10dp" />
-
-    <TextView
-        android:id="@+id/channel2_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:text="@string/channel_name"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/channel2_logo"
-        app:layout_constraintLeft_toRightOf="@id/channel2_logo"
-        app:layout_constraintTop_toBottomOf="@id/channel2_logo"
-        app:layout_constraintTop_toTopOf="@id/channel2_logo" />
-
-    <TextView
-        android:id="@+id/land_vistweb2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/land_vistweb"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintRight_toLeftOf="@id/channel2_web"
-        app:layout_constraintBottom_toBottomOf="@id/channel2_web"
-        app:layout_constraintTop_toTopOf="@id/channel2_web" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/channel2_web"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/arrow"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/channel_web" />
-
-    <!--    Channel 3-->
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/channel3_logo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@mipmap/ic_launcher"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/channel2_logo"
-        android:layout_marginStart="10dp" />
-
-    <TextView
-        android:id="@+id/channel3_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:text="@string/channel_name"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@id/channel3_logo"
-        app:layout_constraintLeft_toRightOf="@id/channel3_logo"
-        app:layout_constraintTop_toBottomOf="@id/channel3_logo"
-        app:layout_constraintTop_toTopOf="@id/channel3_logo" />
-
-    <TextView
-        android:id="@+id/land_vistweb3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/land_vistweb"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintRight_toLeftOf="@id/channel3_web"
-        app:layout_constraintBottom_toBottomOf="@id/channel3_web"
-        app:layout_constraintTop_toTopOf="@id/channel3_web" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/channel3_web"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/arrow"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/channel2_web" />
-
-    <!--    Channel4-->
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/channel4_logo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@mipmap/ic_launcher"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/channel3_logo"
-        android:layout_marginStart="10dp" />
-
-    <TextView
-        android:id="@+id/channel4_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:text="@string/channel_name"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/channel4_logo"
-        app:layout_constraintLeft_toRightOf="@id/channel4_logo"
-        app:layout_constraintTop_toBottomOf="@id/channel4_logo"
-        app:layout_constraintTop_toTopOf="@id/channel4_logo" />
-
-    <TextView
-        android:id="@+id/land_vistweb4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/land_vistweb"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintRight_toLeftOf="@id/channel4_web"
-        app:layout_constraintBottom_toBottomOf="@id/channel4_web"
-        app:layout_constraintTop_toTopOf="@id/channel4_web" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/channel4_web"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/arrow"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/channel3_web" />
-
-    <!--    Channel 5-->
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/channel5_logo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@mipmap/ic_launcher"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/channel4_logo"
-        android:layout_marginStart="10dp" />
-
-    <TextView
-        android:id="@+id/channel5_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:text="@string/channel_name"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/channel5_logo"
-        app:layout_constraintLeft_toRightOf="@id/channel5_logo"
-        app:layout_constraintTop_toBottomOf="@id/channel5_logo"
-        app:layout_constraintTop_toTopOf="@id/channel5_logo" />
-
-    <TextView
-        android:id="@+id/land_vistweb5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/land_vistweb"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintRight_toLeftOf="@id/channel5_web"
-        app:layout_constraintBottom_toBottomOf="@id/channel5_web"
-        app:layout_constraintTop_toTopOf="@id/channel5_web" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/channel5_web"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/arrow"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/channel4_web" />
-
-    <!--    Channel 6-->
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/channel6_logo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@mipmap/ic_launcher"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/channel5_logo"
-        android:layout_marginStart="10dp" />
-
-    <TextView
-        android:id="@+id/channel6_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:text="@string/channel_name"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/channel6_logo"
-        app:layout_constraintLeft_toRightOf="@id/channel6_logo"
-        app:layout_constraintTop_toBottomOf="@id/channel6_logo"
-        app:layout_constraintTop_toTopOf="@id/channel6_logo" />
-
-    <TextView
-        android:id="@+id/land_vistweb6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/land_vistweb"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintRight_toLeftOf="@id/channel6_web"
-        app:layout_constraintBottom_toBottomOf="@id/channel6_web"
-        app:layout_constraintTop_toTopOf="@id/channel6_web" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/channel6_web"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/arrow"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/channel5_web" />
-
-    <!--    Channel 7-->
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/channel7_logo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@mipmap/ic_launcher"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/channel6_logo"
-        android:layout_marginStart="10dp" />
-
-    <TextView
-        android:id="@+id/channel7_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:text="@string/channel_name"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/channel7_logo"
-        app:layout_constraintLeft_toRightOf="@id/channel7_logo"
-        app:layout_constraintTop_toBottomOf="@id/channel7_logo"
-        app:layout_constraintTop_toTopOf="@id/channel7_logo" />
-
-    <TextView
-        android:id="@+id/land_vistweb7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/land_vistweb"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintRight_toLeftOf="@id/channel7_web"
-        app:layout_constraintBottom_toBottomOf="@id/channel7_web"
-        app:layout_constraintTop_toTopOf="@id/channel7_web" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/channel7_web"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/arrow"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/channel6_web" />
-
-    <!--    Channel 8-->
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/channel8_logo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@mipmap/ic_launcher"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/channel7_logo"
-        android:layout_marginStart="10dp" />
-
-    <TextView
-        android:id="@+id/channel8_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:text="@string/channel_name"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/channel8_logo"
-        app:layout_constraintLeft_toRightOf="@id/channel8_logo"
-        app:layout_constraintTop_toBottomOf="@id/channel8_logo"
-        app:layout_constraintTop_toTopOf="@id/channel8_logo" />
-
-    <TextView
-        android:id="@+id/land_vistweb8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/land_vistweb"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintRight_toLeftOf="@id/channel8_web"
-        app:layout_constraintBottom_toBottomOf="@id/channel8_web"
-        app:layout_constraintTop_toTopOf="@id/channel8_web" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/channel8_web"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/arrow"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/channel7_web" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>

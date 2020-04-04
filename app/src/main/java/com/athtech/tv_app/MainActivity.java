@@ -10,7 +10,7 @@ import android.widget.TextView;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
-    TextView Channel_name;
+    TextView Channel1_name;
     TextView Channel2_name;
     TextView Channel3_name;
     TextView Channel4_name;
@@ -43,32 +43,45 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Channel_name=  findViewById(R.id.channel_name);
-        Channel2_name= findViewById(R.id.channel2_name);
-        Channel3_name= findViewById(R.id.channel3_name);
-        Channel4_name= findViewById(R.id.channel4_name);
-        Channel5_name= findViewById(R.id.channel5_name);
-        Channel6_name= findViewById(R.id.channel6_name);
-        Channel7_name= findViewById(R.id.channel7_name);
-        Channel8_name= findViewById(R.id.channel8_name);
+        View channel1_view=findViewById(R.id.channel1);
+        Channel1_logo= channel1_view.findViewById(R.id.channel_logo);
+        Channel1_name=channel1_view.findViewById(R.id.channel_name);
+        Channel1_nav= channel1_view.findViewById(R.id.channel_web);
 
-        Channel1_logo= findViewById(R.id.channel_logo);
-        Channel2_logo= findViewById(R.id.channel2_logo);
-        Channel3_logo= findViewById(R.id.channel3_logo);
-        Channel4_logo= findViewById(R.id.channel4_logo);
-        Channel5_logo= findViewById(R.id.channel5_logo);
-        Channel6_logo= findViewById(R.id.channel6_logo);
-        Channel7_logo= findViewById(R.id.channel7_logo);
-        Channel8_logo= findViewById(R.id.channel8_logo);
+        View Channel2_view=findViewById(R.id.channel2);
+        Channel2_logo= Channel2_view.findViewById(R.id.channel_logo);
+        Channel2_name=Channel2_view.findViewById(R.id.channel_name);
+        Channel2_nav= Channel2_view.findViewById(R.id.channel_web);
 
-        Channel1_nav= findViewById(R.id.channel_web);
-        Channel2_nav= findViewById(R.id.channel2_web);
-        Channel3_nav= findViewById(R.id.channel3_web);
-        Channel4_nav= findViewById(R.id.channel4_web);
-        Channel5_nav= findViewById(R.id.channel5_web);
-        Channel6_nav= findViewById(R.id.channel6_web);
-        Channel7_nav= findViewById(R.id.channel7_web);
-        Channel8_nav= findViewById(R.id.channel8_web);
+        View Channel3_view=findViewById(R.id.channel3);
+        Channel3_logo= Channel3_view.findViewById(R.id.channel_logo);
+        Channel3_name=Channel3_view.findViewById(R.id.channel_name);
+        Channel3_nav= Channel3_view.findViewById(R.id.channel_web);
+
+        View Channel4_view=findViewById(R.id.channel4);
+        Channel4_logo= Channel4_view.findViewById(R.id.channel_logo);
+        Channel4_name=Channel4_view.findViewById(R.id.channel_name);
+        Channel4_nav= Channel4_view.findViewById(R.id.channel_web);
+
+        View Channel5_view=findViewById(R.id.channel5);
+        Channel5_logo= Channel5_view.findViewById(R.id.channel_logo);
+        Channel5_name=Channel5_view.findViewById(R.id.channel_name);
+        Channel5_nav= Channel5_view.findViewById(R.id.channel_web);
+
+        View Channel6_view=findViewById(R.id.channel6);
+        Channel6_logo= Channel6_view.findViewById(R.id.channel_logo);
+        Channel6_name=Channel6_view.findViewById(R.id.channel_name);
+        Channel6_nav= Channel6_view.findViewById(R.id.channel_web);
+
+        View Channel7_view=findViewById(R.id.channel7);
+        Channel7_logo= Channel7_view.findViewById(R.id.channel_logo);
+        Channel7_name=Channel7_view.findViewById(R.id.channel_name);
+        Channel7_nav= Channel7_view.findViewById(R.id.channel_web);
+
+        View Channel8_view=findViewById(R.id.channel8);
+        Channel8_logo= Channel8_view.findViewById(R.id.channel_logo);
+        Channel8_name=Channel8_view.findViewById(R.id.channel_name);
+        Channel8_nav= Channel8_view.findViewById(R.id.channel_web);
 
         Channel ant1=new Channel(getResources().getString(R.string.channelname_ant1), "https://www.antenna.gr/tvguide", getResources().getDrawable(R.drawable.logo_ant1));
         Channel mega=new Channel(getResources().getString(R.string.channelname_mega), "https://www.megatv.com/summary.asp?catid=17496" , getResources().getDrawable(R.drawable.logo_mega));
@@ -79,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         Channel makedonia=new Channel(getResources().getString(R.string.channelname_makedonia),"https://www.maktv.gr/programma/", getResources().getDrawable(R.drawable.logo_makedonia));
         Channel ertsports=new Channel(getResources().getString(R.string.channelname_ertsports),"https://program.ert.gr/ERTSPortsHD/", getResources().getDrawable(R.drawable.logo_ertsports));
 
-        setupChannel(ant1,Channel_name, Channel1_logo, Channel1_nav);
+        setupChannel(ant1,Channel1_name, Channel1_logo, Channel1_nav);
         setupChannel(mega, Channel2_name, Channel2_logo, Channel2_nav);
         setupChannel(star, Channel3_name, Channel3_logo, Channel3_nav);
         setupChannel(skai, Channel4_name, Channel4_logo, Channel4_nav);
