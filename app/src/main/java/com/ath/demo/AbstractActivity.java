@@ -4,9 +4,11 @@ import android.os.Bundle;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 
-public abstract class AbstractActivity extends AppCompatActivity {
+public abstract class AbstractActivity extends FragmentActivity {
 
     @LayoutRes
     public abstract int getLayout();
@@ -37,6 +39,33 @@ public abstract class AbstractActivity extends AppCompatActivity {
         runOperation();
     }
 
+    public void attachFragment(Fragment fragment) {
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.add(R.id.frame_layout, fragment, fragment.getClass().getSimpleName());
+        transaction.addToBackStack(null);
+
+        transaction.commit();
+    }
+
+    public void replaceFragment(Fragment fragment) {
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.frame_layout, fragment, fragment.getClass().getSimpleName());
+        transaction.addToBackStack(null);
+
+        transaction.commit();
+    }
+
+    public void removeFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.remove(fragment);
+
+        transaction.commit();
+    }
 
     @Override
     protected void onPause() {

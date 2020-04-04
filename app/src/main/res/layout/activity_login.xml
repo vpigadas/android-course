@@ -7,6 +7,15 @@
     android:layout_marginLeft="32dp"
     android:layout_marginRight="32dp">
 
+    <fragment
+        android:id="@+id/first_fragment"
+        android:name="com.ath.demo.FirstFragment"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/login_username"
+        tools:layout="@layout/fragment_first"
+        android:layout_height="0dp"/>
+
     <EditText
         android:id="@+id/login_username"
         android:layout_width="match_parent"
@@ -38,5 +47,12 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_password"
         tools:text="@string/app_name" />
+
+    <FrameLayout
+        android:id="@+id/frame_layout"
+        android:layout_width="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_btn"
+        android:layout_height="0dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
