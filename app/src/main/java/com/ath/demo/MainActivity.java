@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -16,7 +17,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.ath.demo.communication.ServerResponse;
+import com.ath.demo.communication.retrofit.ApiClient;
+import com.ath.demo.communication.retrofit.ApiEndpoints;
+import com.ath.demo.model.ParcelableModel;
 import com.google.gson.Gson;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class MainActivity extends AbstractActivity {
 
@@ -37,6 +44,7 @@ public class MainActivity extends AbstractActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ThirdActivity.class);
+                intent.putExtra("model",new ParcelableModel("vassilis"));
                 startActivity(intent);
             }
         });
@@ -59,56 +67,6 @@ public class MainActivity extends AbstractActivity {
             if (networkInfo == null) return false;
 
             return networkInfo.isConnected() && networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
-
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                connectivityManager.addDefaultNetworkActiveListener(new ConnectivityManager.OnNetworkActiveListener(){
-//
-//                    @Override
-//                    public void onNetworkActive() {
-//                        listener.onNetworkActive();
-//                    }
-//                });
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                    connectivityManager.registerDefaultNetworkCallback(new ConnectivityManager.NetworkCallback(){
-//                        @Override
-//                        public void onAvailable(@NonNull Network network) {
-//                            super.onAvailable(network);
-//                        }
-//
-//                        @Override
-//                        public void onLosing(@NonNull Network network, int maxMsToLive) {
-//                            super.onLosing(network, maxMsToLive);
-//                        }
-//
-//                        @Override
-//                        public void onLost(@NonNull Network network) {
-//                            super.onLost(network);
-//                        }
-//
-//                        @Override
-//                        public void onUnavailable() {
-//                            super.onUnavailable();
-//                        }
-//
-//                        @Override
-//                        public void onCapabilitiesChanged(@NonNull Network network, @NonNull NetworkCapabilities networkCapabilities) {
-//                            super.onCapabilitiesChanged(network, networkCapabilities);
-//                        }
-//
-//                        @Override
-//                        public void onLinkPropertiesChanged(@NonNull Network network, @NonNull LinkProperties linkProperties) {
-//                            super.onLinkPropertiesChanged(network, linkProperties);
-//                        }
-//
-//                        @Override
-//                        public void onBlockedStatusChanged(@NonNull Network network, boolean blocked) {
-//                            super.onBlockedStatusChanged(network, blocked);
-//                        }
-//                    });
-//                }
-//            }else {
-//
-//            }
         } catch (Exception exception) {
             exception.printStackTrace();
         }
@@ -180,6 +138,37 @@ public class MainActivity extends AbstractActivity {
 
 // Add the request to the RequestQueue.
         queue.add(stringRequest);
+
+
+//        ApiEndpoints service = ApiClient.getRetrofitInstance().create(ApiEndpoints.class);
+//        Call<ServerResponse> call = service.getTv();
+//        call.enqueue(new Callback<ServerResponse>() {
+//            @Override
+//            public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
+//                Log.d("COMMUNICATION", response.body().toString());
+//                if(response == null){}
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ServerResponse> call, Throwable t) {
+//                Toast.makeText(MainActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
+
+        ApiClient.getInstance().getTv(new Callback<ServerResponse>() {
+            @Override
+            public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
+                Log.d("COMMUNICATION", response.body().toString());
+                if(response == null){}
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     @Override
