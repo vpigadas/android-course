@@ -3,11 +3,20 @@ package com.athtech.tv_app;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.View;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.athtech.tv_app.communication.ServerResponse;
+import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity {
     TextView Channel1_name;
@@ -36,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
     ImageView Channel6_nav;
     ImageView Channel7_nav;
     ImageView Channel8_nav;
+
+    ServerResponse serverResponse;
+    TestClass mTestClass=new TestClass();
 
 
     @Override
@@ -83,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         Channel8_name=Channel8_view.findViewById(R.id.channel_name);
         Channel8_nav= Channel8_view.findViewById(R.id.channel_web);
 
+
         Channel ant1=new Channel(getResources().getString(R.string.channelname_ant1), "https://www.antenna.gr/tvguide", getResources().getDrawable(R.drawable.logo_ant1));
         Channel mega=new Channel(getResources().getString(R.string.channelname_mega), "https://www.megatv.com/summary.asp?catid=17496" , getResources().getDrawable(R.drawable.logo_mega));
         Channel star=new Channel(getResources().getString(R.string.channelname_star),"https://www.star.gr/tv/programma", getResources().getDrawable(R.drawable.logo_star));
@@ -101,6 +114,8 @@ public class MainActivity extends AppCompatActivity {
         setupChannel(makedonia, Channel7_name, Channel7_logo, Channel7_nav);
         setupChannel(ertsports, Channel8_name, Channel8_logo, Channel8_nav);
 
+        makeARequest();
+//        Log.d("comms",serverResponse.channels.get(0).channelName);
 
     }
 
@@ -109,13 +124,38 @@ public class MainActivity extends AppCompatActivity {
         channel_logo.setBackground(channel.getChannelLogo());
         channel_nav.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                openWebPage(v, channel.getChannelWebsite());
+                openChannelsActivity(v, channel.getChannelWebsite());
         }
     });
     }
 
-    public void openWebPage(View v, String url) {
-        Intent intent= new Intent(Intent.ACTION_VIEW,Uri.parse(url));
+    public void openChannelsActivity(View v, String url) {
+        Intent intent= new Intent(this, ChannelActivity.class);
+        intent.putExtra("serverResponse", serverResponse);
         startActivity(intent);
+    }
+
+    private void makeARequest() {
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "https://api-vpigadas.herokuapp.com/api/zapping/demo/athtech/tv";
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        Log.d("COMMUNICATION", response);
+                        serverResponse = new Gson().fromJson(response, ServerResponse.class);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("COMMUNICATION", "Volley error response");
+            }
+        });
+
+        queue.add(stringRequest);
     }
 }

@@ -2,75 +2,60 @@
 <ScrollView
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/channels_scrollview">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <include
             android:id="@+id/channel1"
-            layout="@layout/channel_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            layout="@layout/channel_frame" />
 
         <include
             android:id="@+id/channel2"
-            layout="@layout/channel_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            layout="@layout/channel_frame"
             app:layout_constraintTop_toBottomOf="@id/channel1" />
 
         <include
             android:id="@+id/channel3"
-            layout="@layout/channel_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            layout="@layout/channel_frame"
             app:layout_constraintTop_toBottomOf="@id/channel2"
             />
 
         <include
             android:id="@+id/channel4"
-            layout="@layout/channel_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            layout="@layout/channel_frame"
             app:layout_constraintTop_toBottomOf="@id/channel3"
             />
 
         <include
             android:id="@+id/channel5"
-            layout="@layout/channel_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            layout="@layout/channel_frame"
             app:layout_constraintTop_toBottomOf="@id/channel4"
             />
 
         <include
             android:id="@+id/channel6"
-            layout="@layout/channel_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            layout="@layout/channel_frame"
             app:layout_constraintTop_toBottomOf="@id/channel5"
             />
 
         <include
             android:id="@+id/channel7"
-            layout="@layout/channel_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            layout="@layout/channel_frame"
             app:layout_constraintTop_toBottomOf="@id/channel6"
             />
 
         <include
             android:id="@+id/channel8"
-            layout="@layout/channel_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            layout="@layout/channel_frame"
             app:layout_constraintTop_toBottomOf="@id/channel7"
             />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </ScrollView>

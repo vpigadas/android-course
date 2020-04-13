@@ -10,4 +10,7 @@
     <string name="channelname_makedonia">Makedonia TV</string>
     <string name="channelname_skai">SKAI</string>
     <string name="channelname_ertsports">ERT Sports</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
