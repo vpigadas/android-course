@@ -5,8 +5,9 @@ import android.os.Bundle;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 
-public abstract class AbstractActivity extends AppCompatActivity {
+public abstract class AbstractActivity extends FragmentActivity {
 
     @LayoutRes
     public abstract int getLayout();

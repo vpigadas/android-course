@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AbstractActivity {
 
 
     RecyclerView recyclerView;
@@ -20,6 +20,31 @@ public class MainActivity extends AppCompatActivity {
     int link_icon = R.drawable.image_preview;
     int channel_icons[] = {R.drawable.ic_channel_ert1, R.drawable.ic_channel_ert2, R.drawable.ic_channel_ert3, R.drawable.ic_channel_star,
             R.drawable.ic_channel_ant1, R.drawable.ic_channel_skai, R.drawable.ic_channel_open, R.drawable.ic_channel_alpha};
+
+    @Override
+    public int getLayout() {
+        return 0;
+    }
+
+    @Override
+    public void initialiseLayout() {
+
+    }
+
+    @Override
+    public void runOperation() {
+
+    }
+
+    @Override
+    public void stopOperation() {
+
+    }
+
+    @Override
+    public void destroyLayout() {
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
