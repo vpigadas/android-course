@@ -23,12 +23,18 @@ public class MainActivity extends AbstractActivity {
 
     @Override
     public int getLayout() {
-        return 0;
+        return R.layout.activity_main;
     }
 
     @Override
     public void initialiseLayout() {
 
+        channel_names = getResources().getStringArray(R.array.channel_names);
+
+        recyclerView = findViewById(R.id.recyclerView);
+        MyAdapter myAdapter = new MyAdapter(this, channel_icons, channel_names, links ,link_icon);
+        recyclerView.setAdapter(myAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
@@ -43,20 +49,6 @@ public class MainActivity extends AbstractActivity {
 
     @Override
     public void destroyLayout() {
-
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        channel_names = getResources().getStringArray(R.array.channel_names);
-
-        recyclerView = findViewById(R.id.recyclerView);
-        MyAdapter myAdapter = new MyAdapter(this, channel_icons, channel_names, links ,link_icon);
-        recyclerView.setAdapter(myAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
     }
 

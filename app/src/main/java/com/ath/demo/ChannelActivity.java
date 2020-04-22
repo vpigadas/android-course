@@ -1,6 +1,7 @@
 package com.ath.demo;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
@@ -8,7 +9,7 @@ public class ChannelActivity extends AbstractActivity {
 
     @Override
     public int getLayout() {
-        return 0;
+        return R.layout.activity_channel;
     }
 
     @Override
@@ -19,6 +20,13 @@ public class ChannelActivity extends AbstractActivity {
     @Override
     public void runOperation() {
 
+        BlankFragment blankFragment = BlankFragment.newInstance("","");
+        attachFragment(blankFragment);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     @Override
@@ -29,11 +37,5 @@ public class ChannelActivity extends AbstractActivity {
     @Override
     public void destroyLayout() {
 
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_channel);
     }
 }
