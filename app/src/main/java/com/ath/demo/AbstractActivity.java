@@ -40,6 +40,23 @@ public abstract class AbstractActivity extends FragmentActivity {
         runOperation();
     }
 
+    @Override
+    protected void onPause() {
+        stopOperation();
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        destroyLayout();
+        super.onDestroy();
+    }
+
 //    public void attachFragment(Fragment fragment) {
 //
 //        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -68,20 +85,5 @@ public abstract class AbstractActivity extends FragmentActivity {
 //        transaction.commit();
 //    }
 
-    @Override
-    protected void onPause() {
-        stopOperation();
-        super.onPause();
-    }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        destroyLayout();
-        super.onDestroy();
-    }
 }
