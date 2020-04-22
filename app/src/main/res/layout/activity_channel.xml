@@ -6,11 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".ChannelActivity">
 
-    <FrameLayout
-        android:id="@+id/frame_fragment"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_height="0dp"/>
+
+<!--    <FrameLayout-->
+<!--        android:id="@+id/frame_fragment"-->
+<!--        android:layout_width="match_parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        android:layout_height="0dp"/>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -40,33 +40,33 @@ public abstract class AbstractActivity extends FragmentActivity {
         runOperation();
     }
 
-    public void attachFragment(Fragment fragment) {
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        transaction.add(R.id.frame_fragment, fragment, fragment.getClass().getSimpleName());
-        transaction.addToBackStack(null);
-
-        transaction.commit();
-    }
-
-    public void replaceFragment(Fragment fragment) {
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        transaction.replace(R.id.frame_fragment, fragment, fragment.getClass().getSimpleName());
-        transaction.addToBackStack(null);
-
-        transaction.commit();
-    }
-
-    public void removeFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        transaction.remove(fragment);
-
-        transaction.commit();
-    }
+//    public void attachFragment(Fragment fragment) {
+//
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//
+//        transaction.add(R.id.frame_fragment, fragment, fragment.getClass().getSimpleName());
+//        transaction.addToBackStack(null);
+//
+//        transaction.commit();
+//    }
+//
+//    public void replaceFragment(Fragment fragment) {
+//
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//
+//        transaction.replace(R.id.frame_fragment, fragment, fragment.getClass().getSimpleName());
+//        transaction.addToBackStack(null);
+//
+//        transaction.commit();
+//    }
+//
+//    public void removeFragment(Fragment fragment) {
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//
+//        transaction.remove(fragment);
+//
+//        transaction.commit();
+//    }
 
     @Override
     protected void onPause() {
