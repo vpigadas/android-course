@@ -10,22 +10,32 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.lifecycle.Observer;
+import androidx.room.Room;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.ath.demo.communication.ChannelResponse;
 import com.ath.demo.communication.ServerResponse;
 import com.ath.demo.communication.retrofit.ApiClient;
 import com.ath.demo.communication.retrofit.ApiEndpoints;
+import com.ath.demo.database.DemoDatabase;
 import com.ath.demo.model.ParcelableModel;
 import com.google.gson.Gson;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 
 public class MainActivity extends AbstractActivity {
+
+    private DemoDatabase db = Room.databaseBuilder(getApplicationContext(), DemoDatabase.class, "database-name").build();
+
 
     @Override
     public int getLayout() {
@@ -139,10 +149,37 @@ public class MainActivity extends AbstractActivity {
 // Add the request to the RequestQueue.
         queue.add(stringRequest);
 
+        db.channelDao().getAll().observe(MainActivity.this, new Observer<List<ChannelResponse>>() {
+            @Override
+            public void onChanged(List<ChannelResponse> channelResponses) {
 
-//        ApiEndpoints service = ApiClient.getRetrofitInstance().create(ApiEndpoints.class);
-//        Call<ServerResponse> call = service.getTv();
-//        call.enqueue(new Callback<ServerResponse>() {
+            }
+        });
+
+
+        ApiEndpoints service = ApiClient.getRetrofitInstance().create(ApiEndpoints.class);
+        Call<ServerResponse> call = service.getTv();
+        call.enqueue(new Callback<ServerResponse>() {
+            @Override
+            public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
+                Log.d("COMMUNICATION", response.body().toString());
+                if (response == null) {
+                }
+
+
+                for (ChannelResponse data : response.body().channels) {
+                    db.channelDao().insert(data);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+//        ApiClient.getInstance().getTv(new Callback<ServerResponse>() {
 //            @Override
 //            public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
 //                Log.d("COMMUNICATION", response.body().toString());
@@ -154,20 +191,6 @@ public class MainActivity extends AbstractActivity {
 //                Toast.makeText(MainActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
 //            }
 //        });
-
-
-        ApiClient.getInstance().getTv(new Callback<ServerResponse>() {
-            @Override
-            public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
-                Log.d("COMMUNICATION", response.body().toString());
-                if(response == null){}
-            }
-
-            @Override
-            public void onFailure(Call<ServerResponse> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-            }
-        });
 
     }
 
