@@ -9,7 +9,9 @@ import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.ath.demo.communication.ChannelResponse;
 import com.ath.demo.communication.ServerResponse;
+import com.ath.demo.communication.ShowsResponse;
 import com.ath.demo.communication.retrofit.ApiClient;
 
 import java.util.ArrayList;
@@ -21,6 +23,9 @@ import retrofit2.Callback;
 public class ChannelActivity extends AbstractActivity {
 
     FragmentAdapter pageAdapter;
+
+    String links[] = {"https://www.hellenicparliament.gr/Enimerosi/Vouli-Tileorasi/", "https://www.skaitv.gr/", "https://www.alphatv.gr/", "https://webtv.ert.gr/ert3",
+            "https://www.antenna.gr/", "https://webtv.ert.gr/ert1", "https://webtv.ert.gr/ert2", "https://www.tvopen.gr/", "https://www.star.gr/"};
 
     private boolean isConnected(final ConnectivityManager.OnNetworkActiveListener listener) {
         try {
@@ -43,35 +48,47 @@ public class ChannelActivity extends AbstractActivity {
 
     @Override
     public void initialiseLayout() {
-
+        runOperation();
     }
 
     @Override
     public void runOperation() {
 
-//        BlankFragment blankFragment = BlankFragment.newInstance("","");
-//        attachFragment(blankFragment);
-
-        makeARequest();
-
-        List<Fragment> fragments = getFragments();
-        pageAdapter = new FragmentAdapter(getSupportFragmentManager(), fragments);
-        ViewPager pager = (ViewPager) findViewById(R.id.view_pager);
-        pager.setAdapter(pageAdapter);
-    }
-
-    private void makeARequest() {
         ApiClient.getInstance().getTv(new Callback<ServerResponse>() {
             @Override
             public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
-                Log.d("COMMUNICATION", response.body().toString());
-                if(response == null){}
+
+                List<Fragment> fragments = new ArrayList<>();
+                List<ChannelResponse> channelResponses = response.body().getChannels();
+
+                for (int i = 0 ; i < channelResponses.size() ; i++) {
+
+                    List<ShowsResponse> showsResponses = channelResponses.get(i).getShows();
+
+                    ArrayList<String> titles = new ArrayList<>();
+                    ArrayList<String> startTimes = new ArrayList<>();
+                    ArrayList<String> links = new ArrayList<>();
+
+                    for (ShowsResponse showsResponse : showsResponses) {
+                        titles.add(showsResponse.getTitle());
+                        startTimes.add(showsResponse.getStartTime());
+                        links.add(links.get(i));
+                    }
+
+                    fragments.add(ChannelFragment.newInstance(titles, startTimes, links));
+                }
+
+                pageAdapter = new FragmentAdapter(getSupportFragmentManager(), fragments);
+                ViewPager pager = (ViewPager) findViewById(R.id.view_pager);
+                pager.setAdapter(pageAdapter);
             }
+
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
                 Toast.makeText(ChannelActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
     @Override
@@ -87,17 +104,6 @@ public class ChannelActivity extends AbstractActivity {
     @Override
     public void destroyLayout() {
 
-    }
-
-    private static List<Fragment> getFragments() {
-        List<Fragment> fragmentList = new ArrayList<>();
-
-        fragmentList.add(ChannelFragment.newInstance("fr1","fr1"));
-        fragmentList.add(ChannelFragment.newInstance("fr2","fr2"));
-        fragmentList.add(ChannelFragment.newInstance("fr3","fr3"));
-        fragmentList.add(ChannelFragment.newInstance("fr4","fr4"));
-
-        return fragmentList;
     }
 
 }

@@ -12,19 +12,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 public class ProgramRecyclerAdapter extends RecyclerView.Adapter<ProgramRecyclerAdapter.MyViewHolder> {
 
     Context context;
-    String[] titles;
-    String[] startTimes;
-    String[] linksOfAd;
+    ArrayList<String> titles;
+    ArrayList<String> startTimes;
     int play_icon;
+    ArrayList<String> linksOfAd;
 
-    public ProgramRecyclerAdapter(Context ct, String[] titleInputs , String[] startTimeInputs , int p_icon, String[] links) {
+    public ProgramRecyclerAdapter(Context ct, ArrayList<String> titleInputs , ArrayList<String> startTimeInputs , ArrayList<String> links) {
         context = ct;
         titles = titleInputs;
         startTimes = startTimeInputs;
-        play_icon = p_icon;
         linksOfAd = links;
     }
 
@@ -41,12 +42,12 @@ public class ProgramRecyclerAdapter extends RecyclerView.Adapter<ProgramRecycler
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
 
-        holder.title.setText(titles[position]);
-        holder.startΤime.setText(startTimes[position]);
+        holder.title.setText(titles.get(position));
+        holder.startΤime.setText(startTimes.get(position));
         holder.play_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(linksOfAd[position]));
+                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(linksOfAd.get(position)));
                 context.startActivity(intent);
             }
         });
@@ -54,7 +55,7 @@ public class ProgramRecyclerAdapter extends RecyclerView.Adapter<ProgramRecycler
 
     @Override
     public int getItemCount() {
-        return titles.length;
+        return titles.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
