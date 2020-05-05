@@ -64,7 +64,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            iconStart = itemView.findViewById(R.id.channel_icon);
+            iconStart = itemView.findViewById(R.id.start_time);
             text = itemView.findViewById(R.id.channel_name);
             link_icon = itemView.findViewById(R.id.go_to_website_icon);
         }

@@ -1,14 +1,11 @@
 package com.ath.demo;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -95,10 +92,10 @@ public class ChannelActivity extends AbstractActivity {
     private static List<Fragment> getFragments() {
         List<Fragment> fragmentList = new ArrayList<>();
 
-        fragmentList.add(BlankFragment.newInstance("fr1","fr1"));
-        fragmentList.add(BlankFragment.newInstance("fr2","fr2"));
-        fragmentList.add(BlankFragment.newInstance("fr3","fr3"));
-        fragmentList.add(BlankFragment.newInstance("fr4","fr4"));
+        fragmentList.add(ChannelFragment.newInstance("fr1","fr1"));
+        fragmentList.add(ChannelFragment.newInstance("fr2","fr2"));
+        fragmentList.add(ChannelFragment.newInstance("fr3","fr3"));
+        fragmentList.add(ChannelFragment.newInstance("fr4","fr4"));
 
         return fragmentList;
     }
