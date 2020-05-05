@@ -9,8 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-
-
 public class ChannelFragment extends AbstractFragment {
 
     RecyclerView recyclerView;
@@ -54,7 +52,7 @@ public class ChannelFragment extends AbstractFragment {
             mParam2 = getArguments().getStringArrayList(ARG_PARAM2);
             mParam4 = getArguments().getStringArrayList(ARG_PARAM4);
 
-            recyclerView = recyclerView.findViewById(R.id.program_recyclerView);
+            recyclerView = view.findViewById(R.id.program_recyclerView);
             ProgramRecyclerAdapter programRecyclerAdapter = new ProgramRecyclerAdapter(this.getContext(), mParam1, mParam2, mParam4);
             recyclerView.setAdapter(programRecyclerAdapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
