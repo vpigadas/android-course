@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapter.MyViewHolder> {
 
     Context context;
     int[] icons;
@@ -20,7 +20,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     String[] linksOfAd;
     int link_icon;
 
-    public MyAdapter(Context ct, int[] imgs, String[] names , String[] links ,int l_icon) {
+    public MainRecyclerAdapter(Context ct, int[] imgs, String[] names , String[] links , int l_icon) {
         context = ct;
         icons = imgs;
         texts = names;

@@ -1,14 +1,19 @@
 package com.ath.demo;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.util.Log;
+import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.ath.demo.communication.ServerResponse;
+import com.ath.demo.communication.retrofit.ApiClient;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class MainActivity extends AbstractActivity {
 
@@ -24,6 +29,20 @@ public class MainActivity extends AbstractActivity {
 //    int channel_icons[] = {R.drawable.ic_channel_vouli, R.drawable.ic_channel_skai, R.drawable.ic_channel_alpha, R.drawable.ic_channel_ert3, R.drawable.ic_channel_ant1,
 //            R.drawable.ic_channel_ert1, R.drawable.ic_channel_ert2, R.drawable.ic_channel_open, R.drawable.ic_channel_star};
 
+    private boolean isConnected(final ConnectivityManager.OnNetworkActiveListener listener) {
+        try {
+            ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+            if (networkInfo == null) return false;
+
+            return networkInfo.isConnected() && networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return false;
+    }
+
     @Override
     public int getLayout() {
         return R.layout.activity_main;
@@ -35,9 +54,23 @@ public class MainActivity extends AbstractActivity {
         channel_names = getResources().getStringArray(R.array.channel_names);
 
         recyclerView = findViewById(R.id.recyclerView);
-        MyAdapter myAdapter = new MyAdapter(this, channel_icons, channel_names, links, link_icon);
-        recyclerView.setAdapter(myAdapter);
+        MainRecyclerAdapter mainRecyclerAdapter = new MainRecyclerAdapter(this, channel_icons, channel_names, links, link_icon);
+        recyclerView.setAdapter(mainRecyclerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void makeARequest() {
+        ApiClient.getInstance().getTv(new Callback<ServerResponse>() {
+            @Override
+            public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
+                Log.d("COMMUNICATION", response.body().toString());
+                if(response == null){}
+            }
+            @Override
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

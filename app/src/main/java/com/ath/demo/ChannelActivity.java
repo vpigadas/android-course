@@ -20,7 +20,7 @@ import retrofit2.Callback;
 
 public class ChannelActivity extends AbstractActivity {
 
-    MyPageAdapter pageAdapter;
+    FragmentAdapter pageAdapter;
 
     private boolean isConnected(final ConnectivityManager.OnNetworkActiveListener listener) {
         try {
@@ -55,7 +55,7 @@ public class ChannelActivity extends AbstractActivity {
         makeARequest();
 
         List<Fragment> fragments = getFragments();
-        pageAdapter = new MyPageAdapter(getSupportFragmentManager(), fragments);
+        pageAdapter = new FragmentAdapter(getSupportFragmentManager(), fragments);
         ViewPager pager = (ViewPager) findViewById(R.id.view_pager);
         pager.setAdapter(pageAdapter);
     }
