@@ -53,7 +53,7 @@ public class MainActivity extends AbstractActivity {
 
         channel_names = getResources().getStringArray(R.array.channel_names);
 
-        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.main_recyclerView);
         MainRecyclerAdapter mainRecyclerAdapter = new MainRecyclerAdapter(this, channel_icons, channel_names, links, link_icon);
         recyclerView.setAdapter(mainRecyclerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

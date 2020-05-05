@@ -12,20 +12,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapter.MyViewHolder> {
+public class ProgramRecyclerAdapter extends RecyclerView.Adapter<ProgramRecyclerAdapter.MyViewHolder> {
 
     Context context;
-    int[] icons;
-    String[] texts;
+    String[] titles;
+    String[] startTimes;
     String[] linksOfAd;
-    int link_icon;
+    int play_icon;
 
-    public MainRecyclerAdapter(Context ct, int[] imgs, String[] names , String[] links , int l_icon) {
+    public ProgramRecyclerAdapter(Context ct, String[] titleInputs , String[] startTimeInputs , int p_icon, String[] links) {
         context = ct;
-        icons = imgs;
-        texts = names;
+        titles = titleInputs;
+        startTimes = startTimeInputs;
+        play_icon = p_icon;
         linksOfAd = links;
-        link_icon = l_icon;
     }
 
     @NonNull
@@ -33,17 +33,17 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.my_row, parent, false);
+        View view = inflater.inflate(R.layout.my_program_row, parent, false);
 
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
-        holder.iconStart.setImageResource(icons[position]);
-        holder.text.setText(texts[position]);
-        holder.link_icon.setImageResource(link_icon);
-        holder.link_icon.setOnClickListener(new View.OnClickListener() {
+
+        holder.title.setText(titles[position]);
+        holder.startΤime.setText(startTimes[position]);
+        holder.play_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(linksOfAd[position]));
@@ -54,19 +54,19 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
 
     @Override
     public int getItemCount() {
-        return texts.length;
+        return titles.length;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView iconStart,link_icon;
-        TextView text;
+        ImageView play_icon;
+        TextView title,startΤime;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            iconStart = itemView.findViewById(R.id.channel_icon);
-            text = itemView.findViewById(R.id.channel_name);
-            link_icon = itemView.findViewById(R.id.go_to_website_icon);
+            title = itemView.findViewById(R.id.show_title);
+            startΤime = itemView.findViewById(R.id.start_time);
+            play_icon = itemView.findViewById(R.id.go_to_website_icon);
         }
     }
 }
