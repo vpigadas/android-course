@@ -1,19 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ChannelFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="100dp"
+        android:layout_marginStart="-32dp"
+        android:layout_marginLeft="-32dp"
+        android:layout_marginEnd="-32dp"
+        android:layout_marginRight="-32dp"
+        android:background="@color/colorPrimary"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintBottom_toTopOf="@+id/program_recyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/left_arrow"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintLeft_toLeftOf="@+id/toolbar"
+        app:layout_constraintRight_toLeftOf="@id/program_logo"
+        app:layout_constraintTop_toTopOf="@+id/toolbar"
+        app:srcCompat="@android:drawable/ic_media_play"
+        />
+
+    <ImageView
+        android:id="@+id/program_logo"
+        android:src="@mipmap/ic_launcher_round"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintLeft_toRightOf="@+id/left_arrow"
+        app:layout_constraintRight_toLeftOf="@+id/channel_title"
+        app:layout_constraintTop_toTopOf="@+id/toolbar"
+        />
+
+    <TextView
+        android:id="@+id/channel_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintLeft_toRightOf="@+id/program_logo"
+        app:layout_constraintRight_toLeftOf="@+id/right_arrow"
+        app:layout_constraintTop_toTopOf="@+id/toolbar"
+        />
+
+    <ImageView
+        android:id="@+id/right_arrow"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintLeft_toRightOf="@+id/channel_title"
+        app:layout_constraintRight_toRightOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="@+id/toolbar"
+        app:srcCompat="@android:drawable/ic_media_play"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/program_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        />
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

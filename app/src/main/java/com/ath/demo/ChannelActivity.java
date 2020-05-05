@@ -27,6 +27,9 @@ public class ChannelActivity extends AbstractActivity {
     String[] linksInput = {"https://www.hellenicparliament.gr/Enimerosi/Vouli-Tileorasi/", "https://www.skaitv.gr/", "https://www.alphatv.gr/", "https://webtv.ert.gr/ert3",
             "https://www.antenna.gr/", "https://webtv.ert.gr/ert1", "https://webtv.ert.gr/ert2", "https://www.tvopen.gr/", "https://www.star.gr/"};
 
+    int channel_icons[] = {R.drawable.ic_channel_vouli, R.drawable.ic_channel_skai, R.drawable.ic_channel_alpha, R.drawable.ic_channel_ert3, R.drawable.ic_channel_ant1,
+            R.drawable.ic_channel_ert1, R.drawable.ic_channel_ert2, R.drawable.ic_channel_open, R.drawable.ic_channel_star};
+
     private boolean isConnected(final ConnectivityManager.OnNetworkActiveListener listener) {
         try {
             ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -47,9 +50,7 @@ public class ChannelActivity extends AbstractActivity {
     }
 
     @Override
-    public void initialiseLayout() {
-//        runOperation();
-    }
+    public void initialiseLayout() {}
 
     @Override
     public void runOperation() {
@@ -61,7 +62,7 @@ public class ChannelActivity extends AbstractActivity {
                 List<Fragment> fragments = new ArrayList<>();
                 List<ChannelResponse> channelResponses = response.body().getChannels();
 
-                for (int i = 0 ; i < channelResponses.size() ; i++) {
+                for (int i = 0; i < channelResponses.size(); i++) {
 
                     List<ShowsResponse> showsResponses = channelResponses.get(i).getShows();
 
@@ -75,7 +76,8 @@ public class ChannelActivity extends AbstractActivity {
                         links.add(linksInput[i]);
                     }
 
-                    fragments.add(ChannelFragment.newInstance(titles, startTimes, links));
+                    fragments.add(ChannelFragment.newInstance(channelResponses.get(i).getChannelName(),
+                            channel_icons[i], titles, startTimes, links));
                 }
 
                 pageAdapter = new FragmentAdapter(getSupportFragmentManager(), fragments);
@@ -85,7 +87,8 @@ public class ChannelActivity extends AbstractActivity {
 
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
-                Toast.makeText(ChannelActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChannelActivity.this, "Something went wrong...Please try later!",
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
