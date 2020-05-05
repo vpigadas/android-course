@@ -24,7 +24,7 @@ public class ChannelActivity extends AbstractActivity {
 
     FragmentAdapter pageAdapter;
 
-    String links[] = {"https://www.hellenicparliament.gr/Enimerosi/Vouli-Tileorasi/", "https://www.skaitv.gr/", "https://www.alphatv.gr/", "https://webtv.ert.gr/ert3",
+    String[] linksInput = {"https://www.hellenicparliament.gr/Enimerosi/Vouli-Tileorasi/", "https://www.skaitv.gr/", "https://www.alphatv.gr/", "https://webtv.ert.gr/ert3",
             "https://www.antenna.gr/", "https://webtv.ert.gr/ert1", "https://webtv.ert.gr/ert2", "https://www.tvopen.gr/", "https://www.star.gr/"};
 
     private boolean isConnected(final ConnectivityManager.OnNetworkActiveListener listener) {
@@ -48,7 +48,7 @@ public class ChannelActivity extends AbstractActivity {
 
     @Override
     public void initialiseLayout() {
-        runOperation();
+//        runOperation();
     }
 
     @Override
@@ -72,7 +72,7 @@ public class ChannelActivity extends AbstractActivity {
                     for (ShowsResponse showsResponse : showsResponses) {
                         titles.add(showsResponse.getTitle());
                         startTimes.add(showsResponse.getStartTime());
-                        links.add(links.get(i));
+                        links.add(linksInput[i]);
                     }
 
                     fragments.add(ChannelFragment.newInstance(titles, startTimes, links));
