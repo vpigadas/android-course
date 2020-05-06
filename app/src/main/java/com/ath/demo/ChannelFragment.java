@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import java.util.ArrayList;
 
@@ -14,7 +15,7 @@ public class ChannelFragment extends AbstractFragment {
 
     RecyclerView recyclerView;
 
-    int arrows[] = {R.drawable.left_arrow,R.drawable.right_arrow};
+    int arrows[] = {R.drawable.left,R.drawable.right};
 
     private static final String ARG_PARAM1 = "title";
     private static final String ARG_PARAM2 = "logo";
@@ -69,11 +70,6 @@ public class ChannelFragment extends AbstractFragment {
 
             ImageView logo_icon = view.findViewById(R.id.program_logo);
             logo_icon.setImageResource(mParam2);
-
-            ImageView lArrow = view.findViewById(R.id.left_arrow);
-            lArrow.setImageResource(arrows[0]);
-            ImageView rArrow = view.findViewById(R.id.right_arrow);
-            rArrow.setImageResource(arrows[1]);
 
             recyclerView = view.findViewById(R.id.program_recyclerView);
             ProgramRecyclerAdapter programRecyclerAdapter = new ProgramRecyclerAdapter(this.getContext(), mParam3, mParam4, mParam5);

@@ -10,10 +10,6 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_marginStart="-32dp"
-        android:layout_marginLeft="-32dp"
-        android:layout_marginEnd="-32dp"
-        android:layout_marginRight="-32dp"
         android:background="@color/colorPrimary"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintBottom_toTopOf="@+id/program_recyclerView"
@@ -22,16 +18,6 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
-    <ImageView
-        android:id="@+id/left_arrow"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-        app:layout_constraintLeft_toLeftOf="@+id/toolbar"
-        app:layout_constraintRight_toLeftOf="@id/program_logo"
-        app:layout_constraintTop_toTopOf="@+id/toolbar"
-        app:srcCompat="@android:drawable/ic_media_play"
-        />
 
     <ImageView
         android:id="@+id/program_logo"
@@ -39,7 +25,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-        app:layout_constraintLeft_toRightOf="@+id/left_arrow"
+        app:layout_constraintLeft_toLeftOf="@+id/toolbar"
         app:layout_constraintRight_toLeftOf="@+id/channel_title"
         app:layout_constraintTop_toTopOf="@+id/toolbar"
         />
@@ -51,19 +37,8 @@
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintLeft_toRightOf="@+id/program_logo"
-        app:layout_constraintRight_toLeftOf="@+id/right_arrow"
-        app:layout_constraintTop_toTopOf="@+id/toolbar"
-        />
-
-    <ImageView
-        android:id="@+id/right_arrow"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-        app:layout_constraintLeft_toRightOf="@+id/channel_title"
         app:layout_constraintRight_toRightOf="@+id/toolbar"
         app:layout_constraintTop_toTopOf="@+id/toolbar"
-        app:srcCompat="@android:drawable/ic_media_play"
         />
 
     <androidx.recyclerview.widget.RecyclerView

@@ -4,9 +4,13 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.ath.demo.communication.ChannelResponse;
@@ -23,6 +27,7 @@ import retrofit2.Callback;
 public class ChannelActivity extends AbstractActivity {
 
     FragmentAdapter pageAdapter;
+    List<Fragment> fragments = new ArrayList<>();
 
     String[] linksInput = {"https://www.hellenicparliament.gr/Enimerosi/Vouli-Tileorasi/", "https://www.skaitv.gr/", "https://www.alphatv.gr/", "https://webtv.ert.gr/ert3",
             "https://www.antenna.gr/", "https://webtv.ert.gr/ert1", "https://webtv.ert.gr/ert2", "https://www.tvopen.gr/", "https://www.star.gr/"};
@@ -50,7 +55,8 @@ public class ChannelActivity extends AbstractActivity {
     }
 
     @Override
-    public void initialiseLayout() {}
+    public void initialiseLayout() {
+    }
 
     @Override
     public void runOperation() {
@@ -59,7 +65,6 @@ public class ChannelActivity extends AbstractActivity {
             @Override
             public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
 
-                List<Fragment> fragments = new ArrayList<>();
                 List<ChannelResponse> channelResponses = response.body().getChannels();
 
                 for (int i = 0; i < channelResponses.size(); i++) {
@@ -79,12 +84,26 @@ public class ChannelActivity extends AbstractActivity {
                     fragments.add(ChannelFragment.newInstance(channelResponses.get(i).getChannelName(),
                             channel_icons[i], titles, startTimes, links));
                 }
-
                 pageAdapter = new FragmentAdapter(getSupportFragmentManager(), fragments);
-                ViewPager pager = (ViewPager) findViewById(R.id.view_pager);
+                final ViewPager pager = (ViewPager) findViewById(R.id.view_pager);
                 pager.setAdapter(pageAdapter);
-            }
 
+                ImageView lArrow = findViewById(R.id.left_arrow);
+                lArrow.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        pager.arrowScroll(View.FOCUS_LEFT);
+                    }
+                });
+                ImageView rArrow = findViewById(R.id.right_arrow);
+                rArrow.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        pager.arrowScroll(View.FOCUS_RIGHT);
+                    }
+                });
+
+            }
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
                 Toast.makeText(ChannelActivity.this, "Something went wrong...Please try later!",
