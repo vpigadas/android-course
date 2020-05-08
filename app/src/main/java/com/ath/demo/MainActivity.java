@@ -25,7 +25,6 @@ import retrofit2.Callback;
 
 public class MainActivity extends AbstractActivity {
 
-
     RecyclerView recyclerView;
 
     int link_icon = R.drawable.image_preview;
@@ -70,7 +69,7 @@ public class MainActivity extends AbstractActivity {
                 ArrayList<String> channel_names = new ArrayList<>();
 
                 for (ChannelResponse channelResponse : channelResponses) {
-                    channel_names.add(channelResponse.getChannelName()) ;
+                    channel_names.add(channelResponse.getChannelName());
                 }
 
                 recyclerView = findViewById(R.id.main_recyclerView);
