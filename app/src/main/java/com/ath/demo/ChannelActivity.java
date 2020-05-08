@@ -66,21 +66,30 @@ public class ChannelActivity extends AbstractActivity {
 
                 List<ChannelResponse> channelResponses = response.body().getChannels();
 
-                for (int i = 0; i < channelResponses.size(); i++) {
-
+                for (int i = index ; i < channelResponses.size(); i++) {
                     List<ShowsResponse> showsResponses = channelResponses.get(i).getShows();
-
                     ArrayList<String> titles = new ArrayList<>();
                     ArrayList<String> startTimes = new ArrayList<>();
-
                     for (ShowsResponse showsResponse : showsResponses) {
                         titles.add(showsResponse.getTitle());
                         startTimes.add(showsResponse.getStartTime());
                     }
-
                     fragments.add(ChannelFragment.newInstance(channelResponses.get(i).getChannelName(),
                             channel_icons[i], titles, startTimes));
                 }
+
+                for (int i = 0; i < index; i++) {
+                    List<ShowsResponse> showsResponses = channelResponses.get(i).getShows();
+                    ArrayList<String> titles = new ArrayList<>();
+                    ArrayList<String> startTimes = new ArrayList<>();
+                    for (ShowsResponse showsResponse : showsResponses) {
+                        titles.add(showsResponse.getTitle());
+                        startTimes.add(showsResponse.getStartTime());
+                    }
+                    fragments.add(ChannelFragment.newInstance(channelResponses.get(i).getChannelName(),
+                            channel_icons[i], titles, startTimes));
+                }
+
                 pageAdapter = new FragmentAdapter(getSupportFragmentManager(), fragments);
                 final ViewPager pager = (ViewPager) findViewById(R.id.view_pager);
                 pager.setAdapter(pageAdapter);
@@ -127,9 +136,9 @@ public class ChannelActivity extends AbstractActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
-        if(intent.getStringExtra("index") != null){
-            index = Integer.parseInt(intent.getStringExtra("index"));
+        Bundle extras = getIntent().getExtras();
+        if(extras !=null) {
+            index = extras.getInt("index");
         }
     }
 }

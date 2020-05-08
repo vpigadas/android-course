@@ -4,8 +4,8 @@ import java.util.List;
 
 public class ChannelResponse {
 
-    public List<ShowsResponse> shows;
-    public String channelName;
+    private List<ShowsResponse> shows;
+    private String channelName;
 
     public List<ShowsResponse> getShows() {
         return shows;

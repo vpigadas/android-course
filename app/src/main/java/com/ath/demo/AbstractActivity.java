@@ -56,5 +56,4 @@ public abstract class AbstractActivity extends FragmentActivity {
         destroyLayout();
         super.onDestroy();
     }
-
 }

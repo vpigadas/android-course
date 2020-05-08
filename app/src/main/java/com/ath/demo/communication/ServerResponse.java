@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ServerResponse {
 
-    public List<ChannelResponse> channels;
+    private List<ChannelResponse> channels;
 
     public List<ChannelResponse> getChannels() {
         return channels;
