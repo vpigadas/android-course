@@ -57,33 +57,4 @@ public abstract class AbstractActivity extends FragmentActivity {
         super.onDestroy();
     }
 
-//    public void attachFragment(Fragment fragment) {
-//
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//
-//        transaction.add(R.id.frame_fragment, fragment, fragment.getClass().getSimpleName());
-//        transaction.addToBackStack(null);
-//
-//        transaction.commit();
-//    }
-//
-//    public void replaceFragment(Fragment fragment) {
-//
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//
-//        transaction.replace(R.id.frame_fragment, fragment, fragment.getClass().getSimpleName());
-//        transaction.addToBackStack(null);
-//
-//        transaction.commit();
-//    }
-//
-//    public void removeFragment(Fragment fragment) {
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//
-//        transaction.remove(fragment);
-//
-//        transaction.commit();
-//    }
-
-
 }

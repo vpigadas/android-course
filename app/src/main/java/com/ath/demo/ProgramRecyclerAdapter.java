@@ -1,8 +1,6 @@
 package com.ath.demo;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +17,6 @@ public class ProgramRecyclerAdapter extends RecyclerView.Adapter<ProgramRecycler
     Context context;
     ArrayList<String> titles;
     ArrayList<String> startTimes;
-    int play_icon;
 
     public ProgramRecyclerAdapter(Context ct, ArrayList<String> titleInputs , ArrayList<String> startTimeInputs) {
         context = ct;

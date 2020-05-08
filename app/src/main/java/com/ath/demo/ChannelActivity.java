@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -28,9 +29,7 @@ public class ChannelActivity extends AbstractActivity {
 
     FragmentAdapter pageAdapter;
     List<Fragment> fragments = new ArrayList<>();
-
-    String[] linksInput = {"https://www.hellenicparliament.gr/Enimerosi/Vouli-Tileorasi/", "https://www.skaitv.gr/", "https://www.alphatv.gr/", "https://webtv.ert.gr/ert3",
-            "https://www.antenna.gr/", "https://webtv.ert.gr/ert1", "https://webtv.ert.gr/ert2", "https://www.tvopen.gr/", "https://www.star.gr/"};
+    int index;
 
     int channel_icons[] = {R.drawable.ic_channel_vouli, R.drawable.ic_channel_skai, R.drawable.ic_channel_alpha, R.drawable.ic_channel_ert3, R.drawable.ic_channel_ant1,
             R.drawable.ic_channel_ert1, R.drawable.ic_channel_ert2, R.drawable.ic_channel_open, R.drawable.ic_channel_star};
@@ -73,12 +72,10 @@ public class ChannelActivity extends AbstractActivity {
 
                     ArrayList<String> titles = new ArrayList<>();
                     ArrayList<String> startTimes = new ArrayList<>();
-                    ArrayList<String> links = new ArrayList<>();
 
                     for (ShowsResponse showsResponse : showsResponses) {
                         titles.add(showsResponse.getTitle());
                         startTimes.add(showsResponse.getStartTime());
-                        links.add(linksInput[i]);
                     }
 
                     fragments.add(ChannelFragment.newInstance(channelResponses.get(i).getChannelName(),
@@ -128,4 +125,11 @@ public class ChannelActivity extends AbstractActivity {
 
     }
 
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        if(intent.getStringExtra("index") != null){
+            index = Integer.parseInt(intent.getStringExtra("index"));
+        }
+    }
 }

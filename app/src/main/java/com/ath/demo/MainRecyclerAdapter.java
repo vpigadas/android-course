@@ -12,19 +12,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapter.MyViewHolder> {
 
     Context context;
     int[] icons;
-    String[] texts;
-    String[] linksOfAd;
+    ArrayList<String> texts;
     int link_icon;
 
-    public MainRecyclerAdapter(Context ct, int[] imgs, String[] names , String[] links , int l_icon) {
+    public MainRecyclerAdapter(Context ct, int[] imgs, ArrayList<String> names , int l_icon) {
         context = ct;
         icons = imgs;
         texts = names;
-        linksOfAd = links;
         link_icon = l_icon;
     }
 
@@ -39,22 +39,24 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
+
         holder.iconStart.setImageResource(icons[position]);
-        holder.text.setText(texts[position]);
+        holder.text.setText(texts.get(position));
         holder.link_icon.setImageResource(link_icon);
         holder.link_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(linksOfAd[position]));
-                context.startActivity(intent);
+                Intent myIntent = new Intent(v.getContext(),ChannelActivity.class);
+                myIntent.putExtra("index", position);
+                v.getContext().startActivity(myIntent);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return texts.length;
+        return texts.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
