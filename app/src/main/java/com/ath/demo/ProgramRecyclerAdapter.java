@@ -20,13 +20,11 @@ public class ProgramRecyclerAdapter extends RecyclerView.Adapter<ProgramRecycler
     ArrayList<String> titles;
     ArrayList<String> startTimes;
     int play_icon;
-    ArrayList<String> linksOfAd;
 
-    public ProgramRecyclerAdapter(Context ct, ArrayList<String> titleInputs , ArrayList<String> startTimeInputs , ArrayList<String> links) {
+    public ProgramRecyclerAdapter(Context ct, ArrayList<String> titleInputs , ArrayList<String> startTimeInputs) {
         context = ct;
         titles = titleInputs;
         startTimes = startTimeInputs;
-        linksOfAd = links;
     }
 
     @NonNull
@@ -44,13 +42,7 @@ public class ProgramRecyclerAdapter extends RecyclerView.Adapter<ProgramRecycler
 
         holder.title.setText(titles.get(position));
         holder.startΤime.setText(startTimes.get(position));
-        holder.play_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(linksOfAd.get(position)));
-                context.startActivity(intent);
-            }
-        });
+
     }
 
     @Override

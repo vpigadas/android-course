@@ -25,14 +25,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView"
-                android:layout_marginLeft="24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/show_title"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginStart="24dp" />
-
+                />
 
             <TextView
                 android:id="@+id/show_title"
@@ -40,24 +37,10 @@
                 android:layout_height="wrap_content"
                 android:text="TextView"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/go_to_website_icon"
-                app:layout_constraintStart_toEndOf="@+id/start_time"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/go_to_website_icon"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="24dp"
-                android:scaleType="fitXY"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/show_title"
+                app:layout_constraintStart_toEndOf="@+id/start_time"
                 app:layout_constraintTop_toTopOf="parent"
-                android:clickable="true"
-                app:srcCompat="@android:drawable/ic_media_play"
-                android:focusable="true"
-                android:layout_marginEnd="24dp" />
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

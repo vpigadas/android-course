@@ -82,7 +82,7 @@ public class ChannelActivity extends AbstractActivity {
                     }
 
                     fragments.add(ChannelFragment.newInstance(channelResponses.get(i).getChannelName(),
-                            channel_icons[i], titles, startTimes, links));
+                            channel_icons[i], titles, startTimes));
                 }
                 pageAdapter = new FragmentAdapter(getSupportFragmentManager(), fragments);
                 final ViewPager pager = (ViewPager) findViewById(R.id.view_pager);

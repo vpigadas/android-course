@@ -21,19 +21,17 @@ public class ChannelFragment extends AbstractFragment {
     private static final String ARG_PARAM2 = "logo";
     private static final String ARG_PARAM3 = "show_titles";
     private static final String ARG_PARAM4 = "startTimes";
-    private static final String ARG_PARAM5 = "links";
 
     private String mParam1;
     private int mParam2;
     private ArrayList<String> mParam3;
     private ArrayList<String> mParam4;
-    private ArrayList<String> mParam5;
 
     public ChannelFragment() {
         // Required empty public constructor
     }
 
-    public static ChannelFragment newInstance(String title, int logo, ArrayList<String> show_titles, ArrayList<String> startTimes, ArrayList<String> links) {
+    public static ChannelFragment newInstance(String title, int logo, ArrayList<String> show_titles, ArrayList<String> startTimes) {
 
         ChannelFragment fragment = new ChannelFragment();
         Bundle args = new Bundle();
@@ -42,7 +40,6 @@ public class ChannelFragment extends AbstractFragment {
         args.putInt(ARG_PARAM2, logo);
         args.putStringArrayList(ARG_PARAM3, show_titles);
         args.putStringArrayList(ARG_PARAM4, startTimes);
-        args.putStringArrayList(ARG_PARAM5, links);
 
         fragment.setArguments(args);
 
@@ -63,7 +60,6 @@ public class ChannelFragment extends AbstractFragment {
             mParam2 = getArguments().getInt(ARG_PARAM2);
             mParam3 = getArguments().getStringArrayList(ARG_PARAM3);
             mParam4 = getArguments().getStringArrayList(ARG_PARAM4);
-            mParam5 = getArguments().getStringArrayList(ARG_PARAM5);
 
             TextView channel_title = view.findViewById(R.id.channel_title);
             channel_title.setText(mParam1);
@@ -72,7 +68,7 @@ public class ChannelFragment extends AbstractFragment {
             logo_icon.setImageResource(mParam2);
 
             recyclerView = view.findViewById(R.id.program_recyclerView);
-            ProgramRecyclerAdapter programRecyclerAdapter = new ProgramRecyclerAdapter(this.getContext(), mParam3, mParam4, mParam5);
+            ProgramRecyclerAdapter programRecyclerAdapter = new ProgramRecyclerAdapter(this.getContext(), mParam3, mParam4);
             recyclerView.setAdapter(programRecyclerAdapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
