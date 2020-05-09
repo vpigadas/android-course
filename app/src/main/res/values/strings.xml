@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Channels</string>
-    <string name="main_header_text">Greek channels</string>
-    <string name="url_icon_desc">Visit Website</string>
+    <string name="app_name">Greek Channels</string>
+    <string name="main_activity_header">List of channels</string>
+    <string name="second_activity_header">Channel\'s program</string>
 </resources>
