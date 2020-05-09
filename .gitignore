@@ -293,3 +293,5 @@ fabric.properties
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.gitignore.io/api/linux,macos,gradle,android,windows,androidstudio,visualstudiocode
+/app/src/androidTest/java/com/example/greekchannels/
+/app/src/test/java/com/example/greekchannels/
