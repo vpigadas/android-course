@@ -2,28 +2,22 @@ package com.example.greekchannels;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class ChannelFragment extends Fragment {
+public class ChannelFragment extends AbstractFragment {
 
     private ArrayList<String> channelProgramTitles = new ArrayList<>();
     private ArrayList<String> channelProgramTitlesStart = new ArrayList<>();
@@ -47,10 +41,12 @@ public class ChannelFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    int getLayout() {
+        return R.layout.fragment_channel;
+    }
 
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_channel, container, false);
+    @Override
+    void initLayout(View view) {
 
         try {
             chosenChannelObject = new JSONObject(channelToShow);
@@ -83,10 +79,22 @@ public class ChannelFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return view;
+    }
+
+    @Override
+    void runOperation() {
 
     }
 
+    @Override
+    void stopOperation() {
+
+    }
+
+    @Override
+    void destroyLayout() {
+
+    }
 
     public class SimpleAdapter extends RecyclerView.Adapter<SimpleViewHolder>{
         private String[] channelPrograms;
@@ -130,8 +138,6 @@ public class ChannelFragment extends Fragment {
             startTime = itemView.findViewById(R.id.programStart);
             endTime = itemView.findViewById(R.id.programEnd);
             title = itemView.findViewById(R.id.programTitle);
-
         }
     }
-
 }

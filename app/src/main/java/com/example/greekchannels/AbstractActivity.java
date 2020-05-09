@@ -1,9 +1,15 @@
 package com.example.greekchannels;
 
-import androidx.annotation.LayoutRes;
-import androidx.fragment.app.FragmentActivity;
+import android.os.Bundle;
 
-public abstract class AbstractActivity extends FragmentActivity {
+import androidx.annotation.LayoutRes;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
+
+public abstract class AbstractActivity extends AppCompatActivity {
 
     @LayoutRes
     public abstract int getLayout();
@@ -16,4 +22,39 @@ public abstract class AbstractActivity extends FragmentActivity {
 
     public abstract void destroyLayout();
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(getLayout());
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        initialiseLayout();
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        runOperation();
+    }
+
+    @Override
+    protected void onPause() {
+        stopOperation();
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        destroyLayout();
+        super.onDestroy();
+    }
 }
+

@@ -1,21 +1,12 @@
 package com.example.greekchannels;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
+import android.os.Build;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,24 +16,19 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.greekchannels.model.ServerResponse;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements CustomRecyclerViewAdapter.ItemClickListener {
+public class MainActivity extends AbstractActivity implements CustomRecyclerViewAdapter.ItemClickListener {
 
     private String httpEndPoint = "https://tv-zapping.herokuapp.com/v2/tv";
     private String tvData;
     private JSONArray responseArray;
-    private JSONObject responseObject;
 
     CustomRecyclerViewAdapter adapter;
     RecyclerView recyclerView;
@@ -50,9 +36,12 @@ public class MainActivity extends AppCompatActivity implements CustomRecyclerVie
     ArrayList<Integer> channelsImages = new ArrayList<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public int getLayout() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    public void initialiseLayout() {
 
         //Set Activity title
         this.setTitle(R.string.main_activity_header);
@@ -74,9 +63,7 @@ public class MainActivity extends AppCompatActivity implements CustomRecyclerVie
                         try {
                             //Encode response to UTF-8
                             tvData = new String(response.getBytes("ISO-8859-1"), "UTF-8");
-
-                            responseObject = new JSONObject(tvData);
-                            responseArray = responseObject.getJSONArray("channels");
+                            responseArray = new JSONObject(tvData).getJSONArray("channels");
 
                             for (int i = 0; i < responseArray.length(); i++) {
                                 JSONObject json = responseArray.optJSONObject(i);
@@ -85,25 +72,25 @@ public class MainActivity extends AppCompatActivity implements CustomRecyclerVie
                                 switch (channelName){
                                     case "ΕΡΤ1":
                                         channelsImages.add(R.drawable.ert1);
-                                    break;
+                                        break;
                                     case "ANT1 HD":
                                         channelsImages.add(R.drawable.ant1);
-                                    break;
+                                        break;
                                     case "ALPHA HD":
                                         channelsImages.add(R.drawable.alpha);
-                                    break;
+                                        break;
                                     case "OPEN BEYOND HD":
                                         channelsImages.add(R.drawable.open);
-                                    break;
+                                        break;
                                     case "STAR HD":
                                         channelsImages.add(R.drawable.star);
-                                    break;
+                                        break;
                                     case "ΣΚΑΪ HD":
                                         channelsImages.add(R.drawable.skai);
-                                    break;
+                                        break;
                                     default:
                                         channelsImages.add(R.drawable.default_channel);
-                                    break;
+                                        break;
                                 }
                             }
                             adapter.notifyDataSetChanged();
@@ -117,10 +104,9 @@ public class MainActivity extends AppCompatActivity implements CustomRecyclerVie
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(getApplicationContext(), "Couldn't retrieve channels data..", Toast.LENGTH_SHORT).show();
                     }
-        });
+                });
 
         queue.add(stringRequest);
-        //End HTTP
     }
 
     @Override
@@ -136,6 +122,21 @@ public class MainActivity extends AppCompatActivity implements CustomRecyclerVie
         intent.putExtra("tvData", tvData);
         startActivity(intent);
         // Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void runOperation() {
+
+    }
+
+    @Override
+    public void stopOperation() {
+
+    }
+
+    @Override
+    public void destroyLayout() {
+
     }
 
 }
