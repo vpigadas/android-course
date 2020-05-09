@@ -3,6 +3,7 @@ package com.ath.demo;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,6 +27,8 @@ import retrofit2.Callback;
 public class MainActivity extends AbstractActivity {
 
     RecyclerView recyclerView;
+    private LinearLayoutManager mLayoutManager;
+    Parcelable state;
 
     int channel_icons[] = {R.drawable.ic_channel_vouli, R.drawable.ic_channel_skai, R.drawable.ic_channel_alpha, R.drawable.ic_channel_ert3, R.drawable.ic_channel_ant1,
             R.drawable.ic_channel_ert1, R.drawable.ic_channel_ert2, R.drawable.ic_channel_open, R.drawable.ic_channel_star};
@@ -73,8 +76,9 @@ public class MainActivity extends AbstractActivity {
                 recyclerView = findViewById(R.id.main_recyclerView);
                 MainRecyclerAdapter mainRecyclerAdapter = new MainRecyclerAdapter(getBaseContext(), channel_icons, channel_names);
                 recyclerView.setAdapter(mainRecyclerAdapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
-
+                mLayoutManager = new LinearLayoutManager(getBaseContext());
+                recyclerView.setLayoutManager(mLayoutManager);
+                mLayoutManager.onRestoreInstanceState(state);
             }
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
@@ -86,7 +90,7 @@ public class MainActivity extends AbstractActivity {
 
     @Override
     public void stopOperation() {
-
+        state = mLayoutManager.onSaveInstanceState();
     }
 
     @Override
