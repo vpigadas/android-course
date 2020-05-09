@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">TV Guide</string>
+    <string name="app_name">Τηλεοπτικός Όδηγος</string>
     <string name="channel_name">Τηλεοπτικό κανάλι</string>
-    <string name="land_vistweb">Επίσκεψη Ιστοσελίδας</string>
-    <string name="channelname_skai">ΣΚΑΪ</string>
-    <string name="channelname_makedonia">Μακεδονία TV</string>
-    <string name="channelname_ant1">ANT1</string>
-    <string name="channelname_mega">Mega</string>
-    <string name="channelname_alpha">Alpha</string>
-    <string name="channelname_star">Star</string>
-    <string name="channelname_open">Open</string>
-    <string name="channelname_ertsports">ΕΡΤ Sports</string>
+    <string name="land_vistweb">Πρόβολη προγράμματος</string>
+    <string name="channelname_skai">ΣΚΑΪ HD</string>
+    <string name="channelname_ant1">ANT1 HD</string>
+    <string name="channelname_vouli">ΒΟΥΛΗ</string>
+    <string name="channelname_alpha">Alpha HD</string>
+    <string name="channelname_star">Star HD</string>
+    <string name="channelname_open">Open Beyond HD</string>
+    <string name="channelname_ertsports">ΕΡΤ Sports HD</string>
+    <string name="channelactivity_label">"Πρόγραμμαα Καναλιού "</string>
+    <string name="channelname_ert1">ΕΡΤ1</string>
+    <string name="channelname_ert2">ΕΡΤ2</string>
+    <string name="channelname_ert3">ΕΡΤ3</string>
 </resources>

@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="@id/channel_logo" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/channel_web"
+        android:id="@+id/channel_nav"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginTop="10dp"

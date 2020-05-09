@@ -57,5 +57,17 @@
             app:layout_constraintTop_toBottomOf="@id/channel7"
             />
 
+        <include
+            android:id="@+id/channel9"
+            layout="@layout/channel_frame"
+            app:layout_constraintTop_toBottomOf="@id/channel8"
+            />
+
+        <include
+            android:id="@+id/channel10"
+            layout="@layout/channel_frame"
+            app:layout_constraintTop_toBottomOf="@id/channel9"
+            />
+
     </LinearLayout>
 </ScrollView>

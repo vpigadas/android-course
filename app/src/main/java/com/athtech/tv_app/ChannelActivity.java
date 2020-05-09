@@ -2,40 +2,26 @@ package com.athtech.tv_app;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.athtech.tv_app.communication.ServerResponse;
 
 import java.util.ArrayList;
 
-public class ChannelActivity extends FragmentActivity {
+public class ChannelActivity extends AppCompatActivity {
     ServerResponse serverResponse;
-    ArrayList<Fragment> channelFramgnets=new ArrayList<>();
-
-    /**
-     * The number of pages (wizard steps) to show in this demo.
-     */
-    private static final int NUM_PAGES = 8;
-
-    /**
-     * The pager widget, which handles animation and allows swiping horizontally to access previous
-     * and next wizard steps.
-     */
+    ArrayList<Fragment> channelFramgnets = new ArrayList<>();
+    static int numOfChannels=10;
+    private static final int NUM_PAGES = numOfChannels;
     private ViewPager mPager;
-
-    /**
-     * The pager adapter, which provides the pages to the view pager widget.
-     */
     private PagerAdapter pagerAdapter;
+    float scroll_position=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,38 +30,22 @@ public class ChannelActivity extends FragmentActivity {
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
-        serverResponse=(ServerResponse) extras.getSerializable("serverResponse");
-        if (serverResponse!=null){
-            Log.d("commms", "Success! Serializable was not null!");
-            Log.d("comms",serverResponse.channels.get(0).channelName);
-            Log.d("comms",serverResponse.channels.get(1).channelName);}
-        else Log.d("commms", "Failure! Serializable was null!");
+        if (extras!=null) serverResponse = (ServerResponse) extras.getSerializable("serverResponse");
+        else{ Toast serverWait = Toast.makeText(this, "Waiting for server response...", Toast.LENGTH_SHORT);
+        serverWait.show();
+        onBackPressed();};
 
         initiateChannelFragmentsList();
-
-        // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
         pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(pagerAdapter);
+        mPager.setPageTransformer(true, new PageTransformer());
 
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (mPager.getCurrentItem() == 0) {
-            // If the user is currently looking at the first step, allow the system to handle the
-            // Back button. This calls finish() on this activity and pops the back stack.
-            super.onBackPressed();
-        } else {
-            // Otherwise, select the previous step.
-            mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+        if (extras != null) {
+            mPager.setCurrentItem(extras.getInt("pageNum"));
         }
     }
 
-    /**
-     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
-     * sequence.
-     */
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
@@ -84,25 +54,20 @@ public class ChannelActivity extends FragmentActivity {
         @Override
         public Fragment getItem(int position) {
 
-            String channelName=serverResponse.channels.get(position).channelName;
-            StringBuilder content= new StringBuilder();
-            for (int x=0; x<serverResponse.channels.get(position).shows.size(); x++){
-                content.append("Show: ");
-                content.append(serverResponse.channels.get(x).shows.get(0).title);
-                content.append("\n");
-                content.append("Start Time: ");
-                content.append(serverResponse.channels.get(x).shows.get(0).startTimeCaption);
-                content.append("\n");
-                content.append("End Time: ");
-                content.append(serverResponse.channels.get(x).shows.get(0).endTimeCaption);
-                content.append("\n");
+            String channelName = serverResponse.channels.get(position).channelName;
+            StringBuilder content = new StringBuilder();
+            for (int x = 0; x < serverResponse.channels.get(position).program.size() - 1; x++) {
+                content.append(serverResponse.channels.get(position).program.get(x).title);
+                content.append("\n");;
+                content.append(serverResponse.channels.get(position).program.get(x).startTimeCaption);
+                content.append(" - ");
+                content.append(serverResponse.channels.get(position).program.get(x).endTimeCaption);
+                content.append("\n\n");
             }
 
-            String contentString=content.toString();
-
-
-            Bundle bundle=new Bundle();
-            bundle.putString("channelname",channelName);
+            String contentString = content.toString();
+            Bundle bundle = new Bundle();
+            bundle.putString("channelname", channelName);
             bundle.putString("content", contentString);
             channelFramgnets.get(position).setArguments(bundle);
             return channelFramgnets.get(position);
@@ -114,15 +79,18 @@ public class ChannelActivity extends FragmentActivity {
         }
     }
 
-    public void initiateChannelFragmentsList(){
-        ChannelFragment channelFragment= new ChannelFragment();
-        ChannelFragment channelFragment2= new ChannelFragment();
-        ChannelFragment channelFragment3= new ChannelFragment();
-        ChannelFragment channelFragment4= new ChannelFragment();
-        ChannelFragment channelFragment5= new ChannelFragment();
-        ChannelFragment channelFragment6= new ChannelFragment();
-        ChannelFragment channelFragment7= new ChannelFragment();
-        ChannelFragment channelFragment8= new ChannelFragment();
+
+    public void initiateChannelFragmentsList() {
+        ChannelFragment channelFragment = new ChannelFragment();
+        ChannelFragment channelFragment2 = new ChannelFragment();
+        ChannelFragment channelFragment3 = new ChannelFragment();
+        ChannelFragment channelFragment4 = new ChannelFragment();
+        ChannelFragment channelFragment5 = new ChannelFragment();
+        ChannelFragment channelFragment6 = new ChannelFragment();
+        ChannelFragment channelFragment7 = new ChannelFragment();
+        ChannelFragment channelFragment8 = new ChannelFragment();
+        ChannelFragment channelFragment9 = new ChannelFragment();
+        ChannelFragment channelFragment10 = new ChannelFragment();
         channelFramgnets.add(channelFragment);
         channelFramgnets.add(channelFragment2);
         channelFramgnets.add(channelFragment3);
@@ -131,8 +99,12 @@ public class ChannelActivity extends FragmentActivity {
         channelFramgnets.add(channelFragment6);
         channelFramgnets.add(channelFragment7);
         channelFramgnets.add(channelFragment8);
+        channelFramgnets.add(channelFragment9);
+        channelFramgnets.add(channelFragment10);
     }
 }
+
+
 
 
 

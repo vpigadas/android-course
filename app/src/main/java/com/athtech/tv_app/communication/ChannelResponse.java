@@ -4,6 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 public class ChannelResponse implements Serializable {
-    public List<ShowsResponse> shows;
+    public List<ProgramResponse> program;
     public String channelName;
 }
