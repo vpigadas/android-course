@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -49,14 +48,12 @@ public class ProgramRecyclerAdapter extends RecyclerView.Adapter<ProgramRecycler
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView play_icon;
         TextView title,startΤime;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.show_title);
             startΤime = itemView.findViewById(R.id.start_time);
-            play_icon = itemView.findViewById(R.id.go_to_website_icon);
         }
     }
 }

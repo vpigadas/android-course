@@ -1,15 +1,18 @@
 package com.ath.demo;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -19,13 +22,11 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
     Context context;
     int[] icons;
     ArrayList<String> texts;
-    int link_icon;
 
-    public MainRecyclerAdapter(Context ct, int[] imgs, ArrayList<String> names , int l_icon) {
+    public MainRecyclerAdapter(Context ct, int[] imgs, ArrayList<String> names ) {
         context = ct;
         icons = imgs;
         texts = names;
-        link_icon = l_icon;
     }
 
     @NonNull
@@ -43,10 +44,10 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
 
         holder.iconStart.setImageResource(icons[position]);
         holder.text.setText(texts.get(position));
-        holder.link_icon.setImageResource(link_icon);
-        holder.link_icon.setOnClickListener(new View.OnClickListener() {
+        holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                holder.card.setCardBackgroundColor(v.getContext().getResources().getColor(R.color.colorPrimary));
                 Intent myIntent = new Intent(v.getContext(),ChannelActivity.class);
                 myIntent.putExtra("index", position);
                 v.getContext().startActivity(myIntent);
@@ -61,14 +62,15 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView iconStart,link_icon;
+        ImageView iconStart;
         TextView text;
+        CardView card;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             iconStart = itemView.findViewById(R.id.channel_icon);
             text = itemView.findViewById(R.id.channel_name);
-            link_icon = itemView.findViewById(R.id.go_to_website_icon);
+            card = itemView.findViewById(R.id.main_row_card);
         }
     }
 }

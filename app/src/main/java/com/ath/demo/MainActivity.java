@@ -27,8 +27,6 @@ public class MainActivity extends AbstractActivity {
 
     RecyclerView recyclerView;
 
-    int link_icon = R.drawable.image_preview;
-
     int channel_icons[] = {R.drawable.ic_channel_vouli, R.drawable.ic_channel_skai, R.drawable.ic_channel_alpha, R.drawable.ic_channel_ert3, R.drawable.ic_channel_ant1,
             R.drawable.ic_channel_ert1, R.drawable.ic_channel_ert2, R.drawable.ic_channel_open, R.drawable.ic_channel_star};
 
@@ -73,7 +71,7 @@ public class MainActivity extends AbstractActivity {
                 }
 
                 recyclerView = findViewById(R.id.main_recyclerView);
-                MainRecyclerAdapter mainRecyclerAdapter = new MainRecyclerAdapter(getBaseContext(), channel_icons, channel_names,  link_icon);
+                MainRecyclerAdapter mainRecyclerAdapter = new MainRecyclerAdapter(getBaseContext(), channel_icons, channel_names);
                 recyclerView.setAdapter(mainRecyclerAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
 
