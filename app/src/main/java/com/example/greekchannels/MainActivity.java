@@ -1,12 +1,12 @@
 package com.example.greekchannels;
 
+import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,6 +29,7 @@ public class MainActivity extends AbstractActivity implements CustomRecyclerView
     private String httpEndPoint = "https://tv-zapping.herokuapp.com/v2/tv";
     private String tvData;
     private JSONArray responseArray;
+    private boolean connectivity = false;
 
     CustomRecyclerViewAdapter adapter;
     RecyclerView recyclerView;
@@ -42,6 +43,12 @@ public class MainActivity extends AbstractActivity implements CustomRecyclerView
 
     @Override
     public void initialiseLayout() {
+
+        //Check internet connectivity
+        if ( !connectivity() ){
+            Toast.makeText(getApplicationContext(), "No internet connection detected", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         //Set Activity title
         this.setTitle(R.string.main_activity_header);
@@ -112,8 +119,8 @@ public class MainActivity extends AbstractActivity implements CustomRecyclerView
     @Override
     public void onItemClick(View view, int position) {
 
-        TextView text = view.findViewById(R.id.name);
-        text.setTextColor(getResources().getColor(R.color.colorPrimary, null));
+        //TextView text = view.findViewById(R.id.name);
+        //text.setTextColor(getResources().getColor(R.color.colorPrimary, null));
 
         Intent intent = new Intent(MainActivity.this, SecondActivity.class);
         //intent.putExtra("chosen", String.valueOf(this.responseArray.optJSONObject(position)));
@@ -121,7 +128,19 @@ public class MainActivity extends AbstractActivity implements CustomRecyclerView
         intent.putExtra("pages", responseArray.length());
         intent.putExtra("tvData", tvData);
         startActivity(intent);
-        // Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+
+        //Clickable item
+        //adapter.getItem(position)
+    }
+
+    public boolean connectivity(){
+        try {
+            ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override

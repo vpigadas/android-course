@@ -21,6 +21,9 @@ public class SecondActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
 
+        //Enable back button on action bar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         //Set Activity title
         this.setTitle(R.string.second_activity_header);
 
@@ -45,5 +48,12 @@ public class SecondActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(initPosition);
 
+    }
+
+    //Action bar back button
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 }
