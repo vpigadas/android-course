@@ -15,29 +15,26 @@ public class ChannelFragment extends AbstractFragment {
 
     int arrows[] = {R.drawable.left,R.drawable.right};
 
-    private static final String ARG_PARAM1 = "title";
-    private static final String ARG_PARAM2 = "logo";
-    private static final String ARG_PARAM3 = "show_titles";
-    private static final String ARG_PARAM4 = "startTimes";
+    private static final String ARG_PARAM1 = "logo";
+    private static final String ARG_PARAM2 = "show_titles";
+    private static final String ARG_PARAM3 = "startTimes";
 
-    private String mParam1;
-    private int mParam2;
+    private int mParam1;
+    private ArrayList<String> mParam2;
     private ArrayList<String> mParam3;
-    private ArrayList<String> mParam4;
 
     public ChannelFragment() {
         // Required empty public constructor
     }
 
-    public static ChannelFragment newInstance(String title, int logo, ArrayList<String> show_titles, ArrayList<String> startTimes) {
+    public static ChannelFragment newInstance( int logo, ArrayList<String> show_titles, ArrayList<String> startTimes) {
 
         ChannelFragment fragment = new ChannelFragment();
         Bundle args = new Bundle();
 
-        args.putString(ARG_PARAM1, title);
-        args.putInt(ARG_PARAM2, logo);
-        args.putStringArrayList(ARG_PARAM3, show_titles);
-        args.putStringArrayList(ARG_PARAM4, startTimes);
+        args.putInt(ARG_PARAM1, logo);
+        args.putStringArrayList(ARG_PARAM2, show_titles);
+        args.putStringArrayList(ARG_PARAM3, startTimes);
 
         fragment.setArguments(args);
 
@@ -54,19 +51,15 @@ public class ChannelFragment extends AbstractFragment {
 
         if (getArguments() != null) {
 
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getInt(ARG_PARAM2);
+            mParam1 = getArguments().getInt(ARG_PARAM1);
+            mParam2 = getArguments().getStringArrayList(ARG_PARAM2);
             mParam3 = getArguments().getStringArrayList(ARG_PARAM3);
-            mParam4 = getArguments().getStringArrayList(ARG_PARAM4);
-
-            TextView channel_title = view.findViewById(R.id.channel_title);
-            channel_title.setText(mParam1);
 
             ImageView logo_icon = view.findViewById(R.id.program_logo);
-            logo_icon.setImageResource(mParam2);
+            logo_icon.setImageResource(mParam1);
 
             recyclerView = view.findViewById(R.id.program_recyclerView);
-            ProgramRecyclerAdapter programRecyclerAdapter = new ProgramRecyclerAdapter(this.getContext(), mParam3, mParam4);
+            ProgramRecyclerAdapter programRecyclerAdapter = new ProgramRecyclerAdapter(this.getContext(), mParam2, mParam3);
             recyclerView.setAdapter(programRecyclerAdapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 

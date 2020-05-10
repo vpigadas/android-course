@@ -74,8 +74,7 @@ public class ChannelActivity extends AbstractActivity {
                         titles.add(showsResponse.getTitle());
                         startTimes.add(showsResponse.getStartTime());
                     }
-                    fragments.add(ChannelFragment.newInstance(channelResponses.get(i).getChannelName(),
-                            channel_icons[i], titles, startTimes));
+                    fragments.add(ChannelFragment.newInstance(channel_icons[i], titles, startTimes));
                 }
 
                 for (int i = 0; i < index; i++) {
@@ -86,8 +85,7 @@ public class ChannelActivity extends AbstractActivity {
                         titles.add(showsResponse.getTitle());
                         startTimes.add(showsResponse.getStartTime());
                     }
-                    fragments.add(ChannelFragment.newInstance(channelResponses.get(i).getChannelName(),
-                            channel_icons[i], titles, startTimes));
+                    fragments.add(ChannelFragment.newInstance(channel_icons[i], titles, startTimes));
                 }
 
                 pageAdapter = new FragmentAdapter(getSupportFragmentManager(), fragments);
