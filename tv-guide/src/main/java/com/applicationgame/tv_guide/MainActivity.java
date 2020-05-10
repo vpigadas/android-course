@@ -1,118 +1,140 @@
 package com.applicationgame.tv_guide;
 
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
+import android.os.Build;
+import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.applicationgame.tv_guide.communication.Channel;
+import com.applicationgame.tv_guide.communication.Program;
+import com.applicationgame.tv_guide.communication.ServerResponse;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AbstractActivity {
+
+    public static View.OnClickListener myOnClickListener;
+    ServerResponse server;
+
+    ArrayList<Channel> data;
+    Map<String, List<Program>> map;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+    String json;
+    String jsonServer;
+
 
     @Override
     public int getLayout() {
         return R.layout.activity_main;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void initialiseLayout() {
 
-        final Channel bbc = new Channel("BBC", "@drawable/bbc_icon", "https://www.bbc.com/", "", "");
-        final Channel cnn = new Channel("CNN", "@drawable/cnn_icon", "https://edition.cnn.com/", "", "");
-        final Channel cw = new Channel("The CW Tv", "@drawable/cw_icon", "https://www.cwtv.com/", "", "");
-        final Channel hbo = new Channel("HBO", "@drawable/hbo_icon", "https://www.hbo.com/", "", "");
-        final Channel ch4 = new Channel("Channel 4", "@drawable/ch4_icon", "https://www.channel4.com/", "", "");
-        final Channel dw = new Channel("Deutsche Welle", "@drawable/dw_icon", "https://www.dw.com/", "", "");
+        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
 
-//    Channel 1
-        ImageView icon1 = findViewById(R.id.chIcon1);
-        ImageView url1 = findViewById(R.id.chUrl1);
-        TextView name1 = findViewById(R.id.chName1);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        name1.setText(bbc.name);
-        icon1.setImageDrawable(getResources().getDrawable(getResources().getIdentifier(bbc.icon,"drawable",getPackageName())));
-        url1.setOnClickListener(new View.OnClickListener() {
+        fetchTvGuide();
+
+        myOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(bbc.website));
-                startActivity(i);
+                Intent intent = new Intent(MainActivity.this, ChannelActivity.class);
+                intent.putExtra("channels", jsonServer);
+                int pos = (int) v.getTag();
+                intent.putExtra("position", pos + 1);
+
+                startActivity(intent);
+            }
+        };
+    }
+
+    private void fetchTvGuide() {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "https://api-vpigadas.herokuapp.com/api/zapping/demo/athtech/sport";
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        Log.d("COMMUNICATION", response);
+
+                        server = new Gson().fromJson(response, ServerResponse.class);
+
+                        data = server.getChannels();
+
+                        Gson gson = new GsonBuilder().create();
+
+                        json = gson.toJson(server.getChannels());
+                        jsonServer = gson.toJson(server);
+
+                        Log.d("CHANNELS", json);
+
+                        adapter = new Adapter(data);
+                        recyclerView.setAdapter(adapter);
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("COMMUNICATION", error.getMessage());
+
+                if( error instanceof NetworkError) {
+                    //handle your network error here.
+                    Toast.makeText(getApplicationContext(), "Please check your internet connection and try again!", Toast.LENGTH_SHORT).show();
+                } else if( error instanceof ServerError) {
+                    //handle if server error occurs with 5** status code
+                    Log.d("COMMUNICATION", error.getMessage());
+                    Toast.makeText(getApplicationContext(), "There was an error with the server! Please try again!", Toast.LENGTH_SHORT).show();
+                } else if( error instanceof AuthFailureError) {
+                    //handle if authFailure occurs.This is generally because of invalid credentials
+                    Log.d("COMMUNICATION", error.getMessage());
+                    Toast.makeText(getApplicationContext(), "Please try again!", Toast.LENGTH_SHORT).show();
+                } else if( error instanceof ParseError) {
+                    //handle if the volley is unable to parse the response data.
+                    Log.d("COMMUNICATION", error.getMessage());
+                    Toast.makeText(getApplicationContext(), "Please try again!", Toast.LENGTH_SHORT).show();
+                } else if( error instanceof TimeoutError) {
+                    //handle if socket time out is occurred.
+                    Log.d("COMMUNICATION", error.getMessage());
+                    Toast.makeText(getApplicationContext(), "Please wait...", Toast.LENGTH_SHORT).show();
+                    fetchTvGuide();
+                }
             }
         });
 
-//    Channel 2
-        ImageView icon2 = findViewById(R.id.chIcon2);
-        ImageView url2 = findViewById(R.id.chUrl2);
-        TextView name2 = findViewById(R.id.chName2);
+        queue.add(stringRequest);
 
-        name2.setText(cnn.name);
-        icon2.setImageDrawable(getResources().getDrawable(getResources().getIdentifier(cnn.icon,"drawable",getPackageName())));
-        url2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(cnn.website));
-                startActivity(i);
-            }
-        });
-
-//    Channel 3
-        ImageView icon3 = findViewById(R.id.chIcon3);
-        ImageView url3 = findViewById(R.id.chUrl3);
-        TextView name3 = findViewById(R.id.chName3);
-
-        name3.setText(cw.name);
-        icon3.setImageDrawable(getResources().getDrawable(getResources().getIdentifier(cw.icon,"drawable",getPackageName())));
-        url3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(cw.website));
-                startActivity(i);
-            }
-        });
-
-//    Channel 4
-        ImageView icon4 = findViewById(R.id.chIcon4);
-        ImageView url4 = findViewById(R.id.chUrl4);
-        TextView name4 = findViewById(R.id.chName4);
-
-        name4.setText(hbo.name);
-        icon4.setImageDrawable(getResources().getDrawable(getResources().getIdentifier(hbo.icon,"drawable",getPackageName())));
-        url4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(hbo.website));
-                startActivity(i);
-            }
-        });
-
-//    Channel 5
-        ImageView icon5 = findViewById(R.id.chIcon5);
-        ImageView url5 = findViewById(R.id.chUrl5);
-        TextView name5 = findViewById(R.id.chName5);
-
-        name5.setText(ch4.name);
-        icon5.setImageDrawable(getResources().getDrawable(getResources().getIdentifier(ch4.icon,"drawable",getPackageName())));
-        url5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(ch4.website));
-                startActivity(i);
-            }
-        });
-
-//    Channel 6
-        ImageView icon6 = findViewById(R.id.chIcon6);
-        ImageView url6 = findViewById(R.id.chUrl6);
-        TextView name6 = findViewById(R.id.chName6);
-
-        name6.setText(dw.name);
-        icon6.setImageDrawable(getResources().getDrawable(getResources().getIdentifier(dw.icon,"drawable",getPackageName())));
-        url6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(dw.website));
-                startActivity(i);
-            }
-        });
     }
 
     @Override
@@ -128,11 +150,5 @@ public class MainActivity extends AbstractActivity {
     @Override
     public void destroyLayout() {
 
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
     }
 }
