@@ -4,13 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ChannelFragment">
+    tools:context=".ChannelFragment"
+    android:padding="2dp"
+    android:background="@color/white"
+    >
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@color/colorPrimary"
+        android:layout_height="130dp"
+        android:background="#000"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintBottom_toTopOf="@+id/program_recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,8 +35,11 @@
 
     <TextView
         android:id="@+id/channel_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textColorHighlight="@color/white"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintLeft_toRightOf="@+id/program_logo"
