@@ -1,12 +1,29 @@
 package com.ath.demo.communication;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName="show_response", foreignKeys = {
+        @ForeignKey(
+                entity = ChannelResponse.class,
+                parentColumns = "channelName",
+                childColumns = "channel_fk"
+        )})
 public class ShowsResponse {
+
+    @PrimaryKey(autoGenerate = true)
+    private int id;
 
     private String endTime;
     private String title;
     private String startTime;
     private String endTimeCaption;
     private String startTimeCaption;
+
+    @ColumnInfo(name = "channel_fk")
+    private int ChannelIdFk;
 
     public String getEndTime() {
         return endTime;
@@ -46,5 +63,21 @@ public class ShowsResponse {
 
     public void setStartTimeCaption(String startTimeCaption) {
         this.startTimeCaption = startTimeCaption;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getChannelIdFk() {
+        return ChannelIdFk;
+    }
+
+    public void setChannelIdFk(int channelIdFk) {
+        ChannelIdFk = channelIdFk;
     }
 }
