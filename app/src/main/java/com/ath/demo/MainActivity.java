@@ -33,7 +33,6 @@ public class MainActivity extends AbstractActivity {
     RecyclerView recyclerView;
     private LinearLayoutManager mLayoutManager;
     Parcelable state;
-    boolean dataImportedFromDB = false;
 
     int channel_icons[] = {R.drawable.ic_channel_vouli, R.drawable.ic_channel_skai, R.drawable.ic_channel_alpha, R.drawable.ic_channel_ert3, R.drawable.ic_channel_ant1,
             R.drawable.ic_channel_ert1, R.drawable.ic_channel_ert2, R.drawable.ic_channel_open, R.drawable.ic_channel_star};
@@ -77,7 +76,27 @@ public class MainActivity extends AbstractActivity {
             @Override
             public void onChanged(List<ChannelResponse> channelResponses) {
 
-                    ArrayList<String> channel_names = new ArrayList<>();
+                final ArrayList<String> channel_names = new ArrayList<>();
+
+                    if(channelResponses.size() == 0){
+                        ApiClient.getInstance().getTv(new Callback<ServerResponse>() {
+
+                            @Override
+                            public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
+
+                                List<ChannelResponse> channelResponses = response.body().getChannels();
+
+                                for (ChannelResponse channelResponse : channelResponses) {
+                                    db.channelDao().insert(channelResponse);
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<ServerResponse> call, Throwable t) {
+                                Toast.makeText(MainActivity.this, "Something went wrong...Please try later!",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
 
                     for (ChannelResponse channelResponse : channelResponses) {
                         channel_names.add(channelResponse.getChannelName());
@@ -90,31 +109,8 @@ public class MainActivity extends AbstractActivity {
                     recyclerView.setLayoutManager(mLayoutManager);
                     mLayoutManager.onRestoreInstanceState(state);
 
-                    dataImportedFromDB = true;
                 }
         });
-
-        if(!dataImportedFromDB){
-            ApiClient.getInstance().getTv(new Callback<ServerResponse>() {
-
-                @Override
-                public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
-
-                    List<ChannelResponse> channelResponses = response.body().getChannels();
-                    ArrayList<String> channel_names = new ArrayList<>();
-
-                    for (ChannelResponse channelResponse : channelResponses) {
-                        channel_names.add(channelResponse.getChannelName());
-                        db.channelDao().insert(channelResponse);
-                    }
-                }
-                @Override
-                public void onFailure(Call<ServerResponse> call, Throwable t) {
-                    Toast.makeText(MainActivity.this, "Something went wrong...Please try later!",
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
 
     }
 

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.ath.demo.communication.ChannelResponse;
@@ -19,7 +20,7 @@ public interface ChannelDao {
     @Query("SELECT * FROM channel_response")
     LiveData<List<ChannelResponse>> getAll();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(ChannelResponse... channelResponses);
 
     @Delete
