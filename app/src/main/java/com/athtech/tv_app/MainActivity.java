@@ -1,6 +1,7 @@
 package com.athtech.tv_app;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.athtech.tv_app.communication.ServerResponse;
+import com.athtech.tv_app.database.TvDatabase;
 import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity {
@@ -135,6 +137,9 @@ public class MainActivity extends AppCompatActivity {
         setupChannel(open, Channel10_name, Channel10_logo, Channel10_nav,9);
 
         makeARequest();
+
+        TvDatabase db = Room.databaseBuilder(getApplicationContext(),
+                TvDatabase.class, "database-name").build();
 
     }
 
