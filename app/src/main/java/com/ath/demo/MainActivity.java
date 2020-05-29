@@ -34,7 +34,7 @@ import retrofit2.Callback;
 
 public class MainActivity extends AbstractActivity {
 
-    private DemoDatabase db = Room.databaseBuilder(getApplicationContext(), DemoDatabase.class, "database-name").build();
+    //private DemoDatabase db = Room.databaseBuilder(getApplicationContext(), DemoDatabase.class, "database-name").build();
 
 
     @Override
@@ -149,12 +149,12 @@ public class MainActivity extends AbstractActivity {
 // Add the request to the RequestQueue.
         queue.add(stringRequest);
 
-        db.channelDao().getAll().observe(MainActivity.this, new Observer<List<ChannelResponse>>() {
-            @Override
-            public void onChanged(List<ChannelResponse> channelResponses) {
-
-            }
-        });
+//        db.channelDao().getAll().observe(MainActivity.this, new Observer<List<ChannelResponse>>() {
+//            @Override
+//            public void onChanged(List<ChannelResponse> channelResponses) {
+//
+//            }
+//        });
 
 
         ApiEndpoints service = ApiClient.getRetrofitInstance().create(ApiEndpoints.class);
@@ -168,7 +168,7 @@ public class MainActivity extends AbstractActivity {
 
 
                 for (ChannelResponse data : response.body().channels) {
-                    db.channelDao().insert(data);
+                    //db.channelDao().insert(data);
                 }
 
             }

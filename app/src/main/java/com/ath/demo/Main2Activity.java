@@ -14,7 +14,5 @@ public class Main2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        DemoDatabase db = Room.databaseBuilder(getApplicationContext(), DemoDatabase.class, "database-name").build();
-
     }
 }
