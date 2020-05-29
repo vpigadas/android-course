@@ -6,7 +6,7 @@ import androidx.room.TypeConverters;
 
 import com.athtech.tv_app.communication.ChannelResponse;
 
-@Database(entities = {ChannelResponse.class}, version = 2)
+@Database(entities = {ChannelResponse.class}, version = 2,exportSchema = false)
 @TypeConverters({ListTypeConverters.class})
 public abstract class TvDatabase extends RoomDatabase {
     public abstract tvchannelDao tvchannelDao();

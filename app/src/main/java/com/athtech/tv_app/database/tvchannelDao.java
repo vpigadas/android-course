@@ -13,7 +13,7 @@ import java.util.List;
 @Dao
 public interface tvchannelDao {
 
-        @Query("SELECT * FROM ChannelResponse")
+        @Query("SELECT * FROM channels")
         LiveData<List<ChannelResponse>> getAll();
 
         @Insert

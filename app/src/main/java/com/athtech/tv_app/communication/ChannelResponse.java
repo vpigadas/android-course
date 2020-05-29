@@ -16,9 +16,15 @@ import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 
+@Entity(tableName = "channels")
 public class ChannelResponse {
 
+    @PrimaryKey
+    @NonNull
+    @ColumnInfo(name="name")
     public String channelName;
+    @ColumnInfo(name = "program")
+    @TypeConverters(ListTypeConverters.class)
     public List<ProgramResponse> program;
 
     public List<ProgramResponse> getProgram() {

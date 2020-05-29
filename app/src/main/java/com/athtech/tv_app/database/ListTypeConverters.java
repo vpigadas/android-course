@@ -19,19 +19,19 @@ public class ListTypeConverters {
     static Gson converter_gson = new Gson();
 
     @TypeConverter
-    public static List<ChannelResponse> stringToSomeObjectList(String data) {
+    public static List<ProgramResponse> stringToSomeObjectList(String data) {
         if (data == null) {
             return Collections.emptyList();
         }
 
-        Type listType = new TypeToken<List<ChannelResponse>>() {
+        Type listType = new TypeToken<List<ProgramResponse>>() {
         }.getType();
 
         return converter_gson.fromJson(data, listType);
     }
 
     @TypeConverter
-    public static String someChannelResponsesToString(List<ChannelResponse> channelResponses) {
+    public static String someChannelResponsesToString(List<ProgramResponse> channelResponses) {
         return converter_gson.toJson(channelResponses);
     }
 
