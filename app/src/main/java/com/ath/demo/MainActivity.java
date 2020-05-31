@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -30,6 +32,7 @@ import retrofit2.Callback;
 public class MainActivity extends AbstractActivity {
 
 
+    private MainViewModel mainViewModel;
     RecyclerView recyclerView;
     private LinearLayoutManager mLayoutManager;
     Parcelable state;
@@ -70,48 +73,26 @@ public class MainActivity extends AbstractActivity {
     @Override
     public void runOperation() {
 
-        final DemoDatabase db = Room.databaseBuilder(getApplicationContext(), DemoDatabase.class, "database-name").allowMainThreadQueries().build();
+        final ArrayList<String> channel_names = new ArrayList<>();
 
-        db.channelDao().getAll().observe(MainActivity.this, new Observer<List<ChannelResponse>>() {
+        recyclerView = findViewById(R.id.main_recyclerView);
+        mLayoutManager = new LinearLayoutManager(getBaseContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        mLayoutManager.onRestoreInstanceState(state);
+
+        final MainRecyclerAdapter mainRecyclerAdapter = new MainRecyclerAdapter(getBaseContext(), channel_icons);
+        recyclerView.setAdapter(mainRecyclerAdapter);
+
+        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        mainViewModel.getChannels().observe(this, new Observer<List<ChannelResponse>>() {
             @Override
             public void onChanged(List<ChannelResponse> channelResponses) {
-
-                final ArrayList<String> channel_names = new ArrayList<>();
-
-                    if(channelResponses.size() == 0){
-                        ApiClient.getInstance().getTv(new Callback<ServerResponse>() {
-
-                            @Override
-                            public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
-
-                                List<ChannelResponse> channelResponses = response.body().getChannels();
-
-                                for (ChannelResponse channelResponse : channelResponses) {
-                                    db.channelDao().insert(channelResponse);
-                                }
-                            }
-                            @Override
-                            public void onFailure(Call<ServerResponse> call, Throwable t) {
-                                Toast.makeText(MainActivity.this, "Something went wrong...Please try later!",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-
-                    for (ChannelResponse channelResponse : channelResponses) {
-                        channel_names.add(channelResponse.getChannelName());
-                    }
-
-                    recyclerView = findViewById(R.id.main_recyclerView);
-                    MainRecyclerAdapter mainRecyclerAdapter = new MainRecyclerAdapter(getBaseContext(), channel_icons, channel_names);
-                    recyclerView.setAdapter(mainRecyclerAdapter);
-                    mLayoutManager = new LinearLayoutManager(getBaseContext());
-                    recyclerView.setLayoutManager(mLayoutManager);
-                    mLayoutManager.onRestoreInstanceState(state);
-
+                for (ChannelResponse channelResponse : channelResponses) {
+                    channel_names.add(channelResponse.getChannelName());
                 }
+                mainRecyclerAdapter.setChannelNames(channel_names);
+            }
         });
-
     }
 
 

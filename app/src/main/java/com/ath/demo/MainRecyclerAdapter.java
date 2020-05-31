@@ -16,17 +16,17 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapter.MyViewHolder> {
 
     Context context;
     int[] icons;
-    ArrayList<String> texts;
+    List<String> texts = new ArrayList<>();
 
-    public MainRecyclerAdapter(Context ct, int[] imgs, ArrayList<String> names ) {
+    public MainRecyclerAdapter(Context ct, int[] imgs) {
         context = ct;
         icons = imgs;
-        texts = names;
     }
 
     @NonNull
@@ -60,13 +60,18 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
         return texts.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public void setChannelNames(List<String> names){
+        this.texts = names;
+        notifyDataSetChanged();
+    }
 
-        ImageView iconStart;
-        TextView text;
-        CardView card;
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public MyViewHolder(@NonNull View itemView) {
+        private ImageView iconStart;
+        private TextView text;
+        private CardView card;
+
+        MyViewHolder(@NonNull View itemView) {
             super(itemView);
             iconStart = itemView.findViewById(R.id.channel_icon);
             text = itemView.findViewById(R.id.channel_name);
