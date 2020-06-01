@@ -20,6 +20,7 @@ import com.ath.demo.communication.retrofit.ApiClient;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 
 @Database(entities = {ChannelResponse.class, ShowsResponse.class}, version = BuildConfig.VERSION_CODE)
 public abstract class DemoDatabase extends RoomDatabase {
@@ -41,7 +42,7 @@ public abstract class DemoDatabase extends RoomDatabase {
 
     private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
         @Override
-        public void onOpen(@NonNull SupportSQLiteDatabase db) {
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
             new PopulateDbAsyncTask(instance).execute();
         }
@@ -50,7 +51,6 @@ public abstract class DemoDatabase extends RoomDatabase {
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
 
         private ChannelDao channelDao;
-        private RetroRepo retroRepo;
 
         private PopulateDbAsyncTask(DemoDatabase demoDatabase) {
             channelDao = demoDatabase.channelDao();
@@ -59,11 +59,20 @@ public abstract class DemoDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(Void... voids) {
 
-            List<ChannelResponse> channelResponses = retroRepo.getChannelsFromAPI();
-            for (ChannelResponse channelResponse : channelResponses) {
-                channelDao.insert(channelResponse);
-            }
+            ApiClient.getInstance().getTv(new retrofit2.Callback<ServerResponse>() {
 
+                @Override
+                public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
+                    for (ChannelResponse channelResponse : response.body().getChannels()) {
+                        channelDao.insert(channelResponse);
+                    }
+                }
+                @Override
+                public void onFailure(Call<ServerResponse> call, Throwable t) {
+//                Toast.makeText(MainActivity.this, "Something went wrong...Please try later!",
+//                        Toast.LENGTH_SHORT).show();
+                }
+            });
             return null;
         }
     }

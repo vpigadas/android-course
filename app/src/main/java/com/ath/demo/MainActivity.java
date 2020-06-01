@@ -4,34 +4,25 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Parcelable;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
-import androidx.viewpager.widget.ViewPager;
 
 import com.ath.demo.communication.ChannelResponse;
 import com.ath.demo.communication.ServerResponse;
-import com.ath.demo.communication.ShowsResponse;
 import com.ath.demo.communication.retrofit.ApiClient;
-import com.ath.demo.database.DemoDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 
 public class MainActivity extends AbstractActivity {
 
-
+    ConnectivityManager.OnNetworkActiveListener listener;
     private MainViewModel mainViewModel;
     RecyclerView recyclerView;
     private LinearLayoutManager mLayoutManager;
@@ -84,6 +75,27 @@ public class MainActivity extends AbstractActivity {
         recyclerView.setAdapter(mainRecyclerAdapter);
 
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+
+        if(isConnected(listener)){
+            ApiClient.getInstance().getTv(new retrofit2.Callback<ServerResponse>() {
+
+                @Override
+                public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
+                    for (ChannelResponse channelResponse : response.body().getChannels()) {
+                        mainViewModel.insert(channelResponse);
+                        channel_names.add(channelResponse.getChannelName());
+                    }
+                    mainRecyclerAdapter.setChannelNames(channel_names);
+                }
+                @Override
+                public void onFailure(Call<ServerResponse> call, Throwable t) {
+//                Toast.makeText(MainActivity.this, "Something went wrong...Please try later!",
+//                        Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+
         mainViewModel.getChannels().observe(this, new Observer<List<ChannelResponse>>() {
             @Override
             public void onChanged(List<ChannelResponse> channelResponses) {
