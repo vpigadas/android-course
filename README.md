@@ -3,11 +3,12 @@
 ### _MVC - Model View Controller_
 
 _MVC_'s structure depends on three things. Model, View and Controller. 
-	-The _Model_ is actually the data we want to display at the UI, the rules that we use to manipulate those data and 
+
+-The _Model_ is actually the data we want to display at the UI, the rules that we use to manipulate those data and 
 	it also describes the business logic behind. 
-	-The _View_ is actually the UI presenting the data we want. The _Model_ and the _View_ are connected with each other,
+-The _View_ is actually the UI presenting the data we want. The _Model_ and the _View_ are connected with each other,
 	with the ####Observer#### pattern.
-	-The _Controller_ is the component that processes the data from the _Model_ and send the results to _View_.
+-The _Controller_ is the component that processes the data from the _Model_ and send the results to _View_.
 	It acutally connects the above components.
 
 ### _MVP - Model View Presenter_
