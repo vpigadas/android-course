@@ -13,6 +13,6 @@ _MVC_'s structure depends on three things. Model, View and Controller.
 _MVP_ is a design pattern very similar to _MVC_. In fact, the _MVP_ is developed from _MVC_.
 This design pattern has 3 main components too, the Model, the View and the Presenter.
 
-The _Model_ and the _View_ here have actually the same finctionality with the _MVC_'s. 
+The _Model_ and the _View_ here have actually the same functionality with the _MVC_'s. 
 
 - The _Presenter_ connects the _View_ and the _Model_ in the way that, it gets the user's input in the _View_, then processes the data with the _Model_ and sends back the output to the _View_. The _Presenter_ defines an interface which is implemented in any component that has to do with the functionality of the View, like an **Activity** or a **Fragment**.
