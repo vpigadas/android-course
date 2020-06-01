@@ -37,8 +37,6 @@ public class MainActivity extends AbstractActivity {
 
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
             if (networkInfo == null) {
-                Toast.makeText(MainActivity.this, "No Internet Connection!",
-                        Toast.LENGTH_SHORT).show();
                 return false;
             }
 
@@ -46,8 +44,6 @@ public class MainActivity extends AbstractActivity {
         } catch (Exception exception) {
             exception.printStackTrace();
         }
-        Toast.makeText(MainActivity.this, "No Internet Connection!",
-                Toast.LENGTH_SHORT).show();
         return false;
     }
 
@@ -89,10 +85,14 @@ public class MainActivity extends AbstractActivity {
                 }
                 @Override
                 public void onFailure(Call<ServerResponse> call, Throwable t) {
-//                Toast.makeText(MainActivity.this, "Something went wrong...Please try later!",
-//                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Something went wrong...Please try later!",
+                        Toast.LENGTH_SHORT).show();
                 }
             });
+        }
+        else{
+            Toast.makeText(MainActivity.this, "No internet Connection!",
+                    Toast.LENGTH_SHORT).show();
         }
 
 
