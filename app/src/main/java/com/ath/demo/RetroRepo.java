@@ -10,17 +10,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 public class RetroRepo {
-
+    List<ChannelResponse> channelResponses;
 
     public List<ChannelResponse> getChannelsFromAPI(){
-
-        List<ChannelResponse> channelResponses = null;
 
         ApiClient.getInstance().getTv(new Callback<ServerResponse>() {
 
             @Override
             public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
 
+                channelResponses =  response.body().getChannels();
             }
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
@@ -28,6 +27,7 @@ public class RetroRepo {
 //                        Toast.LENGTH_SHORT).show();
             }
         });
+
         return channelResponses;
     }
 

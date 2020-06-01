@@ -41,7 +41,7 @@ public abstract class DemoDatabase extends RoomDatabase {
 
     private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
         @Override
-        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+        public void onOpen(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
             new PopulateDbAsyncTask(instance).execute();
         }
