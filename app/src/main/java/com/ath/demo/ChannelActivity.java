@@ -1,6 +1,9 @@
 package com.ath.demo;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
@@ -28,18 +31,22 @@ import retrofit2.Callback;
 public class ChannelActivity extends AbstractActivity {
 
     FragmentAdapter pageAdapter;
-    List<Fragment> fragments = new ArrayList<>();
     int index;
+    private ChannelViewModel channelViewModel;
+    List<String> channelNames = new ArrayList<>();
+
 
     int channel_icons[] = {R.drawable.ic_channel_vouli, R.drawable.ic_channel_skai, R.drawable.ic_channel_alpha, R.drawable.ic_channel_ert3, R.drawable.ic_channel_ant1,
             R.drawable.ic_channel_ert1, R.drawable.ic_channel_ert2, R.drawable.ic_channel_open, R.drawable.ic_channel_star};
 
-    private boolean isConnected(final ConnectivityManager.OnNetworkActiveListener listener) {
+    private boolean isConnected() {
         try {
             ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
 
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-            if (networkInfo == null) return false;
+            if (networkInfo == null) {
+                return false;
+            }
 
             return networkInfo.isConnected() && networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
         } catch (Exception exception) {
@@ -47,6 +54,7 @@ public class ChannelActivity extends AbstractActivity {
         }
         return false;
     }
+
 
     @Override
     public int getLayout() {
@@ -60,61 +68,138 @@ public class ChannelActivity extends AbstractActivity {
     @Override
     public void runOperation() {
 
-        ApiClient.getInstance().getTv(new Callback<ServerResponse>() {
+
+        final ViewPager pager = (ViewPager) findViewById(R.id.view_pager);
+        pageAdapter = new FragmentAdapter(getSupportFragmentManager(),new ArrayList<Fragment>());
+        pager.setAdapter(pageAdapter);
+
+        ImageView lArrow = findViewById(R.id.left_arrow);
+        lArrow.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
-
-                List<ChannelResponse> channelResponses = response.body().getChannels();
-
-                for (int i = index ; i < channelResponses.size(); i++) {
-                    List<ShowsResponse> showsResponses = channelResponses.get(i).getShows();
-                    ArrayList<String> titles = new ArrayList<>();
-                    ArrayList<String> startTimes = new ArrayList<>();
-                    for (ShowsResponse showsResponse : showsResponses) {
-                        titles.add(showsResponse.getTitle());
-                        startTimes.add(showsResponse.getStartTime());
-                    }
-                    fragments.add(ChannelFragment.newInstance(channel_icons[i], titles, startTimes));
-                }
-
-                for (int i = 0; i < index; i++) {
-                    List<ShowsResponse> showsResponses = channelResponses.get(i).getShows();
-                    ArrayList<String> titles = new ArrayList<>();
-                    ArrayList<String> startTimes = new ArrayList<>();
-                    for (ShowsResponse showsResponse : showsResponses) {
-                        titles.add(showsResponse.getTitle());
-                        startTimes.add(showsResponse.getStartTime());
-                    }
-                    fragments.add(ChannelFragment.newInstance(channel_icons[i], titles, startTimes));
-                }
-
-                pageAdapter = new FragmentAdapter(getSupportFragmentManager(), fragments);
-                final ViewPager pager = (ViewPager) findViewById(R.id.view_pager);
-                pager.setAdapter(pageAdapter);
-
-                ImageView lArrow = findViewById(R.id.left_arrow);
-                lArrow.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        pager.arrowScroll(View.FOCUS_LEFT);
-                    }
-                });
-                ImageView rArrow = findViewById(R.id.right_arrow);
-                rArrow.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        pager.arrowScroll(View.FOCUS_RIGHT);
-                    }
-                });
-
+            public void onClick(View v) {
+                pager.arrowScroll(View.FOCUS_LEFT);
             }
+        });
+        ImageView rArrow = findViewById(R.id.right_arrow);
+        rArrow.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFailure(Call<ServerResponse> call, Throwable t) {
-                Toast.makeText(ChannelActivity.this, "Something went wrong...Please try later!",
-                        Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {
+                pager.arrowScroll(View.FOCUS_RIGHT);
             }
         });
 
+
+        channelViewModel = ViewModelProviders.of(this).get(ChannelViewModel.class);
+
+        if(isConnected()){
+
+            ApiClient.getInstance().getTv(new Callback<ServerResponse>() {
+                @Override
+                public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
+
+                    List<String> channelNamesTemp = new ArrayList<>();
+
+                    List<Fragment> fragments = new ArrayList<>();
+                    List<ChannelResponse> channelResponses = response.body().getChannels();
+
+                    for (int i = index ; i < channelResponses.size(); i++) {
+
+                        List<ShowsResponse> showsResponses = channelResponses.get(i).getShows();
+                        ArrayList<String> titles = new ArrayList<>();
+                        ArrayList<String> startTimes = new ArrayList<>();
+                        channelViewModel.insert(channelResponses.get(i));
+
+                        for (ShowsResponse showsResponse : showsResponses) {
+
+                            showsResponse.setChannelIdFk(channelResponses.get(i).getChannelName());
+                            channelViewModel.insertShow(showsResponse);
+
+                            titles.add(showsResponse.getTitle());
+                            startTimes.add(showsResponse.getStartTime());
+                        }
+                        fragments.add(ChannelFragment.newInstance(channel_icons[i], titles, startTimes));
+                    }
+
+                    for (int i = 0 ; i < index; i++) {
+
+                        List<ShowsResponse> showsResponses = channelResponses.get(i).getShows();
+                        ArrayList<String> titles = new ArrayList<>();
+                        ArrayList<String> startTimes = new ArrayList<>();
+                        channelViewModel.insert(channelResponses.get(i));
+
+                        for (ShowsResponse showsResponse : showsResponses) {
+
+                            showsResponse.setChannelIdFk(channelResponses.get(i).getChannelName());
+                            channelViewModel.insertShow(showsResponse);
+
+                            titles.add(showsResponse.getTitle());
+                            startTimes.add(showsResponse.getStartTime());
+                        }
+                        fragments.add(ChannelFragment.newInstance(channel_icons[i], titles, startTimes));
+                    }
+                    channelNames = channelNamesTemp;
+                    pageAdapter.setFragments(fragments);
+                }
+                @Override
+                public void onFailure(Call<ServerResponse> call, Throwable t) {
+                    Toast.makeText(ChannelActivity.this, "Something went wrong...Please try later!",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        else{
+            Toast.makeText(ChannelActivity.this, "No internet Connection!",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+
+        channelViewModel.getChannels().observe(this, new Observer<List<ChannelResponse>>() {
+            @Override
+            public void onChanged(List<ChannelResponse> channelResponses) {
+                List<String> channelNamesTemp = new ArrayList<>();
+                for (int i = 0 ; i < channelResponses.size(); i++) {
+                    channelNamesTemp.add(channelResponses.get(i).getChannelName());
+                }
+                channelNames = channelNamesTemp;
+            }
+        });
+
+        channelViewModel.getShows().observe(ChannelActivity.this, new Observer<List<ShowsResponse>>() {
+            @Override
+            public void onChanged(List<ShowsResponse> showsResponses) {
+
+                final List<Fragment> fragments = new ArrayList<>();
+
+                for (int i = index ; i < channelNames.size(); i++) {
+
+                    ArrayList<String> titles = new ArrayList<>();
+                    ArrayList<String> startTimes = new ArrayList<>();
+
+                    for (ShowsResponse showsResponse : showsResponses) {
+                        if(showsResponse.getChannelIdFk().equals(channelNames.get(i))){
+                            titles.add(showsResponse.getTitle());
+                            startTimes.add(showsResponse.getStartTime());
+                        }
+                    }
+                    fragments.add(ChannelFragment.newInstance(channel_icons[i], titles, startTimes));
+                }
+
+                for (int i = 0 ; i < index; i++) {
+
+                    ArrayList<String> titles = new ArrayList<>();
+                    ArrayList<String> startTimes = new ArrayList<>();
+
+                    for (ShowsResponse showsResponse : showsResponses) {
+                        if(showsResponse.getChannelIdFk().equals(channelNames.get(i))){
+                            titles.add(showsResponse.getTitle());
+                            startTimes.add(showsResponse.getStartTime());
+                        }
+                    }
+                    fragments.add(ChannelFragment.newInstance(channel_icons[i], titles, startTimes));
+                }
+                pageAdapter.setFragments(fragments);
+            }
+        });
     }
 
     @Override

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ath.demo.communication.ChannelResponse;
 import com.ath.demo.communication.ServerResponse;
+import com.ath.demo.communication.ShowsResponse;
 import com.ath.demo.communication.retrofit.ApiClient;
 
 import java.util.ArrayList;
@@ -22,7 +23,6 @@ import retrofit2.Call;
 
 public class MainActivity extends AbstractActivity {
 
-    ConnectivityManager.OnNetworkActiveListener listener;
     private MainViewModel mainViewModel;
     RecyclerView recyclerView;
     private LinearLayoutManager mLayoutManager;
@@ -31,7 +31,7 @@ public class MainActivity extends AbstractActivity {
     int channel_icons[] = {R.drawable.ic_channel_vouli, R.drawable.ic_channel_skai, R.drawable.ic_channel_alpha, R.drawable.ic_channel_ert3, R.drawable.ic_channel_ant1,
             R.drawable.ic_channel_ert1, R.drawable.ic_channel_ert2, R.drawable.ic_channel_open, R.drawable.ic_channel_star};
 
-    private boolean isConnected(final ConnectivityManager.OnNetworkActiveListener listener) {
+    private boolean isConnected() {
         try {
             ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -60,8 +60,6 @@ public class MainActivity extends AbstractActivity {
     @Override
     public void runOperation() {
 
-        final ArrayList<String> channel_names = new ArrayList<>();
-
         recyclerView = findViewById(R.id.main_recyclerView);
         mLayoutManager = new LinearLayoutManager(getBaseContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -72,13 +70,20 @@ public class MainActivity extends AbstractActivity {
 
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
-        if(isConnected(listener)){
+        if(isConnected()){
             ApiClient.getInstance().getTv(new retrofit2.Callback<ServerResponse>() {
 
                 @Override
                 public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
+
+                    ArrayList<String> channel_names = new ArrayList<>();
+
                     for (ChannelResponse channelResponse : response.body().getChannels()) {
                         mainViewModel.insert(channelResponse);
+                        for(ShowsResponse showsResponse : channelResponse.getShows()){
+                            showsResponse.setChannelIdFk(channelResponse.getChannelName());
+                            mainViewModel.insertShow(showsResponse);
+                        }
                         channel_names.add(channelResponse.getChannelName());
                     }
                     mainRecyclerAdapter.setChannelNames(channel_names);
@@ -99,6 +104,9 @@ public class MainActivity extends AbstractActivity {
         mainViewModel.getChannels().observe(this, new Observer<List<ChannelResponse>>() {
             @Override
             public void onChanged(List<ChannelResponse> channelResponses) {
+
+                ArrayList<String> channel_names = new ArrayList<>();
+
                 for (ChannelResponse channelResponse : channelResponses) {
                     channel_names.add(channelResponse.getChannelName());
                 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.ath.demo.communication.ChannelResponse;
+import com.ath.demo.communication.ShowsResponse;
 
 import java.util.List;
 
@@ -25,6 +26,10 @@ public class MainViewModel extends AndroidViewModel {
         repository.insert(channelResponse);
     }
 
+    public void insertShow(ShowsResponse showsResponse){
+        repository.insertShow(showsResponse);
+    }
+
     public void update(ChannelResponse channelResponse){
         repository.update(channelResponse);
     }
@@ -40,4 +45,6 @@ public class MainViewModel extends AndroidViewModel {
     public LiveData<List<ChannelResponse>> getChannels() {
         return channels;
     }
+
+
 }

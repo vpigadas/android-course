@@ -1,5 +1,6 @@
 package com.ath.demo.communication;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -13,17 +14,17 @@ import androidx.room.PrimaryKey;
         )})
 public class ShowsResponse {
 
-    @PrimaryKey(autoGenerate = true)
-    private int id;
 
-    private String endTime;
+    @NonNull
+    @PrimaryKey
     private String title;
     private String startTime;
+    private String endTime;
     private String endTimeCaption;
     private String startTimeCaption;
 
     @ColumnInfo(name = "channel_fk")
-    private int ChannelIdFk;
+    private String ChannelIdFk;
 
     public String getEndTime() {
         return endTime;
@@ -65,19 +66,11 @@ public class ShowsResponse {
         this.startTimeCaption = startTimeCaption;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getChannelIdFk() {
+    public String getChannelIdFk() {
         return ChannelIdFk;
     }
 
-    public void setChannelIdFk(int channelIdFk) {
+    public void setChannelIdFk(String channelIdFk) {
         ChannelIdFk = channelIdFk;
     }
 }

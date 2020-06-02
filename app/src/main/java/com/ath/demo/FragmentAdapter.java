@@ -16,6 +16,11 @@ class FragmentAdapter extends FragmentPagerAdapter {
         this.fragments = fragments;
     }
 
+    public void setFragments(List<Fragment> fragments) {
+        this.fragments = fragments;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public Fragment getItem(int position) {

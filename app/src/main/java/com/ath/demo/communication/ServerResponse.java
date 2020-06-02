@@ -9,8 +9,4 @@ public class ServerResponse {
     public List<ChannelResponse> getChannels() {
         return channels;
     }
-
-    public void setChannels(List<ChannelResponse> channels) {
-        this.channels = channels;
-    }
 }
