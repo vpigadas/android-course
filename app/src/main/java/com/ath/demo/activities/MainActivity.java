@@ -15,7 +15,7 @@ import com.ath.demo.R;
 import com.ath.demo.abstractLayer.AbstractActivity;
 import com.ath.demo.adapters.MainRecyclerAdapter;
 import com.ath.demo.model.ChannelResponse;
-import com.ath.demo.model.ServerResponse;
+import com.ath.demo.webService.ServerResponseDTO;
 import com.ath.demo.model.ShowsResponse;
 import com.ath.demo.viewModel.MainViewModel;
 import com.ath.demo.webService.ApiClient;
@@ -73,10 +73,10 @@ public class MainActivity extends AbstractActivity {
         recyclerView.setAdapter(mainRecyclerAdapter);
 
         if(isConnected()){
-            ApiClient.getInstance().getTv(new retrofit2.Callback<ServerResponse>() {
+            ApiClient.getInstance().getTv(new retrofit2.Callback<ServerResponseDTO>() {
 
                 @Override
-                public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
+                public void onResponse(Call<ServerResponseDTO> call, retrofit2.Response<ServerResponseDTO> response) {
 
                     ArrayList<String> channel_names = new ArrayList<>();
 
@@ -91,7 +91,7 @@ public class MainActivity extends AbstractActivity {
                     mainRecyclerAdapter.setChannelNames(channel_names);
                 }
                 @Override
-                public void onFailure(Call<ServerResponse> call, Throwable t) {
+                public void onFailure(Call<ServerResponseDTO> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Something went wrong...Please try later!",
                         Toast.LENGTH_SHORT).show();
                 }

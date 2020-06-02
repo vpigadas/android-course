@@ -1,7 +1,5 @@
 package com.ath.demo.webService;
 
-import com.ath.demo.model.ServerResponse;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
@@ -37,8 +35,8 @@ public class ApiClient {
         return instance;
     }
 
-    public void getTv(Callback<ServerResponse> listener) {
-        Call<ServerResponse> call = endpoints.getTv();
+    public void getTv(Callback<ServerResponseDTO> listener) {
+        Call<ServerResponseDTO> call = endpoints.getTv();
         call.enqueue(listener);
     }
 }

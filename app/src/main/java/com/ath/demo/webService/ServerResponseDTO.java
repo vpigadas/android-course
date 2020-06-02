@@ -1,8 +1,10 @@
-package com.ath.demo.model;
+package com.ath.demo.webService;
+
+import com.ath.demo.model.ChannelResponse;
 
 import java.util.List;
 
-public class ServerResponse {
+public class ServerResponseDTO {
 
     private List<ChannelResponse> channels;
 
