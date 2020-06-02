@@ -1,4 +1,4 @@
-package com.ath.demo.communication;
+package com.ath.demo.model;
 
 import java.util.List;
 

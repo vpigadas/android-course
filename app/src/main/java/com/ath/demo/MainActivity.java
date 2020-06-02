@@ -11,9 +11,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ath.demo.communication.ChannelResponse;
-import com.ath.demo.communication.ServerResponse;
-import com.ath.demo.communication.ShowsResponse;
+import com.ath.demo.model.ChannelResponse;
+import com.ath.demo.model.ServerResponse;
+import com.ath.demo.model.ShowsResponse;
 import com.ath.demo.communication.retrofit.ApiClient;
 
 import java.util.ArrayList;

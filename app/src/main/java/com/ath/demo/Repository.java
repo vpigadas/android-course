@@ -5,8 +5,8 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
-import com.ath.demo.communication.ChannelResponse;
-import com.ath.demo.communication.ShowsResponse;
+import com.ath.demo.model.ChannelResponse;
+import com.ath.demo.model.ShowsResponse;
 import com.ath.demo.database.ChannelDao;
 import com.ath.demo.database.DemoDatabase;
 import com.ath.demo.database.ShowDao;

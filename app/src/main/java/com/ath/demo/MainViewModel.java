@@ -6,8 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.ath.demo.communication.ChannelResponse;
-import com.ath.demo.communication.ShowsResponse;
+import com.ath.demo.model.ChannelResponse;
+import com.ath.demo.model.ShowsResponse;
 
 import java.util.List;
 

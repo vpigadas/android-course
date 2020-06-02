@@ -1,25 +1,21 @@
 package com.ath.demo;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.ath.demo.communication.ChannelResponse;
-import com.ath.demo.communication.ServerResponse;
-import com.ath.demo.communication.ShowsResponse;
+import com.ath.demo.model.ChannelResponse;
+import com.ath.demo.model.ServerResponse;
+import com.ath.demo.model.ShowsResponse;
 import com.ath.demo.communication.retrofit.ApiClient;
 
 import java.util.ArrayList;

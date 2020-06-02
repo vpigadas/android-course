@@ -1,6 +1,6 @@
 package com.ath.demo.communication.retrofit;
 
-import com.ath.demo.communication.ServerResponse;
+import com.ath.demo.model.ServerResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -8,7 +8,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.ath.demo.communication.ChannelResponse;
+import com.ath.demo.model.ChannelResponse;
 
 import java.util.List;
 

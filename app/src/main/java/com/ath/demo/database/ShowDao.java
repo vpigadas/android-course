@@ -8,7 +8,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.ath.demo.communication.ShowsResponse;
+import com.ath.demo.model.ShowsResponse;
 
 import java.util.List;
 

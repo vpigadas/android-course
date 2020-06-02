@@ -1,21 +1,14 @@
 package com.ath.demo.database;
 
 import android.content.Context;
-import android.os.AsyncTask;
 
-import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.ath.demo.BuildConfig;
-import com.ath.demo.communication.ChannelResponse;
-import com.ath.demo.communication.ServerResponse;
-import com.ath.demo.communication.ShowsResponse;
-import com.ath.demo.communication.retrofit.ApiClient;
-
-import retrofit2.Call;
+import com.ath.demo.model.ChannelResponse;
+import com.ath.demo.model.ShowsResponse;
 
 @Database(entities = {ChannelResponse.class, ShowsResponse.class}, version = BuildConfig.VERSION_CODE)
 public abstract class DemoDatabase extends RoomDatabase {
