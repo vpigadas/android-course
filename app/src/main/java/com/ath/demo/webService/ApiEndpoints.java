@@ -1,4 +1,4 @@
-package com.ath.demo.communication.retrofit;
+package com.ath.demo.webService;
 
 import com.ath.demo.model.ServerResponse;
 

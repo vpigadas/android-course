@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.ath.demo.model.ChannelResponse;
 import com.ath.demo.model.ServerResponse;
 import com.ath.demo.model.ShowsResponse;
-import com.ath.demo.communication.retrofit.ApiClient;
+import com.ath.demo.webService.ApiClient;
 
 import java.util.ArrayList;
 import java.util.List;
