@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.ath.demo.adapters.FragmentAdapter;
 import com.ath.demo.model.ChannelResponse;
 import com.ath.demo.model.ServerResponse;
 import com.ath.demo.model.ShowsResponse;

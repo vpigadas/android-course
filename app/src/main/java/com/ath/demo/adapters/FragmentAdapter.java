@@ -1,4 +1,4 @@
-package com.ath.demo;
+package com.ath.demo.adapters;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import java.util.List;
 
-class FragmentAdapter extends FragmentPagerAdapter {
+public class FragmentAdapter extends FragmentPagerAdapter {
 
     private List<Fragment> fragments;
 

@@ -1,11 +1,8 @@
-package com.ath.demo;
+package com.ath.demo.adapters;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -14,6 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.ath.demo.ChannelActivity;
+import com.ath.demo.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +48,7 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
             @Override
             public void onClick(View v) {
                 holder.card.setCardBackgroundColor(v.getContext().getResources().getColor(R.color.colorPrimary));
-                Intent myIntent = new Intent(v.getContext(),ChannelActivity.class);
+                Intent myIntent = new Intent(v.getContext(), ChannelActivity.class);
                 myIntent.putExtra("index", position);
                 v.getContext().startActivity(myIntent);
             }

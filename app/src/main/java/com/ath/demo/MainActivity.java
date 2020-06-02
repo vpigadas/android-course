@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ath.demo.adapters.MainRecyclerAdapter;
 import com.ath.demo.model.ChannelResponse;
 import com.ath.demo.model.ServerResponse;
 import com.ath.demo.model.ShowsResponse;
