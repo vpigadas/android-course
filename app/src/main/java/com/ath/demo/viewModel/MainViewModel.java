@@ -1,4 +1,4 @@
-package com.ath.demo;
+package com.ath.demo.viewModel;
 
 import android.app.Application;
 
@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.ath.demo.R;
+import com.ath.demo.repositories.Repository;
 import com.ath.demo.model.ChannelResponse;
 import com.ath.demo.model.ShowsResponse;
 

@@ -1,4 +1,4 @@
-package com.ath.demo;
+package com.ath.demo.repositories;
 
 import android.app.Application;
 import android.os.AsyncTask;

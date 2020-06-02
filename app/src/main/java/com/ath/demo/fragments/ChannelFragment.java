@@ -1,4 +1,4 @@
-package com.ath.demo;
+package com.ath.demo.fragments;
 
 import android.os.Bundle;
 
@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ath.demo.R;
+import com.ath.demo.abstractLayer.AbstractFragment;
 import com.ath.demo.adapters.ProgramRecyclerAdapter;
 
 import java.util.ArrayList;
@@ -45,12 +47,12 @@ public class ChannelFragment extends AbstractFragment {
     }
 
     @Override
-    int getLayout() {
+    public int getLayout() {
         return R.layout.fragment_channel;
     }
 
     @Override
-    void initLayout(View view) {
+    public void initLayout(View view) {
 
         if (getArguments() != null) {
 
@@ -70,17 +72,17 @@ public class ChannelFragment extends AbstractFragment {
     }
 
     @Override
-    void runOperation() {
+    public void runOperation() {
 
     }
 
     @Override
-    void stopOperation() {
+    public void stopOperation() {
 
     }
 
     @Override
-    void destroyLayout() {
+    public void destroyLayout() {
 
     }
 }

@@ -1,5 +1,5 @@
 
-package com.ath.demo;
+package com.ath.demo.abstractLayer;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,15 +12,15 @@ import androidx.fragment.app.Fragment;
 
 public abstract class AbstractFragment extends Fragment {
 
-    abstract int getLayout();
+    public abstract int getLayout();
 
-    abstract void initLayout(View view);
+    public abstract void initLayout(View view);
 
-    abstract void runOperation();
+    public abstract void runOperation();
 
-    abstract void stopOperation();
+    public abstract void stopOperation();
 
-    abstract void destroyLayout();
+    public abstract void destroyLayout();
 
 
     @Nullable

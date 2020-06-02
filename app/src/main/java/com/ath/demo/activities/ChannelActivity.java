@@ -1,4 +1,4 @@
-package com.ath.demo;
+package com.ath.demo.activities;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -13,10 +13,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.ath.demo.R;
+import com.ath.demo.abstractLayer.AbstractActivity;
 import com.ath.demo.adapters.FragmentAdapter;
+import com.ath.demo.fragments.ChannelFragment;
 import com.ath.demo.model.ChannelResponse;
 import com.ath.demo.model.ServerResponse;
 import com.ath.demo.model.ShowsResponse;
+import com.ath.demo.viewModel.ChannelViewModel;
 import com.ath.demo.webService.ApiClient;
 
 import java.util.ArrayList;

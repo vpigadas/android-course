@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ath.demo.ChannelActivity;
+import com.ath.demo.activities.ChannelActivity;
 import com.ath.demo.R;
 
 import java.util.ArrayList;
