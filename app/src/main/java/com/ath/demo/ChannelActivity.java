@@ -30,14 +30,10 @@ import retrofit2.Callback;
 
 public class ChannelActivity extends AbstractActivity {
 
-    FragmentAdapter pageAdapter;
-    int index;
     private ChannelViewModel channelViewModel;
-    List<String> channelNames = new ArrayList<>();
-
-
-    int channel_icons[] = {R.drawable.ic_channel_vouli, R.drawable.ic_channel_skai, R.drawable.ic_channel_alpha, R.drawable.ic_channel_ert3, R.drawable.ic_channel_ant1,
-            R.drawable.ic_channel_ert1, R.drawable.ic_channel_ert2, R.drawable.ic_channel_open, R.drawable.ic_channel_star};
+    private FragmentAdapter pageAdapter;
+    private int index;
+    private List<String> channelNames = new ArrayList<>();
 
     private boolean isConnected() {
         try {
@@ -55,7 +51,6 @@ public class ChannelActivity extends AbstractActivity {
         return false;
     }
 
-
     @Override
     public int getLayout() {
         return R.layout.activity_channel;
@@ -68,6 +63,8 @@ public class ChannelActivity extends AbstractActivity {
     @Override
     public void runOperation() {
 
+        channelViewModel = ViewModelProviders.of(this).get(ChannelViewModel.class);
+        final int channel_icons[] = channelViewModel.getChannel_icons();
 
         final ViewPager pager = (ViewPager) findViewById(R.id.view_pager);
         pageAdapter = new FragmentAdapter(getSupportFragmentManager(),new ArrayList<Fragment>());
@@ -88,11 +85,7 @@ public class ChannelActivity extends AbstractActivity {
             }
         });
 
-
-        channelViewModel = ViewModelProviders.of(this).get(ChannelViewModel.class);
-
         if(isConnected()){
-
             ApiClient.getInstance().getTv(new Callback<ServerResponse>() {
                 @Override
                 public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {

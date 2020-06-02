@@ -24,12 +24,9 @@ import retrofit2.Call;
 public class MainActivity extends AbstractActivity {
 
     private MainViewModel mainViewModel;
-    RecyclerView recyclerView;
+    private RecyclerView recyclerView;
     private LinearLayoutManager mLayoutManager;
-    Parcelable state;
-
-    int channel_icons[] = {R.drawable.ic_channel_vouli, R.drawable.ic_channel_skai, R.drawable.ic_channel_alpha, R.drawable.ic_channel_ert3, R.drawable.ic_channel_ant1,
-            R.drawable.ic_channel_ert1, R.drawable.ic_channel_ert2, R.drawable.ic_channel_open, R.drawable.ic_channel_star};
+    private Parcelable state;
 
     private boolean isConnected() {
         try {
@@ -60,6 +57,9 @@ public class MainActivity extends AbstractActivity {
     @Override
     public void runOperation() {
 
+        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        final int channel_icons[] = mainViewModel.getChannel_icons();
+
         recyclerView = findViewById(R.id.main_recyclerView);
         mLayoutManager = new LinearLayoutManager(getBaseContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -67,8 +67,6 @@ public class MainActivity extends AbstractActivity {
 
         final MainRecyclerAdapter mainRecyclerAdapter = new MainRecyclerAdapter(getBaseContext(), channel_icons);
         recyclerView.setAdapter(mainRecyclerAdapter);
-
-        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
         if(isConnected()){
             ApiClient.getInstance().getTv(new retrofit2.Callback<ServerResponse>() {
@@ -114,7 +112,6 @@ public class MainActivity extends AbstractActivity {
             }
         });
     }
-
 
     @Override
     public void stopOperation() {

@@ -16,6 +16,8 @@ public class ChannelViewModel extends AndroidViewModel {
     private Repository repository;
     private LiveData<List<ChannelResponse>> channels;
     private LiveData<List<ShowsResponse>> shows;
+    private int channel_icons[] = {R.drawable.ic_channel_vouli, R.drawable.ic_channel_skai, R.drawable.ic_channel_alpha, R.drawable.ic_channel_ert3, R.drawable.ic_channel_ant1,
+            R.drawable.ic_channel_ert1, R.drawable.ic_channel_ert2, R.drawable.ic_channel_open, R.drawable.ic_channel_star};
 
     public ChannelViewModel(@NonNull Application application) {
         super(application);
@@ -50,5 +52,9 @@ public class ChannelViewModel extends AndroidViewModel {
 
     public LiveData<List<ShowsResponse>> getShows() {
         return shows;
+    }
+
+    public int[] getChannel_icons() {
+        return channel_icons;
     }
 }
