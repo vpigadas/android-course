@@ -21,7 +21,7 @@ And this is why I chose the _MVVM_ design pattern for my project.
 
 ### MVVM in the project
 
-The _MMVM_ is the design pattern based on which the project is structured.
+The _MVVM_ is the design pattern based on which the project is structured.
 
 * Views display a certain shape of data. They have no idea where the data comes from.
 * ViewModels hold a certain shape of data and commands, they do not know where the data, or code, comes from or how it is displayed.
