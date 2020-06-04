@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.applicationgame.tv_guide.communication.Channel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
@@ -57,8 +58,21 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         pos = listPosition;
     }
 
+    public void setChannels(List<Channel> channelsvm) {
+        this.channels = (ArrayList<Channel>) channelsvm;
+        notifyDataSetChanged();
+    }
+
+    public ArrayList<Channel> getChannels() {
+        return channels;
+    }
+
     @Override
     public int getItemCount() {
-        return channels.size();
+        if (channels == null) {
+            return channels.size();
+        }else {
+            return 0;
+        }
     }
 }

@@ -11,6 +11,7 @@ import com.applicationgame.tv_guide.communication.Program;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class FragmentAdapter extends RecyclerView.Adapter<FragmentAdapter.MyViewHolder> {
 
@@ -65,6 +66,10 @@ public class FragmentAdapter extends RecyclerView.Adapter<FragmentAdapter.MyView
         prName.setText(prNameTmp);
         sTime.setText(programs.get(listPosition).getStartTimeCaption());
         eTime.setText(programs.get(listPosition).getEndTimeCaption());
+    }
+    void setPrograms(List<Program> programsvm) {
+        programs = (ArrayList<Program>) programsvm;
+        notifyDataSetChanged();
     }
 
     @Override

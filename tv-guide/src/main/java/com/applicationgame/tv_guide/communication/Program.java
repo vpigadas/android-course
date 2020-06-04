@@ -3,26 +3,61 @@ package com.applicationgame.tv_guide.communication;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@Entity(tableName = "programs", foreignKeys = {
+        @ForeignKey(
+                entity = Channel.class,
+                parentColumns = "channelId",
+                childColumns = "channelName")})
 public class Program implements Parcelable {
 
+    @ColumnInfo(name = "endTime")
     @SerializedName("endTime")
     @Expose
     private int endTime;
+
+    @NonNull
+    @PrimaryKey
+    @ColumnInfo(name = "program_title")
     @SerializedName("title")
     @Expose
     private String title;
+
+    @ColumnInfo(name = "startTime")
     @SerializedName("startTime")
     @Expose
     private int startTime;
+
+    @ColumnInfo(name = "endTimeCaption")
     @SerializedName("endTimeCaption")
     @Expose
     private String endTimeCaption;
+
+    @ColumnInfo(name = "startTimeCaption")
     @SerializedName("startTimeCaption")
     @Expose
     private String startTimeCaption;
+
+    @ColumnInfo(name = "channelName")
+    private String channelName;
+
+    public Program (String title, int startTime, String startTimeCaption, int endTime, String endTimeCaption, String channelName){
+        super();
+        this.title            = title;
+        this.startTime        = startTime;
+        this.startTimeCaption = startTimeCaption;
+        this.endTime          = endTime;
+        this.endTimeCaption   = endTimeCaption;
+        this.setChannelName(channelName);
+    }
 
     public int getEndTime() {
         return endTime;
@@ -64,6 +99,15 @@ public class Program implements Parcelable {
         this.startTimeCaption = startTimeCaption;
     }
 
+    public String getChannelName() {
+        return channelName;
+    }
+
+    public void setChannelName(String channelName) {
+        this.channelName = channelName;
+    }
+
+
     //
     public Program(Parcel in){
         String[] data = new String[3];
@@ -102,4 +146,5 @@ public class Program implements Parcelable {
             return new Program[size];
         }
     };
+
 }
