@@ -12,7 +12,17 @@ public class ChannelResponse {
 
     @NonNull
     @PrimaryKey
+    private int channelId;
+
     private String channelName;
+
+    public ChannelResponse() {
+    }
+
+    public ChannelResponse(int channelId, String channelName) {
+        this.channelId = channelId;
+        this.channelName = channelName;
+    }
 
     @Ignore
     private List<ShowsResponse> shows;
@@ -31,5 +41,13 @@ public class ChannelResponse {
 
     public void setChannelName(String channelName) {
         this.channelName = channelName;
+    }
+
+    public int getChannelId() {
+        return channelId;
+    }
+
+    public void setChannelId(int channelId) {
+        this.channelId = channelId;
     }
 }

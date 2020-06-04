@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName="show_response", foreignKeys = {
         @ForeignKey(
                 entity = ChannelResponse.class,
-                parentColumns = "channelName",
+                parentColumns = "channelId",
                 childColumns = "channel_fk"
         )})
 public class ShowsResponse {
@@ -24,7 +24,7 @@ public class ShowsResponse {
     private String startTimeCaption;
 
     @ColumnInfo(name = "channel_fk")
-    private String ChannelIdFk;
+    private int ChannelIdFk;
 
     public String getEndTime() {
         return endTime;
@@ -66,11 +66,11 @@ public class ShowsResponse {
         this.startTimeCaption = startTimeCaption;
     }
 
-    public String getChannelIdFk() {
+    public int getChannelIdFk() {
         return ChannelIdFk;
     }
 
-    public void setChannelIdFk(String channelIdFk) {
+    public void setChannelIdFk(int channelIdFk) {
         ChannelIdFk = channelIdFk;
     }
 }

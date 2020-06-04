@@ -34,7 +34,7 @@ public class ChannelActivity extends AbstractActivity {
     private ChannelViewModel channelViewModel;
     private FragmentAdapter pageAdapter;
     private int index;
-    private List<String> channelNames = new ArrayList<>();
+    private List<ChannelResponse> channelsGlobal = new ArrayList<>();
 
     private boolean isConnected() {
         try {
@@ -59,16 +59,12 @@ public class ChannelActivity extends AbstractActivity {
 
     @Override
     public void initialiseLayout() {
-    }
-
-    @Override
-    public void runOperation() {
 
         channelViewModel = ViewModelProviders.of(this).get(ChannelViewModel.class);
         final int channel_icons[] = channelViewModel.getChannel_icons();
 
         final ViewPager pager = (ViewPager) findViewById(R.id.view_pager);
-        pageAdapter = new FragmentAdapter(getSupportFragmentManager(),new ArrayList<Fragment>());
+        pageAdapter = new FragmentAdapter(getSupportFragmentManager(), new ArrayList<Fragment>());
         pager.setAdapter(pageAdapter);
 
         ImageView lArrow = findViewById(R.id.left_arrow);
@@ -86,54 +82,62 @@ public class ChannelActivity extends AbstractActivity {
             }
         });
 
-        if(isConnected()){
+        if(!isConnected()){
+            Toast.makeText(ChannelActivity.this, "No internet Connection!",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        if (isConnected()) {
             ApiClient.getInstance().getTv(new Callback<ServerResponseDTO>() {
                 @Override
                 public void onResponse(Call<ServerResponseDTO> call, retrofit2.Response<ServerResponseDTO> response) {
 
-                    List<String> channelNamesTemp = new ArrayList<>();
-
-                    List<Fragment> fragments = new ArrayList<>();
                     List<ChannelResponse> channelResponses = response.body().getChannels();
+                    List<ChannelResponse> channelsTemp = new ArrayList<>();
+                    List<Fragment> fragments = new ArrayList<>();
 
-                    for (int i = index ; i < channelResponses.size(); i++) {
+                    for (int i = index; i < channelResponses.size(); i++) {
 
                         List<ShowsResponse> showsResponses = channelResponses.get(i).getShows();
                         ArrayList<String> titles = new ArrayList<>();
                         ArrayList<String> startTimes = new ArrayList<>();
-                        channelViewModel.insert(channelResponses.get(i));
+
+                        ChannelResponse channel = new ChannelResponse(i, channelResponses.get(i).getChannelName());
+                        channelViewModel.insert(channel);
+                        channelsTemp.add(channel);
 
                         for (ShowsResponse showsResponse : showsResponses) {
-
-                            showsResponse.setChannelIdFk(channelResponses.get(i).getChannelName());
+                            showsResponse.setChannelIdFk(i);
                             channelViewModel.insertShow(showsResponse);
-
                             titles.add(showsResponse.getTitle());
                             startTimes.add(showsResponse.getStartTime());
                         }
                         fragments.add(ChannelFragment.newInstance(channel_icons[i], titles, startTimes));
                     }
 
-                    for (int i = 0 ; i < index; i++) {
+                    for (int i = 0; i < index; i++) {
+
 
                         List<ShowsResponse> showsResponses = channelResponses.get(i).getShows();
                         ArrayList<String> titles = new ArrayList<>();
                         ArrayList<String> startTimes = new ArrayList<>();
-                        channelViewModel.insert(channelResponses.get(i));
+
+                        ChannelResponse channel = new ChannelResponse(i, channelResponses.get(i).getChannelName());
+                        channelViewModel.insert(channel);
+                        channelsTemp.add(channel);
 
                         for (ShowsResponse showsResponse : showsResponses) {
-
-                            showsResponse.setChannelIdFk(channelResponses.get(i).getChannelName());
+                            showsResponse.setChannelIdFk(i);
                             channelViewModel.insertShow(showsResponse);
-
                             titles.add(showsResponse.getTitle());
                             startTimes.add(showsResponse.getStartTime());
                         }
                         fragments.add(ChannelFragment.newInstance(channel_icons[i], titles, startTimes));
                     }
-                    channelNames = channelNamesTemp;
+                    channelsGlobal = channelsTemp;
                     pageAdapter.setFragments(fragments);
                 }
+
                 @Override
                 public void onFailure(Call<ServerResponseDTO> call, Throwable t) {
                     Toast.makeText(ChannelActivity.this, "Something went wrong...Please try later!",
@@ -141,20 +145,11 @@ public class ChannelActivity extends AbstractActivity {
                 }
             });
         }
-        else{
-            Toast.makeText(ChannelActivity.this, "No internet Connection!",
-                    Toast.LENGTH_SHORT).show();
-        }
-
 
         channelViewModel.getChannels().observe(this, new Observer<List<ChannelResponse>>() {
             @Override
             public void onChanged(List<ChannelResponse> channelResponses) {
-                List<String> channelNamesTemp = new ArrayList<>();
-                for (int i = 0 ; i < channelResponses.size(); i++) {
-                    channelNamesTemp.add(channelResponses.get(i).getChannelName());
-                }
-                channelNames = channelNamesTemp;
+                channelsGlobal = channelResponses;
             }
         });
 
@@ -164,13 +159,13 @@ public class ChannelActivity extends AbstractActivity {
 
                 final List<Fragment> fragments = new ArrayList<>();
 
-                for (int i = index ; i < channelNames.size(); i++) {
+                for (int i = index; i < channelsGlobal.size(); i++) {
 
                     ArrayList<String> titles = new ArrayList<>();
                     ArrayList<String> startTimes = new ArrayList<>();
 
                     for (ShowsResponse showsResponse : showsResponses) {
-                        if(showsResponse.getChannelIdFk().equals(channelNames.get(i))){
+                        if (showsResponse.getChannelIdFk() == channelsGlobal.get(i).getChannelId()) {
                             titles.add(showsResponse.getTitle());
                             startTimes.add(showsResponse.getStartTime());
                         }
@@ -178,13 +173,13 @@ public class ChannelActivity extends AbstractActivity {
                     fragments.add(ChannelFragment.newInstance(channel_icons[i], titles, startTimes));
                 }
 
-                for (int i = 0 ; i < index; i++) {
+                for (int i = 0; i < index; i++) {
 
                     ArrayList<String> titles = new ArrayList<>();
                     ArrayList<String> startTimes = new ArrayList<>();
 
                     for (ShowsResponse showsResponse : showsResponses) {
-                        if(showsResponse.getChannelIdFk().equals(channelNames.get(i))){
+                        if (showsResponse.getChannelIdFk() == channelsGlobal.get(i).getChannelId()) {
                             titles.add(showsResponse.getTitle());
                             startTimes.add(showsResponse.getStartTime());
                         }
@@ -194,6 +189,10 @@ public class ChannelActivity extends AbstractActivity {
                 pageAdapter.setFragments(fragments);
             }
         });
+    }
+
+    @Override
+    public void runOperation() {
     }
 
     @Override
@@ -214,7 +213,7 @@ public class ChannelActivity extends AbstractActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle extras = getIntent().getExtras();
-        if(extras !=null) {
+        if (extras != null) {
             index = extras.getInt("index");
         }
     }

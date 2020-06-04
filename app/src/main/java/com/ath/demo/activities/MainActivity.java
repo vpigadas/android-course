@@ -3,6 +3,7 @@ package com.ath.demo.activities;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.widget.Toast;
 
@@ -56,11 +57,6 @@ public class MainActivity extends AbstractActivity {
     @Override
     public void initialiseLayout() {
 
-    }
-
-    @Override
-    public void runOperation() {
-
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         final int channel_icons[] = mainViewModel.getChannel_icons();
 
@@ -72,49 +68,52 @@ public class MainActivity extends AbstractActivity {
         final MainRecyclerAdapter mainRecyclerAdapter = new MainRecyclerAdapter(getBaseContext(), channel_icons);
         recyclerView.setAdapter(mainRecyclerAdapter);
 
-        if(isConnected()){
+        if(!isConnected()){
+            Toast.makeText(MainActivity.this, "No internet Connection!",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        if (isConnected()) {
             ApiClient.getInstance().getTv(new retrofit2.Callback<ServerResponseDTO>() {
 
                 @Override
                 public void onResponse(Call<ServerResponseDTO> call, retrofit2.Response<ServerResponseDTO> response) {
 
-                    ArrayList<String> channel_names = new ArrayList<>();
+                    List<ChannelResponse> channelResponses = response.body().getChannels();
+                    List<ChannelResponse> channels = new ArrayList<>();
 
-                    for (ChannelResponse channelResponse : response.body().getChannels()) {
-                        mainViewModel.insert(channelResponse);
-                        for(ShowsResponse showsResponse : channelResponse.getShows()){
-                            showsResponse.setChannelIdFk(channelResponse.getChannelName());
+                    for (int i = 0; i < channelResponses.size(); i++) {
+
+                        ChannelResponse channel = new ChannelResponse(i, channelResponses.get(i).getChannelName());
+                        mainViewModel.insert(channel);
+                        channels.add(channel);
+
+                        for (ShowsResponse showsResponse : channelResponses.get(i).getShows()) {
+                            showsResponse.setChannelIdFk(i);
                             mainViewModel.insertShow(showsResponse);
                         }
-                        channel_names.add(channelResponse.getChannelName());
                     }
-                    mainRecyclerAdapter.setChannelNames(channel_names);
+                    mainRecyclerAdapter.setChannels(channels);
                 }
+
                 @Override
                 public void onFailure(Call<ServerResponseDTO> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Something went wrong...Please try later!",
-                        Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Something went wrong...Please try later!",
+                            Toast.LENGTH_SHORT).show();
                 }
             });
         }
-        else{
-            Toast.makeText(MainActivity.this, "No internet Connection!",
-                    Toast.LENGTH_SHORT).show();
-        }
-
 
         mainViewModel.getChannels().observe(this, new Observer<List<ChannelResponse>>() {
             @Override
             public void onChanged(List<ChannelResponse> channelResponses) {
-
-                ArrayList<String> channel_names = new ArrayList<>();
-
-                for (ChannelResponse channelResponse : channelResponses) {
-                    channel_names.add(channelResponse.getChannelName());
-                }
-                mainRecyclerAdapter.setChannelNames(channel_names);
+                mainRecyclerAdapter.setChannels(channelResponses);
             }
         });
+    }
+
+    @Override
+    public void runOperation() {
     }
 
     @Override
@@ -126,5 +125,6 @@ public class MainActivity extends AbstractActivity {
     public void destroyLayout() {
 
     }
+
 
 }

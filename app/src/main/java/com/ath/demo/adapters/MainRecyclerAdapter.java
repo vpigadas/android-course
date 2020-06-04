@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ath.demo.activities.ChannelActivity;
 import com.ath.demo.R;
+import com.ath.demo.model.ChannelResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
 
     Context context;
     int[] icons;
-    List<String> texts = new ArrayList<>();
+    List<ChannelResponse> channels = new ArrayList<>();
 
     public MainRecyclerAdapter(Context ct, int[] imgs) {
         context = ct;
@@ -42,8 +43,8 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
 
-        holder.iconStart.setImageResource(icons[position]);
-        holder.text.setText(texts.get(position));
+        holder.iconStart.setImageResource(icons[channels.get(position).getChannelId()]);
+        holder.text.setText(channels.get(position).getChannelName());
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,11 +58,11 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
 
     @Override
     public int getItemCount() {
-        return texts.size();
+        return channels.size();
     }
 
-    public void setChannelNames(List<String> names){
-        this.texts = names;
+    public void setChannels(List<ChannelResponse> channels){
+        this.channels = channels;
         notifyDataSetChanged();
     }
 
