@@ -1,4 +1,4 @@
-package com.applicationgame.tv_guide;
+package com.applicationgame.tv_guide.fragments;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.applicationgame.tv_guide.R;
 import com.applicationgame.tv_guide.models.Program;
 
 import java.io.UnsupportedEncodingException;

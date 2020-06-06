@@ -1,4 +1,4 @@
-package com.applicationgame.tv_guide;
+package com.applicationgame.tv_guide.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -29,6 +29,8 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.applicationgame.tv_guide.R;
+import com.applicationgame.tv_guide.adapters.Adapter;
 import com.applicationgame.tv_guide.models.Channel;
 import com.applicationgame.tv_guide.models.Program;
 import com.applicationgame.tv_guide.models.ServerResponse;

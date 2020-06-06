@@ -1,4 +1,4 @@
-package com.applicationgame.tv_guide;
+package com.applicationgame.tv_guide.activities;
 
 import android.os.Bundle;
 

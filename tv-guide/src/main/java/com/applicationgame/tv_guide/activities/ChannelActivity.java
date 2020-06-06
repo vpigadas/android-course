@@ -1,4 +1,4 @@
-package com.applicationgame.tv_guide;
+package com.applicationgame.tv_guide.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,8 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.applicationgame.tv_guide.R;
+import com.applicationgame.tv_guide.fragments.ChannelFragment;
 import com.applicationgame.tv_guide.models.Channel;
 import com.applicationgame.tv_guide.models.Program;
 import com.applicationgame.tv_guide.models.ServerResponse;

@@ -1,4 +1,4 @@
-package com.applicationgame.tv_guide;
+package com.applicationgame.tv_guide.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +8,8 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.applicationgame.tv_guide.activities.MainActivity;
+import com.applicationgame.tv_guide.R;
 import com.applicationgame.tv_guide.models.Channel;
 
 import java.util.ArrayList;

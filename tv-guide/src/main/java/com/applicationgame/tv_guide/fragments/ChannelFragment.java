@@ -1,4 +1,4 @@
-package com.applicationgame.tv_guide;
+package com.applicationgame.tv_guide.fragments;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.applicationgame.tv_guide.R;
 import com.applicationgame.tv_guide.models.Program;
 import com.applicationgame.tv_guide.view_models.ProgramViewModel;
 
