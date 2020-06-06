@@ -16,9 +16,9 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.applicationgame.tv_guide.communication.Channel;
-import com.applicationgame.tv_guide.communication.Program;
-import com.applicationgame.tv_guide.communication.ServerResponse;
+import com.applicationgame.tv_guide.models.Channel;
+import com.applicationgame.tv_guide.models.Program;
+import com.applicationgame.tv_guide.models.ServerResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

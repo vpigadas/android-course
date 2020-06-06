@@ -6,9 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.applicationgame.tv_guide.communication.Channel;
+import com.applicationgame.tv_guide.models.Channel;
 import com.applicationgame.tv_guide.repository.Repo;
-import com.applicationgame.tv_guide.communication.Program;
+import com.applicationgame.tv_guide.models.Program;
 
 import java.util.List;
 

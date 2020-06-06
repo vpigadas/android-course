@@ -6,8 +6,8 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.applicationgame.tv_guide.communication.Channel;
-import com.applicationgame.tv_guide.communication.Program;
+import com.applicationgame.tv_guide.models.Channel;
+import com.applicationgame.tv_guide.models.Program;
 
 @Database(entities = {Channel.class, Program.class}, version = 5, exportSchema = false)
 public abstract class ChannelDataBase extends RoomDatabase {

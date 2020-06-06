@@ -1,4 +1,4 @@
-package com.applicationgame.tv_guide.communication;
+package com.applicationgame.tv_guide.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;

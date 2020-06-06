@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.applicationgame.tv_guide.communication.Program;
+import com.applicationgame.tv_guide.models.Program;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;

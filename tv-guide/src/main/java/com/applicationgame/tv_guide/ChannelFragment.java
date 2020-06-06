@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.applicationgame.tv_guide.communication.Program;
+import com.applicationgame.tv_guide.models.Program;
 import com.applicationgame.tv_guide.view_models.ProgramViewModel;
 
 import java.util.ArrayList;

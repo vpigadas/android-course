@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.applicationgame.tv_guide.communication.Channel;
+import com.applicationgame.tv_guide.models.Channel;
 
 import java.util.ArrayList;
 import java.util.List;

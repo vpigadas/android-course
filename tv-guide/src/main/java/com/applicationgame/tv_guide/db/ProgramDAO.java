@@ -7,7 +7,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.applicationgame.tv_guide.communication.Program;
+import com.applicationgame.tv_guide.models.Program;
 
 import java.util.List;
 

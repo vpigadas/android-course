@@ -6,8 +6,8 @@ import android.os.AsyncTask;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
-import com.applicationgame.tv_guide.communication.Channel;
-import com.applicationgame.tv_guide.communication.Program;
+import com.applicationgame.tv_guide.models.Channel;
+import com.applicationgame.tv_guide.models.Program;
 import com.applicationgame.tv_guide.db.ChannelDAO;
 import com.applicationgame.tv_guide.db.ChannelDataBase;
 import com.applicationgame.tv_guide.db.ProgramDAO;

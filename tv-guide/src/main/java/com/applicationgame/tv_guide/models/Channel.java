@@ -1,4 +1,4 @@
-package com.applicationgame.tv_guide.communication;
+package com.applicationgame.tv_guide.models;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
