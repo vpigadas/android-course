@@ -1,4 +1,4 @@
-package com.athtech.tv_app;
+package com.athtech.tv_app.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -6,11 +6,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.athtech.tv_app.communication.ServerResponse;
+import com.athtech.tv_app.Controller.ChannelFragment;
+import com.athtech.tv_app.Controller.PageTransformer;
+import com.athtech.tv_app.R;
+import com.athtech.tv_app.Model.Communication.ServerResponse;
 
 import java.util.ArrayList;
 
@@ -53,7 +57,6 @@ public class ChannelActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-
             String channelName = serverResponse.channels.get(position).channelName;
             StringBuilder content = new StringBuilder();
             for (int x = 0; x < serverResponse.channels.get(position).program.size() - 1; x++) {
@@ -102,6 +105,10 @@ public class ChannelActivity extends AppCompatActivity {
         channelFramgnets.add(channelFragment9);
         channelFramgnets.add(channelFragment10);
     }
+
+
+
+
 }
 
 

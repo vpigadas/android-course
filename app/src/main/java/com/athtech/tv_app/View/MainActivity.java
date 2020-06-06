@@ -1,25 +1,32 @@
-package com.athtech.tv_app;
+package com.athtech.tv_app.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
-
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.View;
-
+import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.athtech.tv_app.communication.ServerResponse;
-import com.athtech.tv_app.database.TvDatabase;
+import com.athtech.tv_app.Model.Channel;
+import com.athtech.tv_app.R;
+import com.athtech.tv_app.Model.Communication.ServerResponse;
+import com.athtech.tv_app.Model.Database.TvDatabase;
 import com.google.gson.Gson;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     TextView Channel1_name;
@@ -56,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
     ImageButton Channel10_nav;
 
     ServerResponse serverResponse;
+    public static TvDatabase db;
+    private boolean responded=false;
+    private int reconnetDelay=2500;
+    private int maxRespToHold=3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,9 +149,9 @@ public class MainActivity extends AppCompatActivity {
 
         makeARequest();
 
-        TvDatabase db = Room.databaseBuilder(getApplicationContext(),
-                TvDatabase.class, "database-name").build();
-
+        db = Room.databaseBuilder(getApplicationContext(),
+                TvDatabase.class, "database-name").allowMainThreadQueries().build();
+        new Timer().schedule(new reconnectTask(), reconnetDelay, reconnetDelay); //Attempts reconnection if the app has started in offline mode
     }
 
     public void setupChannel (final Channel channel, TextView channel_name, ImageView channel_logo, final ImageView channel_nav, final int pageNum){
@@ -154,13 +165,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openChannelsActivity(int pageNum) {
-        Intent intent= new Intent(this, ChannelActivity.class);
+        Intent intent = new Intent(this, ChannelActivity.class);
+             if (isOnline() && !responded) {
+                Toast noresponse = Toast.makeText(this, "Waiting to retrieve program details...", Toast.LENGTH_SHORT);
+                noresponse.show();
+                return;
+            } else if (!isOnline()) {
+                Toast offlineNotification = Toast.makeText(this, "Your device is not connected to the internet. Data might be outdated.", Toast.LENGTH_LONG);
+                offlineNotification.show();
+                List<ServerResponse> responses = db.tvchannelDao().getAll();
+                try {
+                    serverResponse = responses.get(responses.size() - 1);
+                    if (responses.size() >= maxRespToHold) { responses.remove(0); } //Prevents the db from growing and taking needless space on user's device
+                }catch (IndexOutOfBoundsException a) { //Prevents crushing in offline mode if the db is empty
+                    Toast nodataNotification = Toast.makeText(this, "No data available. Please connect to the internet.", Toast.LENGTH_LONG);
+                    nodataNotification.show();
+                    return;
+                }
+            }
         intent.putExtra("serverResponse", serverResponse);
         intent.putExtra("pageNum", pageNum);
         startActivity(intent);
     }
 
-    private void makeARequest() {
+
+    public void makeARequest() {
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "https://api-vpigadas.herokuapp.com/api/zapping/demo/athtech/tv";
 
@@ -169,6 +198,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         serverResponse = new Gson().fromJson(response, ServerResponse.class);
+                        db.tvchannelDao().insert(serverResponse);
+                        responded=true;
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -178,5 +209,32 @@ public class MainActivity extends AppCompatActivity {
         });
 
         queue.add(stringRequest);
+
+
     }
+
+    public boolean isOnline() {
+        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connManager.getActiveNetworkInfo();
+
+        if(networkInfo != null && networkInfo.isConnectedOrConnecting()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public class reconnectTask extends TimerTask {
+        @Override
+        public void run() {
+            if (!responded) {
+                makeARequest();
+          } else {
+              this.cancel();
+           }
+        }
+    }
+
+
 }

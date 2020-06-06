@@ -1,4 +1,4 @@
-package com.athtech.tv_app;
+package com.athtech.tv_app.Controller;
 
 import android.view.View;
 import androidx.viewpager.widget.ViewPager;

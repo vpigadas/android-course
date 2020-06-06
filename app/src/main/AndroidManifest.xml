@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.athtech.tv_app">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -11,11 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Platform.MaterialComponents.Light">
-        <activity android:name=".ChannelActivity"
-            android:parentActivityName=".MainActivity"
+        <activity android:name=".View.ChannelActivity"
+            android:parentActivityName=".View.MainActivity"
             android:label="@string/channelactivity_label">
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".View.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

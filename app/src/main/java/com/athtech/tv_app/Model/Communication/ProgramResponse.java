@@ -1,8 +1,4 @@
-package com.athtech.tv_app.communication;
-
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+package com.athtech.tv_app.Model.Communication;
 
 import java.io.Serializable;
 

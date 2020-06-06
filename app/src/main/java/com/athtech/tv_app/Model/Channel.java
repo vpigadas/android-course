@@ -1,4 +1,4 @@
-package com.athtech.tv_app;
+package com.athtech.tv_app.Model;
 
 import android.graphics.drawable.Drawable;
 

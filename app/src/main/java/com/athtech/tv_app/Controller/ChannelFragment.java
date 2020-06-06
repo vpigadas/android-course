@@ -1,11 +1,10 @@
-package com.athtech.tv_app;
+package com.athtech.tv_app.Controller;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.athtech.tv_app.R;
 
 import java.io.UnsupportedEncodingException;
 
