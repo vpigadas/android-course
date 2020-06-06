@@ -17,4 +17,4 @@ The _Model_ and the _View_ here have actually the same functionality with the _M
 
 - The _View-Model_ connects the _View_ and the _Model_ in the way that, the _View_ can have an instance of a _View-Model_ and then have access to the data in the _Model_. The amazing thing is that _View-Model_ does not know anything about the _View_ and from the other side, _View-Model_ has a one to many relationship with the _View_.
 That means, that many and different _Views_ can have an instance of a _View-Model_. The main reason of using _MVVM_ was that is recommended for applications with bi-directional data binding, like in our **TV-Guide** we need to bind the data between the DB and the API and of'course the UI.
-The idea behind this design pattern in our application is to create a _View-Model_ for Programs and Channels in order to store information to DB from the API and fetch data from DB to UI.
+The idea behind this design pattern in our application is to create a _View-Model_ for **Programs** and **Channels** in order to store information to DB from the API and fetch data from DB to UI.
