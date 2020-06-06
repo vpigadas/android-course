@@ -1,4 +1,4 @@
-package com.applicationgame.tv_guide;
+package com.applicationgame.tv_guide.repository;
 
 import android.app.Application;
 import android.os.AsyncTask;
@@ -22,14 +22,18 @@ public class Repo {
     private LiveData<List<Channel>> channels;
     @NonNull
     private LiveData<List<Program>> programs;
+    @NonNull
+    private LiveData<List<Program>> programsWithId;
+    int id;
 
 
     public Repo(Application application) {
         ChannelDataBase db = ChannelDataBase.getInstance(application);
-        channelDAO = db.channelDao;
+        channelDAO = db.channelDAO();
         channels   = channelDAO.getAllChannels();
-        programDAO = db.programDAO;
+        programDAO = db.programDAO();
         programs   = programDAO.getAllProg();
+//        programsWithId = programDAO.getAllProgWithChannelId(id);
 
     }
 
@@ -41,6 +45,10 @@ public class Repo {
         return programs;
     }
 
+    public LiveData<List<Program>> getProgramsWithId(int id) {
+        return programDAO.getAllProgWithChannelId(id);
+    }
+
     public void insertChannel (Channel channel) {
         new insertAsyncTaskforChannel(channelDAO).execute(channel);
     }
@@ -48,6 +56,11 @@ public class Repo {
     public void insertProgram (Program program) {
         new insertAsyncTaskforProgram(programDAO).execute(program);
     }
+
+    public void update(Channel channel){
+        new UpdateChannelAsyncTask(channelDAO).execute(channel);
+    }
+
 
     private static class insertAsyncTaskforChannel extends AsyncTask<Channel, Void, Void> {
         private ChannelDAO mAsyncTaskDAO;
@@ -73,6 +86,20 @@ public class Repo {
         @Override
         protected Void doInBackground(final Program... programs) {
             mAsyncTaskDAO.insert(programs[0]);
+            return null;
+        }
+    }
+
+    private static class UpdateChannelAsyncTask extends AsyncTask<Channel, Void, Void>{
+
+        private ChannelDAO channelDAO;
+        public UpdateChannelAsyncTask(ChannelDAO channelDAO) {
+            this.channelDAO = channelDAO;
+        }
+
+        @Override
+        protected Void doInBackground(Channel... channels) {
+            channelDAO.update(channels[0]);
             return null;
         }
     }

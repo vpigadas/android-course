@@ -7,16 +7,18 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-@Entity(tableName = "programs", foreignKeys = {
+@Entity(tableName = "programs", indices = {@Index(value = {"channelId"})},
+        foreignKeys = {
         @ForeignKey(
                 entity = Channel.class,
                 parentColumns = "channelId",
-                childColumns = "channelName")})
+                childColumns = "channelId")})
 public class Program implements Parcelable {
 
     @ColumnInfo(name = "endTime")
@@ -24,8 +26,7 @@ public class Program implements Parcelable {
     @Expose
     private int endTime;
 
-    @NonNull
-    @PrimaryKey
+
     @ColumnInfo(name = "program_title")
     @SerializedName("title")
     @Expose
@@ -46,17 +47,23 @@ public class Program implements Parcelable {
     @Expose
     private String startTimeCaption;
 
-    @ColumnInfo(name = "channelName")
-    private String channelName;
+    @ColumnInfo(name = "channelId")
+    private int channelId;
 
-    public Program (String title, int startTime, String startTimeCaption, int endTime, String endTimeCaption, String channelName){
+    @NonNull
+    @PrimaryKey
+    @ColumnInfo(name = "programId")
+    private int programId;
+
+    public Program (int programId, String title, int startTime, String startTimeCaption, int endTime, String endTimeCaption, int channelId){
         super();
+        this.programId        = programId;
         this.title            = title;
         this.startTime        = startTime;
         this.startTimeCaption = startTimeCaption;
         this.endTime          = endTime;
         this.endTimeCaption   = endTimeCaption;
-        this.setChannelName(channelName);
+        this.channelId        = channelId;
     }
 
     public int getEndTime() {
@@ -99,12 +106,20 @@ public class Program implements Parcelable {
         this.startTimeCaption = startTimeCaption;
     }
 
-    public String getChannelName() {
-        return channelName;
+    public int getChannelId() {
+        return channelId;
     }
 
-    public void setChannelName(String channelName) {
-        this.channelName = channelName;
+    public void setChannelId(int channelId) {
+        this.channelId = channelId;
+    }
+
+    public int getProgramId() {
+        return programId;
+    }
+
+    public void setProgramId(int programId) {
+        this.programId = programId;
     }
 
 

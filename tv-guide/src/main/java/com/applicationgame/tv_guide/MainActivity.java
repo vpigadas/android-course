@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.Observer;
@@ -18,9 +17,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
-import androidx.room.RoomDatabase;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -44,14 +40,16 @@ import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class MainActivity extends AbstractActivity {
 
     public static View.OnClickListener myOnClickListener;
     ServerResponse server;
+    ServerResponse servertmp = new ServerResponse();
 
     ArrayList<Channel> data;
+    ArrayList<Channel> dataDB;
+    ArrayList<Program> programData;
 //    Map<String, List<Program>> map;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -63,6 +61,7 @@ public class MainActivity extends AbstractActivity {
 
     ChannelViewModel channelViewModel;
     ProgramViewModel programViewModel;
+    Adapter adaptre = null;
 
 
     @Override
@@ -73,14 +72,6 @@ public class MainActivity extends AbstractActivity {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void initialiseLayout() {
-//        programViewModel = ViewModelProviders.of(this).get(ProgramViewModel.class);
-
-//        programViewModel.getPrograms().observe((this, new Observer<List<Program>>() {
-//            @Override
-//            public void onChanged(List<Program> programs) {
-//                adapter.
-//            }
-//        }));
 
         prefs = getSharedPreferences("com.applicationgame.tv_guide", MODE_PRIVATE);
 
@@ -91,34 +82,21 @@ public class MainActivity extends AbstractActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-
-
-        db = Room.databaseBuilder(getApplicationContext(),
-                ChannelDataBase.class, "Channels").allowMainThreadQueries().addCallback(new RoomDatabase.Callback() {
-            @Override
-            public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                super.onCreate(db);
-
-//                ioThread {
-//                    getInstance
-//                }
-            }
-        }).build();
-
-//        if (isConnected()) {
-//            fetchTvGuide();
-//        }
-//        fetchTvGuide();
-//        ChannelDataBase db = Room.databaseBuilder(getApplicationContext(),
-//                ChannelDataBase.class, "Channels").build();
-
         myOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ChannelActivity.class);
-                intent.putExtra("channels", jsonServer);
-                int pos = (int) v.getTag();
-                intent.putExtra("position", pos + 1);
+                if (isConnected()){
+                    intent.putExtra("channels", jsonServer);
+                } else {
+                    Gson gson = new GsonBuilder().create();
+//                    ServerResponse servertmp = new ServerResponse();
+                    servertmp.setChannels(dataDB);
+                    String jsonData = gson.toJson(servertmp);
+                    intent.putExtra("channels", jsonData);
+                }
+                    int pos = (int) v.getTag();
+                    intent.putExtra("position", pos + 1);
 
                 startActivity(intent);
             }
@@ -155,21 +133,24 @@ public class MainActivity extends AbstractActivity {
                         server = new Gson().fromJson(response, ServerResponse.class);
 
                         data = server.getChannels();
+                        dataDB = data;
+                        int chid = 1;
+                        int prid = 1;
 
                         for (Channel ch : data
                         ) {
                             Log.d("COMMUNICATION", ch.toString());
+                            ch.setChannelId(chid);
+
                             channelViewModel.insert(ch);
-                        }
-                        if (prefs.getBoolean("initiation", true)) {
-                            for (Channel ch : data
-                            ) {
-                                channelViewModel.insert(ch);
-                                for (Program pr: ch.getProgram()){
-                                    programViewModel.insert(pr);
-                                }
+                            chid++;
+                            programData = ch.getProgram();
+                            for (Program pr : programData){
+                                pr.setProgramId(prid);
+                                pr.setChannelId(ch.getChannelId());
+                                programViewModel.insert(pr);
+                                prid++;
                             }
-                            prefs.edit().putBoolean("initiation", false).apply();
                         }
 
                         Gson gson = new GsonBuilder().create();
@@ -184,10 +165,10 @@ public class MainActivity extends AbstractActivity {
 
                     }
                 }, new Response.ErrorListener() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+//            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("COMMUNICATION", Objects.requireNonNull(error.getMessage()));
+                Log.d("COMMUNICATION", error.getMessage());
 
                 if( error instanceof NetworkError) {
                     //handle your network error here.
@@ -219,50 +200,83 @@ public class MainActivity extends AbstractActivity {
 
     @Override
     public void runOperation() {
-        channelViewModel = ViewModelProviders.of(this).get(ChannelViewModel.class);
 
-        channelViewModel.getChannels().observe(this, new Observer<List<Channel>>() {
-            @Override
-            public void onChanged(@Nullable final List<Channel> channels) {
-//                adapter = new Adapter((ArrayList<Channel>) channels);
-                ((Adapter) adapter).setChannels(channels);
-            }
-        });
+        channelViewModel = ViewModelProviders.of(this).get(ChannelViewModel.class);
+        programViewModel = ViewModelProviders.of(this).get(ProgramViewModel.class);
 
         if (prefs.getBoolean("initiation", true)) {
-            // Do first run stuff here then set 'initiation' as false
+            //the app is being launched for first time, do something
+            Log.d("Comments", "First time");
             if (isConnected()) {
-//                while (data == null) {
-                    fetchTvGuide();
+                fetchTvGuide();
+            }else {
+                Toast.makeText(MainActivity.this, "Please check your internet connection and restart the TV-Guide!",
+                        Toast.LENGTH_SHORT).show();
+            }
+              // record the fact that the app has been started at least once
+            prefs.edit().putBoolean("initiation", false).apply();
+        }else {
+            if (isConnected()) {
+                fetchTvGuide();
+
+//            channelViewModel.getChannels().observe(this, new Observer<List<Channel>>() {
+//                @Override
+//                public void onChanged(@Nullable final List<Channel> channels) {
+//                adapter = new Adapter((ArrayList<Channel>) channels);
+//                    ((Adapter) adapter).setChannels(channels);
+//
 //                }
+//            });
 
             } else {
                 Toast.makeText(MainActivity.this, "Please check your internet connection and try again!",
                         Toast.LENGTH_SHORT).show();
+
+                channelViewModel.getChannels().observe(this, new Observer<List<Channel>>() {
+                    @Override
+                    public void onChanged(@Nullable final List<Channel> channels) {
+//                    adapter = new Adapter((ArrayList<Channel>) channels);
+                        dataDB = (ArrayList<Channel>) channels;
+//                    servertmp.setChannels((ArrayList<Channel>) channels);
+                        adaptre = new Adapter(dataDB);
+                        adaptre.setChannels(channels);
+                        recyclerView.setAdapter(adaptre);
+                    }
+                });
+
             }
-            // using the following line to edit/commit prefs
-            prefs.edit().putBoolean("initiation", false).commit();
-        }
-        if (isConnected()) {
-            fetchTvGuide();
-//            ChannelDataBase db = Room.databaseBuilder(getApplicationContext(),
-//                    ChannelDataBase.class, "Channels").build();
-//            db.channelDao.insert();
-//            saveToDB();
-//            for (Channel ch:data
-//            ) {
-//                db.channelDao.insert(ch);
-//            }
-
-        } else {
-            Toast.makeText(MainActivity.this, "Please check your internet connection and try again!",
-                    Toast.LENGTH_SHORT).show();
 
         }
-////        fetchTvGuide();
-////        ChannelDataBase db = Room.databaseBuilder(getApplicationContext(),
-////                ChannelDataBase.class, "Channels").build();
+
+//        if (isConnected()) {
+//            fetchTvGuide();
 //
+////            channelViewModel.getChannels().observe(this, new Observer<List<Channel>>() {
+////                @Override
+////                public void onChanged(@Nullable final List<Channel> channels) {
+////                adapter = new Adapter((ArrayList<Channel>) channels);
+////                    ((Adapter) adapter).setChannels(channels);
+////
+////                }
+////            });
+//
+//        } else {
+//            Toast.makeText(MainActivity.this, "Please check your internet connection and try again!",
+//                    Toast.LENGTH_SHORT).show();
+//
+//            channelViewModel.getChannels().observe(this, new Observer<List<Channel>>() {
+//                @Override
+//                public void onChanged(@Nullable final List<Channel> channels) {
+////                    adapter = new Adapter((ArrayList<Channel>) channels);
+//                    dataDB = (ArrayList<Channel>) channels;
+////                    servertmp.setChannels((ArrayList<Channel>) channels);
+//                    adaptre = new Adapter(dataDB);
+//                    adaptre.setChannels(channels);
+//                    recyclerView.setAdapter(adaptre);
+//                }
+//            });
+//
+//        }
     }
 
     @Override

@@ -19,6 +19,9 @@ public interface ProgramDAO {
     @Query("SELECT * FROM programs")
     LiveData<List<Program>> getAllProg();
 
+    @Query("SELECT * FROM programs WHERE programs.channelId = :channelId")
+    LiveData<List<Program>> getAllProgWithChannelId(int channelId);
+
     @Insert(onConflict = REPLACE)
     void insert(Program program);
 

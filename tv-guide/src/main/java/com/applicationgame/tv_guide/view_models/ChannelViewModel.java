@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.applicationgame.tv_guide.Repo;
+import com.applicationgame.tv_guide.repository.Repo;
 import com.applicationgame.tv_guide.communication.Channel;
 
 import java.util.List;
@@ -32,5 +32,9 @@ public class ChannelViewModel extends AndroidViewModel {
 
     public void insert(Channel channel) {
         repo.insertChannel(channel);
+    }
+
+    public void update(Channel channel) {
+        repo.update(channel);
     }
 }

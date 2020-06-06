@@ -69,7 +69,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
     @Override
     public int getItemCount() {
-        if (channels == null) {
+        if (channels != null) {
             return channels.size();
         }else {
             return 0;

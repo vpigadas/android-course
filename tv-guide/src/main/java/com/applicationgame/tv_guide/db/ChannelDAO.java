@@ -8,6 +8,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.applicationgame.tv_guide.communication.Channel;
+import com.applicationgame.tv_guide.communication.Program;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface ChannelDAO {
     LiveData<List<Channel>> getAllChannels();
 
     @Query("SELECT * FROM programs")
-    LiveData<List<Channel>> getAllProg();
+    LiveData<List<Program>> getAllProg();
 
     @Insert(onConflict = REPLACE)
     void insert(Channel channel);
@@ -29,5 +30,5 @@ public interface ChannelDAO {
     void delete(Channel channel);
 
     @Update(onConflict = REPLACE)
-    void updateEvent(Channel channel);
+    void update(Channel channel);
 }

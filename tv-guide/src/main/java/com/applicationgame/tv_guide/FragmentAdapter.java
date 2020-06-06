@@ -67,6 +67,7 @@ public class FragmentAdapter extends RecyclerView.Adapter<FragmentAdapter.MyView
         sTime.setText(programs.get(listPosition).getStartTimeCaption());
         eTime.setText(programs.get(listPosition).getEndTimeCaption());
     }
+
     void setPrograms(List<Program> programsvm) {
         programs = (ArrayList<Program>) programsvm;
         notifyDataSetChanged();
@@ -74,6 +75,10 @@ public class FragmentAdapter extends RecyclerView.Adapter<FragmentAdapter.MyView
 
     @Override
     public int getItemCount() {
-        return programs.size();
+        if (programs != null) {
+            return programs.size();
+        }else {
+            return 0;
+        }
     }
 }

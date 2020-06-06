@@ -12,7 +12,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 @Entity(tableName = "channels")
-public class Channel {
+public  class Channel {
 
     @Ignore
     @SerializedName("program")
@@ -30,8 +30,6 @@ public class Channel {
     @ColumnInfo(name = "channelId")
     public int channelId;
 
-//    @ColumnInfo(name = "channelId")
-//    public String channelId;
     public Channel(String channelName, int channelId){
         super();
         this.channelName = channelName;
@@ -56,12 +54,12 @@ public class Channel {
 
 
 
-//    public String getChannelId() {
-//        return channelId;
-//    }
-//
-//    public void setChannelId(String channelId) {
-//        this.channelId = channelId;
-//    }
+    public int getChannelId() {
+        return channelId;
+    }
+
+    public void setChannelId(int channelId) {
+        this.channelId = channelId;
+    }
 
 }

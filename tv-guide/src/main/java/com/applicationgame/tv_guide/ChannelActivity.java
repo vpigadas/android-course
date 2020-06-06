@@ -1,6 +1,9 @@
 package com.applicationgame.tv_guide;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -27,8 +30,9 @@ public class ChannelActivity extends FragmentActivity {
     int pos;
 
     ServerResponse serverResponse;
-    static ArrayList<Channel> channel_list;
+    static ArrayList<Channel> channel_list = new ArrayList<>();
     static ArrayList<Program> program_list;
+    ServerResponse dataDB;
 
     private static int NUM_PAGES = 1;
 
@@ -62,14 +66,6 @@ public class ChannelActivity extends FragmentActivity {
 
     @Override
     public void onBackPressed() {
-//        if (mPager.getCurrentItem() == 0) {
-//            // If the user is currently looking at the first step, allow the system to handle the
-//            // Back button. This calls finish() on this activity and pops the back stack.
-//            super.onBackPressed();
-//        } else {
-//            // Otherwise, select the previous step.
-//            mPager.setCurrentItem(mPager.getCurrentItem() - 1);
-//        }
         super.onBackPressed();
     }
 
@@ -84,6 +80,7 @@ public class ChannelActivity extends FragmentActivity {
 
             Bundle bundle = new Bundle();
             bundle.putString("channelName", channel_list.get(position).getChannelName());
+            bundle.putInt("id", channel_list.get(position).getChannelId());
             program_list = channel_list.get(position).getProgram();
 
             bundle.putParcelableArrayList("programList", program_list);
@@ -98,6 +95,21 @@ public class ChannelActivity extends FragmentActivity {
         public int getCount() {
             return NUM_PAGES;
         }
+    }
+
+    private boolean isConnected() {
+        try {
+            ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+            if (networkInfo == null) return false;
+
+            return networkInfo.isConnected() && networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
+        return false;
     }
 
 }
