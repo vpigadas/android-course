@@ -58,9 +58,14 @@ __3__. The _Presenter_ layer which stands between the _View_ and the _Model_ (ha
 ## References
 
 [1] 2017, "Model View Presenter(MVP) in Android", <https://medium.com/cr8resume/make-you-hand-dirty-with-mvp-model-view-presenter-eab5b5c16e42>
+
 [2] 2016, "Android Architecture Patterns Part 1: Model-View-Controller", <https://medium.com/upday-devs/android-architecture-patterns-part-1-model-view-controller-3baecef5f2b6>
+
 [3] 2019, "Learn the Model-View-Controller Pattern" <https://openclassrooms.com/en/courses/4661936-develop-your-first-android-application/4679186-learn-the-model-view-controller-pattern>
+
 [4] 2017, "The MVC, MVP, and MVVM Smackdown", <https://academy.realm.io/posts/eric-maxwell-mvc-mvp-and-mvvm-on-android/>
+
 [5] "Model–view–controller", <https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller>
+
 [6] "Model–view–presenter", <https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter>
 
