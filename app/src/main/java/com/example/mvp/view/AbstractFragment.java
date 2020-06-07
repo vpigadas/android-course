@@ -1,4 +1,4 @@
-package com.example.greekchannels;
+package com.example.mvp.view;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,11 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import org.json.JSONException;
+
 public abstract class AbstractFragment extends Fragment {
 
     abstract int getLayout();
 
-    abstract void initLayout(View view);
+    abstract void initLayout(View view) throws JSONException;
 
     abstract void runOperation();
 
@@ -30,7 +32,11 @@ public abstract class AbstractFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initLayout(view);
+        try {
+            initLayout(view);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -9,7 +9,7 @@
     android:layout_height="wrap_content"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    tools:context=".ChannelFragment">
+    tools:context=".view.ChannelFragment">
 
     <TextView
         android:id="@+id/channel"

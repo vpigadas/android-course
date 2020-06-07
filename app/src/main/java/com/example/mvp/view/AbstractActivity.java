@@ -1,22 +1,20 @@
-package com.example.greekchannels;
+package com.example.mvp.view;
 
 import android.os.Bundle;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
+
+import org.json.JSONException;
 
 public abstract class AbstractActivity extends AppCompatActivity {
-
     @LayoutRes
     public abstract int getLayout();
 
-    public abstract void initialiseLayout();
+    public abstract void initialiseLayout() throws JSONException;
 
-    public abstract void runOperation();
+    public abstract void runOperation() throws JSONException;
 
     public abstract void stopOperation();
 
@@ -31,13 +29,21 @@ public abstract class AbstractActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        initialiseLayout();
+        try {
+            initialiseLayout();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        runOperation();
+        try {
+            runOperation();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -56,5 +62,6 @@ public abstract class AbstractActivity extends AppCompatActivity {
         destroyLayout();
         super.onDestroy();
     }
-}
 
+
+}

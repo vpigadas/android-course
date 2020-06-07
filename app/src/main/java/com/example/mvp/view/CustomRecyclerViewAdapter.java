@@ -1,4 +1,4 @@
-package com.example.greekchannels;
+package com.example.mvp.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,33 +6,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.mvp.R;
 
 import java.util.List;
 
-class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecyclerViewAdapter.ViewHolder> {
+public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecyclerViewAdapter.ViewHolder> {
 
+    private LayoutInflater mInflater;
     private List<String> channels;
     private List<Integer> images;
-    private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
-    // data is passed into the constructor
-    CustomRecyclerViewAdapter(Context context, List<String> channels, List<Integer> images) {
+    CustomRecyclerViewAdapter(Context context, List<String> channels, List<Integer> images){
         this.mInflater = LayoutInflater.from(context);
         this.channels = channels;
         this.images = images;
     }
 
-    // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.row_channel, parent, false);
+        View view = mInflater.inflate(R.layout.channel, parent, false);
         return new ViewHolder(view);
     }
 
-    // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         String name = channels.get(position);
@@ -41,14 +39,11 @@ class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecyclerViewA
         holder.ImageView.setImageResource(image);
     }
 
-    // total number of rows
     @Override
     public int getItemCount() {
         return channels.size();
     }
 
-
-    // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView TextView;
         ImageView ImageView;
@@ -64,11 +59,6 @@ class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecyclerViewA
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
         }
-    }
-
-    // convenience method for getting data at click position
-    String getItem(int id) {
-        return channels.get(id);
     }
 
     // allows clicks events to be caught

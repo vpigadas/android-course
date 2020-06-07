@@ -1,4 +1,4 @@
-package com.example.greekchannels;
+package com.example.mvp;
 
 import org.junit.Test;
 

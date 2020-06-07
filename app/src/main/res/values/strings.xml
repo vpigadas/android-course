@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Greek Channels</string>
     <string name="main_activity_header">List of channels</string>
+    <string name="main_activity_header_outdated">List of channels (outdated)</string>
     <string name="second_activity_header">Channel\'s program</string>
+    <string name="second_activity_header_outdated">Channel\'s program (outdated)</string>
 </resources>

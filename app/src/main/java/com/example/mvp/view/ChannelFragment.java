@@ -1,4 +1,4 @@
-package com.example.greekchannels;
+package com.example.mvp.view;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -7,24 +7,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.json.JSONArray;
+import com.example.mvp.R;
+import com.example.mvp.presenter.Presenter2;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class ChannelFragment extends AbstractFragment {
-
-    private ArrayList<String> channelProgramTitles = new ArrayList<>();
-    private ArrayList<String> channelProgramTitlesStart = new ArrayList<>();
-    private ArrayList<String> channelProgramTitlesEnd = new ArrayList<>();
-
+public class ChannelFragment extends AbstractFragment implements Presenter2.View {
+    private RecyclerView recyclerView;
+    private Presenter2 presenter;
+    private View view;
     private String channelToShow;
-    private JSONObject chosenChannelObject;
 
     public static ChannelFragment newInstance(String object){
         ChannelFragment fragment = new ChannelFragment();
@@ -34,7 +34,6 @@ public class ChannelFragment extends AbstractFragment {
         return fragment;
     }
 
-    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         channelToShow = getArguments().getString("channelToShow");
@@ -42,43 +41,14 @@ public class ChannelFragment extends AbstractFragment {
 
     @Override
     int getLayout() {
-        return R.layout.fragment_channel;
+        return R.layout.fragment_program;
     }
 
     @Override
-    void initLayout(View view) {
-
-        try {
-            chosenChannelObject = new JSONObject(channelToShow);
-            String channelName = chosenChannelObject.optString("channelName");
-            JSONArray channelProgram = chosenChannelObject.getJSONArray("shows");
-
-            //Set channel name
-            TextView textView = view.findViewById(R.id.channel);
-            textView.setText(channelName);
-
-            RecyclerView recyclerView = view.findViewById(R.id.program);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
-            for (int i=0; i < channelProgram.length(); i++){
-                JSONObject json = channelProgram.optJSONObject(i);
-
-                String channelProgramTitle = json.optString("title");
-                channelProgramTitles.add(channelProgramTitle);
-
-                String channelProgramStart = json.optString("startTimeCaption");
-                channelProgramTitlesStart.add(channelProgramStart);
-
-                String channelProgramEnd = json.optString("endTimeCaption");
-                channelProgramTitlesEnd.add(channelProgramEnd);
-            }
-            recyclerView.setAdapter(new SimpleAdapter(getActivity(), channelProgramTitles, channelProgramTitlesStart, channelProgramTitlesEnd));
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    void initLayout(View view) throws JSONException {
+        this.view = view;
+        presenter = new Presenter2(this);
+        presenter.initProgram(channelToShow);
     }
 
     @Override
@@ -96,22 +66,38 @@ public class ChannelFragment extends AbstractFragment {
 
     }
 
+    @Override
+    public void showChannelName(String name) {
+        TextView textView = view.findViewById(R.id.channel);
+        textView.setText(name);
+    }
+
+    @Override
+    public void showProgram(List titles, List start, List end) {
+        recyclerView = view.findViewById(R.id.program);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(new SimpleAdapter(getActivity(), titles, start, end));
+    }
+
+
     public class SimpleAdapter extends RecyclerView.Adapter<SimpleViewHolder>{
-        private String[] channelPrograms;
-        private String[] channelProgramsStart;
-        private String[] channelProgramsEnd;
+
+        private final String[] channelProgramsEnd;
+        private final String[] channelProgramsStart;
+        private final String[] channelPrograms;
         private LayoutInflater mInflater;
 
-        public SimpleAdapter(Context context, ArrayList<String> channelPrograms, ArrayList<String> channelProgramsStart, ArrayList<String> channelProgramsEnd){
+        public SimpleAdapter(Context context, List<String> channelPrograms, List<String> channelProgramsStart, List<String> channelProgramsEnd) {
             this.mInflater = LayoutInflater.from(context);
             this.channelPrograms = channelPrograms.toArray(new String[0]);
             this.channelProgramsStart = channelProgramsStart.toArray(new String[0]);
             this.channelProgramsEnd = channelProgramsEnd.toArray(new String[0]);
         }
 
+        @NonNull
         @Override
-        public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = mInflater.inflate(R.layout.row_program, parent, false);
+        public SimpleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = mInflater.inflate(R.layout.program, parent, false);
             return new SimpleViewHolder(view);
         }
 
