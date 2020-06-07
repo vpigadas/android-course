@@ -44,4 +44,4 @@ Closing, it is important to note that the model is only used for the organizatio
 [4]Smith, S., "Overview of ASP.NET Core MVC", 2020, https://docs.microsoft.com/en-us/aspnet/core/mvc/overview?view=aspnetcore-3.1  
 [5]Google, inc, "MVC Architecture", 2020, https://developer.chrome.com/apps/app_frameworks  
 [6]Macneil, M., "Better Software Design with Clean Architecture", 2018, https://fullstackmark.com/post/11/better-software-design-with-clean-architecture  
-[7]FreeCpdeCamp, "A quick introduction to clean architecture", 2018, https://www.freecodecamp.org/news/a-quick-introduction-to-clean-architecture-990c014448d2/
+[7]FreeCodeCamp, "A quick introduction to clean architecture", 2018, https://www.freecodecamp.org/news/a-quick-introduction-to-clean-architecture-990c014448d2/
