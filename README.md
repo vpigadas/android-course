@@ -56,7 +56,7 @@ The reason why I choose MVC design pattern over the MVVM is because of the simpl
 
 __1__. The Model which contains the business logic of the specific application is included at the functions file that is inside the GreekChannelsRestApi.
 
-__2__. The Controller layer that is responsible for interconnecting the view with the model is being done from the RestApiClient activity and from the TvChannelsAdapter and TvSowsAdapater activities.
+__2__. The Controller layer that is responsible for interconnecting the view with the model is being done from the RestApiClient class and from the TvChannelsAdapter and TvSowsAdapater classes.
 
 __3__. The View layer that represents the User Interface is being done from the Main Activity and from the xml files at the resources folder and especially the ones inside the layout folder.
 
