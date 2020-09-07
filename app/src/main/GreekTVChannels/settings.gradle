@@ -1,0 +1,2 @@
+include ':app'
+rootProject.name = "Greek TV Channels"
