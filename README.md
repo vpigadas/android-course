@@ -54,17 +54,17 @@ The specific design pattern has a lot of similarities with MVC design pattern, b
 
 The reason why I choose MVC design pattern over the MVVM is because of the simplicity of the specific project. Below is how I have implemented the specific design pattern.
 
-__1__. The reason why I choose MVC design pattern over the MVVM is because of the simplicity of the specific project. Below is how I have implemented the specific design pattern.
+__1__. The Model which contains the business logic of the specific application is included at the functions file that is inside the GreekChannelsRestApi.
 
-__2__. The Controller layer is responsible for hooking events interchangeably between the Model and the View.
+__2__. The Controller layer that is responsible for interconnecting the view with the model is being done from the RestApiClient activity and from the TvChannelsAdapter and TvSowsAdapater activities.
 
-__3__. The Controller layer is responsible for hooking events interchangeably between the Model and the View.
+__3__. The View layer that represents the User Interface is being done from the Main Activity and from the xml files at the resources folder and especially the ones inside the layout folder.
 
 ***
 
 # Comparison of the two Design Patterns (MVC vs MVVM)
 
-The differences between the two design patters is that MVVM design pattern produces less code and it easier to test your project in comparison to MVC design pattern. In the contradiction MVC design pattern is a simple design pattern and it is suitable for very trivial application like the one that we have implemented for the specific project.
+The differences between the two design patters is that MVVM design pattern is more complex to implement it but it produces less code and it easier to test your project in comparison to MVC design pattern. In the contradiction MVC design pattern is a simple design pattern and it is suitable for very trivial applications like the one that we have implemented for the specific project.
 
 ***
 
